@@ -31,7 +31,7 @@ public class EventDaoImpl implements EventDao {
      * @param storage Storage
      */
     @Autowired
-    public void setStorage(@Qualifier("storage")Storage storage) {
+    public void setStorage(Storage storage) {
         this.storage = storage;
     }
 

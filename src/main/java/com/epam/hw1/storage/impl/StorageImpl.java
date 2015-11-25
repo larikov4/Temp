@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * @author Yevhen_Larikov
  */
-@Repository("storage")
+@Repository
 public class StorageImpl implements Storage {
     private static final Logger LOG = Logger.getLogger(StorageImpl.class);
 

@@ -2,6 +2,7 @@ package com.epam.hw1.model.impl;
 
 import com.epam.hw1.model.User;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,8 +10,8 @@ import java.util.Date;
  *
  * @author Yevhen_Larikov
  */
-public class UserBean implements User {
-    private long id;
+public class UserBean implements User, Serializable {
+    private Long id;
     private String name;
     private String email;
 
