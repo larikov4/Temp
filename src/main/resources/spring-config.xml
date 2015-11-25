@@ -16,4 +16,25 @@
           p:location="storage.properties"/>
 
     <bean class="com.epam.hw1.storage.StoragePostProcessor" p:entitiesFilePath="${pathToEntitiesFile}"/>
+
+
+    <context:property-placeholder location="jdbc.properties"/>
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="studentJDBCTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource"  ref="dataSource" />
+    </bean>
+
+
+
+
+
 </beans>

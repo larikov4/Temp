@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Autowired
     public void setStorage(@Qualifier("storage")Storage storage) {
-        this.storage = storage;
+
     }
 
     @Override
