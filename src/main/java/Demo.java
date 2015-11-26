@@ -12,6 +12,6 @@ public class Demo {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
         BookingFacade facade = context.getBean(BookingFacade.class);
         UserDaoImpl dao = context.getBean(UserDaoImpl.class);
-        System.out.println(dao.getUserByEmailDB("ivan2@email.com"));
+        System.out.println(dao.getUserByEmail("ivan2@email.com"));
     }
 }

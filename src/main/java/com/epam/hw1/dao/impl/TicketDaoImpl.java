@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,16 @@ import static java.util.stream.Collectors.toList;
 public class TicketDaoImpl implements TicketDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
     public static final String TICKET_PREFIX = "ticket";
+
+    private NamedParameterJdbcOperations jdbcTemplate;
     private UserDao userDao;
     private EventDao eventDao;
     private Storage storage;
+
+    @Autowired
+    public void setJdbcTemplate(NamedParameterJdbcOperations jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     /**
      * Injects storage into object.
@@ -47,6 +55,7 @@ public class TicketDaoImpl implements TicketDao {
      *
      * @param userDao UserDao
      */
+    @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -56,6 +65,7 @@ public class TicketDaoImpl implements TicketDao {
      *
      * @param eventDao EventDao
      */
+    @Autowired
     public void setEventDao(EventDao eventDao) {
         this.eventDao = eventDao;
     }

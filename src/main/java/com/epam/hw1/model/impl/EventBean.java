@@ -70,4 +70,14 @@ public class EventBean implements Event {
     public int hashCode() {
         return Objects.hashCode(id, title, date);
     }
+
+    @Override
+    public String toString() {
+        return "EventBean{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", date=" + date +
+                ", price=" + price +
+                '}';
+    }
 }

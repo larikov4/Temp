@@ -2,11 +2,17 @@ package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.model.Event;
+import com.epam.hw1.model.User;
+import com.epam.hw1.model.impl.EventBean;
+import com.epam.hw1.model.impl.UserBean;
 import com.epam.hw1.storage.Storage;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +29,28 @@ import static java.util.stream.Collectors.toList;
 public class EventDaoImpl implements EventDao {
     private static final Logger LOG = Logger.getLogger(EventDaoImpl.class);
     public static final String EVENT_PREFIX = "event";
+    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParamJdbcTemplate;
+
+    private RowMapper<Event> mapper = (rs, rowNum) -> {
+        Event event = new EventBean();
+        event.setId(rs.getLong("id"));
+        event.setTitle(rs.getString("title"));
+        event.setDate(rs.getDate("date"));
+        event.setPrice(rs.getInt("price"));
+        return event;
+    };
+
+    @Autowired
+    public NamedParameterJdbcTemplate getNamedParamJdbcTemplate() {
+        return namedParamJdbcTemplate;
+    }
+
+    @Autowired
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
     private Storage storage;
 
     /**
@@ -36,8 +64,8 @@ public class EventDaoImpl implements EventDao {
     }
 
     @Override
-    public Event getEventById(long id) {
-        return storage.get(EVENT_PREFIX + id);
+    public Event getEventById(long eventId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM events WHERE id = ?", mapper, eventId);
     }
 
     @Override
@@ -47,14 +75,11 @@ public class EventDaoImpl implements EventDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        List<Event> events = storage.getAll().entrySet().stream()
-                .filter(entry -> entry.getKey().contains(EVENT_PREFIX))
-                .map(entry -> (Event) entry.getValue())
-                .filter(event -> event.getTitle() != null && title.contains(event.getTitle()))
-                .collect(toList());
-
-        List<List<Event>> pages = Lists.partition(events, pageSize);
-        return pages.size() >= pageNum ? pages.get(pageNum - 1) : Collections.emptyList();
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("title", title)
+                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("size", pageSize);
+        return namedParamJdbcTemplate.query("SELECT * FROM events WHERE title=:title LIMIT :offset, :size", params, mapper);
     }
 
     @Override
@@ -64,32 +89,11 @@ public class EventDaoImpl implements EventDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        List<List<Event>> pages = Lists.partition(getAllEventsOfDay(day), pageSize);
-        return pages.size() >= pageNum ? pages.get(pageNum - 1) : Collections.emptyList();
-    }
-
-    private List<Event> getAllEventsOfDay(Date day) {
-        if (day == null) {
-            LOG.warn("Passed parameter were null.");
-            return null;
-        }
-        List<Event> events = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTime(day);
-        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-        int year = calendar.get(Calendar.YEAR);
-
-        for (Map.Entry<String, Object> entry : storage.getAll().entrySet()) {
-            if(entry.getKey().contains(EVENT_PREFIX)) {
-                Event event = (Event) entry.getValue();
-                calendar.setTime(day);
-                if (dayOfYear == calendar.get(Calendar.DAY_OF_YEAR) && year == calendar.get(Calendar.YEAR)) {
-                    events.add(event);
-                }
-            }
-        }
-        return events;
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("date", day)
+                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("size", pageSize);
+        return namedParamJdbcTemplate.query("SELECT * FROM events WHERE date=:date LIMIT :offset, :size", params, mapper);
     }
 
     @Override
@@ -98,7 +102,9 @@ public class EventDaoImpl implements EventDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        return storage.put(EVENT_PREFIX + event.getId(), event);
+        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
+        namedParamJdbcTemplate.update("INSERT INTO events VALUES (:id, :title, :date, :price)", beanPropertySqlParameterSource);
+        return event;
     }
 
     @Override
@@ -107,11 +113,13 @@ public class EventDaoImpl implements EventDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        return storage.put(EVENT_PREFIX + event.getId(), event);
+        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
+        namedParamJdbcTemplate.update("UPDATE events SET id=:id, title=:title, date=:date, price=:price WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+        return event;
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return storage.remove(EVENT_PREFIX + eventId);
+        return jdbcTemplate.update("DELETE FROM events WHERE id=?", eventId)!=0;
     }
 }

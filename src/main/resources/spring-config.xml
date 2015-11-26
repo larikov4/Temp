@@ -11,13 +11,6 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.epam.hw1"/>
-
-    <!--<bean id="storageProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"-->
-          <!--p:location="storage.properties"/>-->
-
-    <!--<bean class="com.epam.hw1.storage.StoragePostProcessor" p:entitiesFilePath="${pathToEntitiesFile}"/>-->
-
-
     <context:property-placeholder location="jdbc.properties"/>
 
     <bean id="dataSource"
@@ -28,8 +21,12 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean id="studentJDBCTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource"  ref="dataSource" />
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg name="dataSource"  ref="dataSource" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg name="dataSource"  ref="dataSource" />
     </bean>
 
 

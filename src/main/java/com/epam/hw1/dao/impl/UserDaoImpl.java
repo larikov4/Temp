@@ -9,8 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -31,8 +32,27 @@ public class UserDaoImpl implements UserDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
     public static final String USER_PREFIX = "user";
     private Storage storage;
-    private DataSource dataSource;
+
+    private RowMapper<User> mapper = (rs, rowNum) -> {
+        User user = new UserBean();
+        user.setId(rs.getLong("id"));
+        user.setName(rs.getString("name"));
+        user.setEmail(rs.getString("email"));
+        return user;
+    };
+
+    private NamedParameterJdbcTemplate namedParamJdbcTemplate;
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Autowired
+    public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
+        this.namedParamJdbcTemplate = namedParamJdbcTemplate;
+    }
 
     /**
      * Injects storage into Dao.
@@ -44,48 +64,9 @@ public class UserDaoImpl implements UserDao {
         this.storage = storage;
     }
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    public class UserMapper implements RowMapper<User> {
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            User user = new UserBean();
-            user.setId(rs.getLong("id"));
-            user.setName(rs.getString("name"));
-            user.setEmail(rs.getString("email"));
-            return user;
-        }
-    }
-
     @Override
     public User getUserById(long userId) {
-        return storage.get(USER_PREFIX + userId);
-    }
-
-    public User getUserByEmailDB(String email) {
-//        jdbcTemplate.update("INSERT INTO users VALUES (?, ?, ?)", new Object[] { 11,
-//                "Ivan11","ivan11@email.com"
-//        });
-
-//        return jdbcTemplate.queryForObject("select * from users where email = ?", new Object[]{email}, new UserMapper());
-
-        UserBean user = new UserBean();
-        user.setId(12);
-        user.setName("Ivan12");
-        user.setName("ivan12@email.com");
-        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
-
-//        jdbcTemplate.update("INSERT INTO users( id, name, email) VALUES (:id, :name, :email)", beanPropertySqlParameterSource);
-        jdbcTemplate.update("UPDATE users SET (:id, :name, :email)", beanPropertySqlParameterSource);
-        return null;
-
+        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?", mapper, userId);
     }
 
     @Override
@@ -94,11 +75,7 @@ public class UserDaoImpl implements UserDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        return storage.getAll().entrySet().stream().filter(entry -> entry.getKey().contains(USER_PREFIX))
-                .map(entry -> (User) entry.getValue())
-                .filter(user -> email.equals(user.getEmail()))
-                .findFirst()
-                .orElse(null);
+        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email = ?", mapper, email);
     }
 
     @Override
@@ -108,13 +85,11 @@ public class UserDaoImpl implements UserDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        List<User> users = storage.getAll().entrySet().stream().filter(entry -> entry.getKey().contains(USER_PREFIX))
-                .map(entry -> (User) entry.getValue())
-                .filter(user -> user.getName() != null && name.contains(user.getName()))
-                .collect(toList());
-
-        List<List<User>> pages = Lists.partition(users, pageSize);
-        return pages.size() >= pageNum ? pages.get(pageNum - 1) : Collections.emptyList();
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("name", name)
+                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("size", pageSize);
+        return namedParamJdbcTemplate.query("SELECT * FROM users WHERE name=:name LIMIT :offset, :size", params, mapper);
     }
 
     @Override
@@ -123,11 +98,9 @@ public class UserDaoImpl implements UserDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        if (user.getEmail() != null && getUserByEmail(user.getEmail()) != null) {
-            LOG.warn("User's e-mail should be unique. Duplicate email: " + user.getEmail());
-            return null;
-        }
-        return storage.put(USER_PREFIX + user.getId(), user);
+        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
+        namedParamJdbcTemplate.update("INSERT INTO users VALUES (:id, :name, :email)", beanPropertySqlParameterSource);
+        return user;
     }
 
     @Override
@@ -136,11 +109,13 @@ public class UserDaoImpl implements UserDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        return storage.put(USER_PREFIX + user.getId(), user);
+        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
+        namedParamJdbcTemplate.update("UPDATE users SET id=:id, name=:name, email=:email WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+        return user;
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return storage.remove(USER_PREFIX + userId);
+        return jdbcTemplate.update("DELETE FROM users WHERE id=?", userId)!=0;
     }
 }
