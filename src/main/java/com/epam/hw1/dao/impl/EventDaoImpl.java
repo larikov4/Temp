@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
@@ -42,13 +43,13 @@ public class EventDaoImpl implements EventDao {
     };
 
     @Autowired
-    public NamedParameterJdbcTemplate getNamedParamJdbcTemplate() {
-        return namedParamJdbcTemplate;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Autowired
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
+        this.namedParamJdbcTemplate = namedParamJdbcTemplate;
     }
 
     private Storage storage;
@@ -65,7 +66,14 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public Event getEventById(long eventId) {
-        return jdbcTemplate.queryForObject("SELECT * FROM events WHERE id = ?", mapper, eventId);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM events WHERE id = ?", mapper, eventId);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -77,9 +85,16 @@ public class EventDaoImpl implements EventDao {
         }
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("title", title)
-                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
-        return namedParamJdbcTemplate.query("SELECT * FROM events WHERE title=:title LIMIT :offset, :size", params, mapper);
+        try {
+            return namedParamJdbcTemplate.query("SELECT * FROM events WHERE title=:title LIMIT :offset, :size", params, mapper);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -91,9 +106,16 @@ public class EventDaoImpl implements EventDao {
         }
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("date", day)
-                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
-        return namedParamJdbcTemplate.query("SELECT * FROM events WHERE date=:date LIMIT :offset, :size", params, mapper);
+        try {
+            return namedParamJdbcTemplate.query("SELECT * FROM events WHERE date=:date LIMIT :offset, :size", params, mapper);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -103,8 +125,15 @@ public class EventDaoImpl implements EventDao {
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
-        namedParamJdbcTemplate.update("INSERT INTO events VALUES (:id, :title, :date, :price)", beanPropertySqlParameterSource);
-        return event;
+        try {
+            namedParamJdbcTemplate.update("INSERT INTO events VALUES (:id, :title, :date, :price)", beanPropertySqlParameterSource);
+            return event;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -114,12 +143,26 @@ public class EventDaoImpl implements EventDao {
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
-        namedParamJdbcTemplate.update("UPDATE events SET id=:id, title=:title, date=:date, price=:price WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
-        return event;
+        try {
+            namedParamJdbcTemplate.update("UPDATE events SET id=:id, title=:title, date=:date, price=:price WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+            return event;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return jdbcTemplate.update("DELETE FROM events WHERE id=?", eventId)!=0;
+        try {
+            return jdbcTemplate.update("DELETE FROM events WHERE id=?", eventId) != 0;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return false;
     }
 }

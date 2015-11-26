@@ -62,13 +62,14 @@ public class EventBean implements Event {
         if (o == null || getClass() != o.getClass()) return false;
         EventBean eventBean = (EventBean) o;
         return id == eventBean.id &&
+                Double.compare(eventBean.price, price) == 0 &&
                 Objects.equal(title, eventBean.title) &&
                 Objects.equal(date, eventBean.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, title, date);
+        return Objects.hashCode(id, title, date, price);
     }
 
     @Override

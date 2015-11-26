@@ -59,4 +59,13 @@ public class UserBean implements User, Serializable {
     public int hashCode() {
         return com.google.common.base.Objects.hashCode(id, name, email);
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

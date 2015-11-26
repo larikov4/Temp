@@ -7,6 +7,7 @@ import com.epam.hw1.storage.Storage;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
@@ -29,7 +30,7 @@ import static java.util.stream.Collectors.toList;
  */
 @Repository
 public class UserDaoImpl implements UserDao {
-    private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
     public static final String USER_PREFIX = "user";
     private Storage storage;
 
@@ -66,7 +67,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(long userId) {
-        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?", mapper, userId);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?", mapper, userId);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -75,7 +83,14 @@ public class UserDaoImpl implements UserDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
-        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email = ?", mapper, email);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email = ?", mapper, email);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -87,9 +102,16 @@ public class UserDaoImpl implements UserDao {
         }
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("name", name)
-                .addValue("offset", (pageNum-1) * pageSize)
+                .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
-        return namedParamJdbcTemplate.query("SELECT * FROM users WHERE name=:name LIMIT :offset, :size", params, mapper);
+        try {
+            return namedParamJdbcTemplate.query("SELECT * FROM users WHERE name=:name LIMIT :offset, :size", params, mapper);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -99,8 +121,15 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
-        namedParamJdbcTemplate.update("INSERT INTO users VALUES (:id, :name, :email)", beanPropertySqlParameterSource);
-        return user;
+        try {
+            namedParamJdbcTemplate.update("INSERT INTO users VALUES (:id, :name, :email)", beanPropertySqlParameterSource);
+            return user;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -110,12 +139,26 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
-        namedParamJdbcTemplate.update("UPDATE users SET id=:id, name=:name, email=:email WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
-        return user;
+        try {
+            namedParamJdbcTemplate.update("UPDATE users SET id=:id, name=:name, email=:email WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+            return user;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return jdbcTemplate.update("DELETE FROM users WHERE id=?", userId)!=0;
+        try {
+            return jdbcTemplate.update("DELETE FROM users WHERE id=?", userId) != 0;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return false;
     }
 }
