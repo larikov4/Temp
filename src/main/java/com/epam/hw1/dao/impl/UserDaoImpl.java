@@ -111,7 +111,7 @@ public class UserDaoImpl implements UserDao {
                 LOG.debug(e);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -120,9 +120,11 @@ public class UserDaoImpl implements UserDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO users VALUES (:id, :name, :email)", beanPropertySqlParameterSource);
+            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES (:name, :email)", beanPropertySqlParameterSource, keyHolder);
+            user.setId(keyHolder.getKey().longValue());
             return user;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {

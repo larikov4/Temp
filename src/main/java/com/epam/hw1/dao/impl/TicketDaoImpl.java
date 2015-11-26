@@ -8,14 +8,17 @@ import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.storage.Storage;
-import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
+import java.sql.Types;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -30,70 +33,65 @@ public class TicketDaoImpl implements TicketDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
     public static final String TICKET_PREFIX = "ticket";
 
-    private NamedParameterJdbcOperations jdbcTemplate;
-    private UserDao userDao;
-    private EventDao eventDao;
-    private Storage storage;
+    private RowMapper<Ticket> mapper = (rs, rowNum) -> {
+        Ticket ticket = new TicketBean();
+        ticket.setId(rs.getLong("id"));
+        ticket.setEventId(rs.getLong("eventId"));
+        ticket.setUserId(rs.getLong("userId"));
+        ticket.setCategory(Ticket.Category.valueOf(rs.getString("category")));
+        ticket.setPlace(rs.getInt("place"));
+        return ticket;
+    };
+
+    private NamedParameterJdbcTemplate namedParamJdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setJdbcTemplate(NamedParameterJdbcOperations jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    /**
-     * Injects storage into object.
-     *
-     * @param storage Storage
-     */
     @Autowired
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
-
-    /**
-     * Injects UserDao into object.
-     *
-     * @param userDao UserDao
-     */
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    /**
-     * Injects EventDao into object.
-     *
-     * @param eventDao EventDao
-     */
-    @Autowired
-    public void setEventDao(EventDao eventDao) {
-        this.eventDao = eventDao;
+    public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
+        this.namedParamJdbcTemplate = namedParamJdbcTemplate;
     }
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        for (Ticket ticket : getTicketsByEventId(eventId)) {
-            if (ticket.getPlace() == place) {
-                throw new IllegalStateException("This place is already booked. EventId: " + eventId + ", place: " + place);
+        if (isTicketExists(eventId, place)) {
+            throw new IllegalStateException("This place is already booked. EventId: " + eventId + ", place: " + place);
+        }
+        Ticket ticket = getTicket(userId, eventId, place, category);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        BeanPropertySqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(ticket);
+        beanPropertySqlParameterSource.registerSqlType("category", Types.VARCHAR);
+        try {
+            namedParamJdbcTemplate.update("INSERT INTO tickets VALUES (:id, :userId, :eventId, :place, :category)", beanPropertySqlParameterSource, keyHolder);
+            ticket.setId(keyHolder.getKey().longValue());
+            return ticket;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
             }
         }
+        return null;
+    }
+
+    private boolean isTicketExists(long eventId, int place) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("eventId", eventId)
+                .addValue("place", place);
+        return !namedParamJdbcTemplate.query("SELECT * FROM tickets WHERE eventId = ?", params, mapper).isEmpty();
+
+    }
+
+    private Ticket getTicket(long userId, long eventId, int place, Ticket.Category category) {
         Ticket ticket = new TicketBean();
-        ticket.setId(generateUniqueId());
         ticket.setUserId(userId);
         ticket.setEventId(eventId);
         ticket.setPlace(place);
         ticket.setCategory(category);
-        return storage.put(TICKET_PREFIX + ticket.getId(), ticket);
-    }
-
-    private long generateUniqueId() {
-        long id;
-        Random random = new Random();
-        do {
-            id = random.nextLong();
-        }
-        while (storage.get(TICKET_PREFIX + id) != null);
-        return id;
+        return ticket;
     }
 
     @Override
@@ -103,19 +101,18 @@ public class TicketDaoImpl implements TicketDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        List<Ticket> tickets = getTicketsByUserIdSortedByDate(user);
-        List<List<Ticket>> pages = Lists.partition(tickets, pageSize);
-        return pages.size() >= pageNum ? pages.get(pageNum - 1) : Collections.emptyList();
-    }
-
-    private List<Ticket> getTicketsByUserIdSortedByDate(User user) {
-        return storage.getAll().entrySet().stream()
-                .filter(entry -> entry.getKey().contains(TICKET_PREFIX))
-                .map(entry -> (Ticket) entry.getValue())
-                .filter(ticket -> user.getId() == (ticket.getUserId()))
-                .sorted((t1, t2) -> eventDao.getEventById(t2.getUserId()).getDate()
-                        .compareTo(eventDao.getEventById(t1.getUserId()).getDate()))
-                .collect(toList());
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("userId", user.getId())
+                .addValue("offset", (pageNum - 1) * pageSize)
+                .addValue("size", pageSize);
+        try {
+            return namedParamJdbcTemplate.query("SELECT * FROM tickets NATURAL JOIN events WHERE userId=:userId ORDER BY date DESC LIMIT :offset, :size;", params, mapper);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return Collections.emptyList();
     }
 
     @Override
@@ -125,23 +122,29 @@ public class TicketDaoImpl implements TicketDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        List<Ticket> tickets = getTicketsByEventId(event.getId());
-        Collections.sort(tickets, (t1, t2) -> userDao.getUserById(t1.getUserId()).getEmail()
-                .compareTo(userDao.getUserById(t2.getUserId()).getEmail()));
-        List<List<Ticket>> pages = Lists.partition(tickets, pageSize);
-        return pages.size() >= pageNum ? pages.get(pageNum - 1) : Collections.emptyList();
-    }
-
-    private List<Ticket> getTicketsByEventId(long eventId) {
-        return storage.getAll().entrySet().stream()
-                .filter(entry -> entry.getKey().contains(TICKET_PREFIX))
-                .map(entry -> (Ticket) entry.getValue())
-                .filter(ticket -> eventId == ticket.getEventId())
-                .collect(toList());
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("eventId", event.getId())
+                .addValue("offset", (pageNum - 1) * pageSize)
+                .addValue("size", pageSize);
+        try {
+            return namedParamJdbcTemplate.query("SELECT * FROM tickets NATURAL JOIN users WHERE eventId=:eventId ORDER BY email LIMIT :offset, :size;", params, mapper);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return storage.remove(TICKET_PREFIX + ticketId);
+        try {
+            return jdbcTemplate.update("DELETE FROM tickets WHERE id=?", ticketId) != 0;
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return false;
     }
 }

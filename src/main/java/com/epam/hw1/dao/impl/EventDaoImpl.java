@@ -14,6 +14,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -94,7 +96,7 @@ public class EventDaoImpl implements EventDao {
                 LOG.debug(e);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -115,7 +117,7 @@ public class EventDaoImpl implements EventDao {
                 LOG.debug(e);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -124,9 +126,11 @@ public class EventDaoImpl implements EventDao {
             LOG.warn("Passed parameter were null.");
             return null;
         }
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO events VALUES (:id, :title, :date, :price)", beanPropertySqlParameterSource);
+            namedParamJdbcTemplate.update("INSERT INTO events (title, date, price) VALUES (:title, :date, :price)", beanPropertySqlParameterSource, keyHolder);
+            event.setId(keyHolder.getKey().longValue());
             return event;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {

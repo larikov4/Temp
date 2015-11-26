@@ -18,17 +18,12 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public boolean refillAccount(int amount) {
-        return userAccountDao.refillAccount(amount);
+    public boolean refillAccount(long userId, double amount) {
+        return userAccountDao.refillAccount(userId, amount);
     }
 
     @Override
-    public double getBalance() {
-        return userAccountDao.getBalance();
-    }
-
-    @Override
-    public boolean withdraw(int amount) {
-        return userAccountDao.withdraw(amount);
+    public boolean withdraw(long userId, double amount) {
+        return userAccountDao.withdraw(userId, amount);
     }
 }

@@ -6,6 +6,7 @@ import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.service.EventService;
 import com.epam.hw1.service.TicketService;
+import com.epam.hw1.service.UserAccountService;
 import com.epam.hw1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,12 +26,26 @@ public class BookingFacadeImpl implements BookingFacade {
     private EventService eventService;
     private TicketService ticketService;
     private UserService userService;
+    private UserAccountService userAccountService;
 
     @Autowired
-    public BookingFacadeImpl(EventService eventService, TicketService ticketService, UserService userService) {
+    public void setEventService(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @Autowired
+    public void setTicketService(TicketService ticketService) {
         this.ticketService = ticketService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setUserAccountService(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
 
     @Override
@@ -114,5 +129,5 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public boolean refillAccount(int amount){return false;}
+    public boolean refillAccount(long userId, double amount){return userAccountService.refillAccount(userId, amount);}
 }

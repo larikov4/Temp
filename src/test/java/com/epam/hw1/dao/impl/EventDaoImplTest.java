@@ -3,149 +3,122 @@ package com.epam.hw1.dao.impl;
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.impl.EventBean;
-import com.epam.hw1.storage.Storage;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
 /**
  * @author Yevhen_Larikov
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:test-spring-config.xml")
+@Transactional
 public class EventDaoImplTest {
-    private static final long EVENT_ID = 1L;
-    private static final String EVENT_ID_WITH_PREFIX = EventDaoImpl.EVENT_PREFIX + EVENT_ID;
-    private static final String EVENT_TITLE = "testTitle";
-    private static final String ANOTHER_EVENT_TITLE = "testTitle1";
-    private static final Date EVENT_DATE = new Date();
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
+    private static final int EXISTING_EVENT_ID = 1;
+    private static final int NEW_EVENT_ID = 20;
+    private static final String EXISTING_EVENT_TITLE = "title1";
+    private static final String NEW_EVENT_TITLE = "title20";
+    private static final int EXISTING_EVENT_PRICE = 10;
+    private static final int NEW_EVENT_PRICE = 20;
     private static final int PAGE_SIZE = 2;
     private static final int PAGE_NUM = 1;
 
-    @Mock
-    private Storage storage;
+    private static Date existingEventDate;
+    private static Date newEventDate;
 
-    @Mock
-    private Event event;
+    @Autowired
+    private EventDao eventDao;
 
-    @InjectMocks
-    private EventDao eventDao = new EventDaoImpl();
+    private Event existingEvent;
+    private Event newEvent;
 
-    @Test
-    public void shouldReturnFullListWhenEventsWithTitleIsEnough() {
-        Map<String, Object> events = generateEvents(PAGE_SIZE * PAGE_NUM);
-        when(storage.getAll()).thenReturn(spy(events));
+    @BeforeClass
+    public static void setUpDates() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        existingEventDate = simpleDateFormat.parse("2015-11-24");
+        newEventDate = simpleDateFormat.parse("2025-11-24");
+    }
 
-        assertEquals(PAGE_SIZE, eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM).size());
+    @Before
+    public void setUp() {
+        existingEvent = new EventBean();
+        existingEvent.setId(EXISTING_EVENT_ID);
+        existingEvent.setTitle(EXISTING_EVENT_TITLE);
+        existingEvent.setDate(existingEventDate);
+        existingEvent.setPrice(EXISTING_EVENT_PRICE);
+
+        newEvent = new EventBean();
+        newEvent.setId(NEW_EVENT_ID);
+        newEvent.setTitle(NEW_EVENT_TITLE);
+        newEvent.setDate(newEventDate);
+        newEvent.setPrice(NEW_EVENT_PRICE);
     }
 
     @Test
-    public void shouldReturnNotFullListWhenEventsWithTitleIsNotEnough() {
-        Map<String, Object> events = generateEvents(PAGE_SIZE * PAGE_NUM - PAGE_SIZE / 2);
-        when(storage.getAll()).thenReturn(spy(events));
-
-        assertEquals(PAGE_SIZE / 2, eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM).size());
+    public void shouldReturnEventById(){
+        assertEquals(existingEvent, eventDao.getEventById(EXISTING_EVENT_ID));
     }
 
     @Test
-    public void shouldReturnEmptyListWhenNoEventsWithTitleWereFound() {
-        Map<String, Object> events = new HashMap<>();
-        when(storage.getAll()).thenReturn(spy(events));
-
-        assertEquals(Collections.emptyList(), eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM));
+    public void shouldReturnListWhenEventsByTitleIsEnough(){
+        List<Event> eventsByTitle = eventDao.getEventsByTitle(EXISTING_EVENT_TITLE, PAGE_SIZE, PAGE_NUM);
+        assertEquals(PAGE_SIZE, eventsByTitle.size());
+        assertEquals(existingEvent, eventsByTitle.get(0));
     }
 
     @Test
-    public void shouldReturnFullListWhenEventsForDayIsEnough() {
-        Map<String, Object> events = generateEvents(PAGE_SIZE * PAGE_NUM);
-        when(storage.getAll()).thenReturn(spy(events));
-
-        assertEquals(PAGE_SIZE, eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM).size());
+    public void shouldReturnEmptyListWhenEventsByTitleIsEnough(){
+        List<Event> eventsByTitle = eventDao.getEventsByTitle(NEW_EVENT_TITLE, PAGE_SIZE, PAGE_NUM);
+        assertTrue(eventsByTitle.isEmpty());
     }
 
     @Test
-    public void shouldReturnNotFullListWhenEventsForDayIsNotEnough() {
-        Map<String, Object> events = generateEvents(PAGE_SIZE * PAGE_NUM - PAGE_SIZE / 2);
-        when(storage.getAll()).thenReturn(spy(events));
-
-        assertEquals(PAGE_SIZE / 2, eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM).size());
+    public void shouldReturnListWhenEventsByDateIsEnough(){
+        List<Event> eventsForDate = eventDao.getEventsForDay(existingEventDate, PAGE_SIZE, PAGE_NUM);
+        assertEquals(PAGE_SIZE, eventsForDate.size());
+        assertEquals(existingEvent, eventsForDate.get(0));
     }
 
     @Test
-    public void shouldReturnEmptyListWhenNoEventsForDayWereFound() {
-        Map<String, Object> events = new HashMap<>();
-        when(storage.getAll()).thenReturn(spy(events));
-
-        assertEquals(Collections.emptyList(), eventDao.getEventsByTitle(EVENT_TITLE, PAGE_SIZE, PAGE_NUM));
+    public void shouldReturnEmptyListWhenEventsByDateIsEnough(){
+        List<Event> eventsForDate = eventDao.getEventsForDay(newEventDate, PAGE_SIZE, PAGE_NUM);
+        assertTrue(eventsForDate.isEmpty());
     }
 
     @Test
-    public void shouldPutEventIntoStorage() {
-        when(storage.put(EVENT_ID_WITH_PREFIX, event)).thenReturn(event);
-        when(event.getId()).thenReturn(EVENT_ID);
-
-        assertEquals(event, eventDao.createEvent(event));
-        Mockito.verify(storage).put(EVENT_ID_WITH_PREFIX, event);
+    public void shouldCreateEvent(){
+        assertEquals(newEvent, eventDao.createEvent(newEvent));
+        assertNotNull(newEvent.getId());
     }
 
     @Test
-    public void shouldUpdateEventInStorage() {
-        when(storage.put(EVENT_ID_WITH_PREFIX, event)).thenReturn(event);
-        when(event.getId()).thenReturn(EVENT_ID);
-
-        assertEquals(event, eventDao.updateEvent(event));
-        Mockito.verify(storage).put(EVENT_ID_WITH_PREFIX, event);
+    public void shouldUpdateEvent(){
+        newEvent.setId(EXISTING_EVENT_ID);
+        assertEquals(newEvent, eventDao.updateEvent(newEvent));
+        assertEquals(newEvent, eventDao.getEventById(EXISTING_EVENT_ID));
     }
 
     @Test
-    public void shouldReturnEventById() {
-        when(storage.get(EVENT_ID_WITH_PREFIX)).thenReturn(event);
-
-        assertEquals(event, eventDao.getEventById(EVENT_ID));
-        Mockito.verify(storage).get(EVENT_ID_WITH_PREFIX);
+    public void shouldRemoveEventById(){
+        assertTrue(eventDao.deleteEvent(EXISTING_EVENT_ID));
+        assertNull(eventDao.getEventById(EXISTING_EVENT_ID));
     }
 
     @Test
-    public void shouldRemoveEventFromStorage() {
-        when(storage.remove(EVENT_ID_WITH_PREFIX)).thenReturn(true);
-
-        eventDao.deleteEvent(EVENT_ID);
-        Mockito.verify(storage).remove(EVENT_ID_WITH_PREFIX);
-    }
-
-    private Map<String, Object> generateEvents(int amount) {
-        Map<String, Object> events = new HashMap<>();
-        for (int i = 0; i < amount; i++) {
-            events.put(EventDaoImpl.EVENT_PREFIX + i, generateEvent(i, EVENT_TITLE, EVENT_DATE));
-        }
-        addInvalidEvents(events);
-        return events;
-    }
-
-    private Map<String, Object> addInvalidEvents(Map<String, Object> events) {
-        int k = 0;
-        events.put(EventDaoImpl.EVENT_PREFIX + --k, generateEvent(k, null, EVENT_DATE));
-        events.put(EventDaoImpl.EVENT_PREFIX + --k, generateEvent(k, ANOTHER_EVENT_TITLE, null));
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 1);
-        events.put(EventDaoImpl.EVENT_PREFIX + --k, generateEvent(k, ANOTHER_EVENT_TITLE, calendar.getTime()));
-        return events;
-    }
-
-    private Event generateEvent(int number, String title, Date date) {
-        Event event = new EventBean();
-        event.setId(number);
-        event.setTitle(title);
-        event.setDate(EVENT_DATE);
-        return event;
+    public void shouldReturnFalseWhenRemovingNotExistingEvent(){
+        assertFalse(eventDao.deleteEvent(NEW_EVENT_ID));
     }
 }

@@ -142,5 +142,5 @@ public interface BookingFacade {
      */
     boolean cancelTicket(long ticketId);
 
-    boolean refillAccount(int amount);
+    boolean refillAccount(long userId, double amount);
 }

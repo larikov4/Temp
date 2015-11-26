@@ -4,9 +4,7 @@ package com.epam.hw1.service;
  * @author Yevhen_Larikov
  */
 public interface UserAccountService {
-    boolean refillAccount(int amount);
+    boolean refillAccount(long userId, double amount);
 
-    double getBalance();
-
-    boolean withdraw(int amount);
+    boolean withdraw(long userId, double amount);
 }
