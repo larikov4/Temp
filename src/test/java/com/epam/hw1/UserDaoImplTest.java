@@ -29,7 +29,7 @@ public class UserDaoImplTest {
 //        user.setName("name");
 //        user.setEmail("email");
 //        userDao.createUser(user);
-        User userDB = userDao.getUserById(15);
+        User userDB = userDao.getUserById(1);
         System.out.println(userDB);
     }
 

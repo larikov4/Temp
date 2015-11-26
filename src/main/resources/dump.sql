@@ -5,43 +5,7 @@
 -- HeidiSQL Версия:              8.3.0.4694
 -- --------------------------------------------------------
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Дамп структуры базы данных springdb
-DROP DATABASE IF EXISTS `springdb`;
-CREATE DATABASE IF NOT EXISTS `springdb` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `springdb`;
-
-
--- Дамп структуры для таблица springdb.accounts
-DROP TABLE IF EXISTS `accounts`;
-CREATE TABLE IF NOT EXISTS `accounts` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `userId` bigint(20) NOT NULL DEFAULT '0',
-  `balance` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `FK_accounts_users` (`userId`),
-  CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
--- Дамп данных таблицы springdb.accounts: ~0 rows (приблизительно)
-DELETE FROM `accounts`;
-/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`id`, `userId`, `balance`) VALUES
-	(1, 1, 100),
-	(2, 2, 100),
-	(3, 3, 100),
-	(4, 4, 100),
-	(5, 5, 100),
-	(6, 6, 100),
-	(7, 7, 100),
-	(8, 8, 100),
-	(9, 9, 100),
-	(10, 10, 100);
-/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 
 -- Дамп структуры для таблица springdb.events
@@ -52,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `date` datetime DEFAULT NULL,
   `price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11;
 
 -- Дамп данных таблицы springdb.events: ~0 rows (приблизительно)
 DELETE FROM `events`;
@@ -71,36 +35,6 @@ INSERT INTO `events` (`id`, `title`, `date`, `price`) VALUES
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 
 
--- Дамп структуры для таблица springdb.tickets
-DROP TABLE IF EXISTS `tickets`;
-CREATE TABLE IF NOT EXISTS `tickets` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `eventId` bigint(20) DEFAULT NULL,
-  `userId` bigint(20) DEFAULT NULL,
-  `category` tinyint(4) DEFAULT NULL,
-  `place` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_tickets_events` (`eventId`),
-  KEY `FK_tickets_users` (`userId`),
-  CONSTRAINT `FK_tickets_events` FOREIGN KEY (`eventId`) REFERENCES `events` (`id`),
-  CONSTRAINT `FK_tickets_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
--- Дамп данных таблицы springdb.tickets: ~0 rows (приблизительно)
-DELETE FROM `tickets`;
-/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-INSERT INTO `tickets` (`id`, `eventId`, `userId`, `category`, `place`) VALUES
-	(1, 1, 1, 1, 10),
-	(2, 2, 2, 2, 10),
-	(3, 3, 3, 1, 10),
-	(4, 4, 4, 2, 10),
-	(5, 5, 5, 1, 10),
-	(6, 6, 6, 2, 10),
-	(7, 7, 7, 1, 10),
-	(8, 8, 8, 2, 10),
-	(9, 9, 9, 1, 10),
-	(10, 10, 10, 2, 10);
-/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 
 
 -- Дамп структуры для таблица springdb.users
@@ -110,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11;
 
 -- Дамп данных таблицы springdb.users: ~0 rows (приблизительно)
 DELETE FROM `users`;
@@ -130,3 +64,62 @@ INSERT INTO `users` (`id`, `name`, `email`) VALUES
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+-- Дамп структуры для таблица springdb.accounts
+DROP TABLE IF EXISTS `accounts`;
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL DEFAULT '0',
+  `balance` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `FK_accounts_users` (`userId`),
+  CONSTRAINT `FK_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11;
+
+-- Дамп данных таблицы springdb.accounts: ~0 rows (приблизительно)
+DELETE FROM `accounts`;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` (`id`, `userId`, `balance`) VALUES
+	(1, 1, 100),
+	(2, 2, 100),
+	(3, 3, 100),
+	(4, 4, 100),
+	(5, 5, 100),
+	(6, 6, 100),
+	(7, 7, 100),
+	(8, 8, 100),
+	(9, 9, 100),
+	(10, 10, 100);
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+
+
+-- Дамп структуры для таблица springdb.tickets
+DROP TABLE IF EXISTS `tickets`;
+CREATE TABLE IF NOT EXISTS `tickets` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `eventId` bigint(20) DEFAULT NULL,
+  `userId` bigint(20) DEFAULT NULL,
+  `category` tinyint(4) DEFAULT NULL,
+  `place` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_tickets_events` (`eventId`),
+  KEY `FK_tickets_users` (`userId`),
+  CONSTRAINT `FK_tickets_events` FOREIGN KEY (`eventId`) REFERENCES `events` (`id`),
+  CONSTRAINT `FK_tickets_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11;
+
+-- Дамп данных таблицы springdb.tickets: ~0 rows (приблизительно)
+DELETE FROM `tickets`;
+/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+INSERT INTO `tickets` (`id`, `eventId`, `userId`, `category`, `place`) VALUES
+	(1, 1, 1, 1, 10),
+	(2, 2, 2, 2, 10),
+	(3, 3, 3, 1, 10),
+	(4, 4, 4, 2, 10),
+	(5, 5, 5, 1, 10),
+	(6, 6, 6, 2, 10),
+	(7, 7, 7, 1, 10),
+	(8, 8, 8, 2, 10),
+	(9, 9, 9, 1, 10),
+	(10, 10, 10, 2, 10);
+/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
