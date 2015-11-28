@@ -123,7 +123,7 @@ public class UserDaoImpl implements UserDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES (:name, :email)", beanPropertySqlParameterSource, keyHolder);
+            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES ( :name, :email)", beanPropertySqlParameterSource, keyHolder);
             user.setId(keyHolder.getKey().longValue());
             return user;
         } catch (DataAccessException e) {

@@ -28,7 +28,7 @@ public class UserAccountDaoImpl implements UserAccountDao {
         UserAccount userAccount = new UserAccountBean();
         userAccount.setId(rs.getLong("id"));
         userAccount.setUserId(rs.getLong("userId"));
-        userAccount.setBalance(rs.getDouble("email"));
+        userAccount.setBalance(rs.getDouble("balance"));
         return userAccount;
     };
 
@@ -45,12 +45,25 @@ public class UserAccountDaoImpl implements UserAccountDao {
         this.namedParamJdbcTemplate = namedParamJdbcTemplate;
     }
 
+    @Override
+    public UserAccount getUserAccount(long userId) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM accounts WHERE userId = ?", mapper, userId);
+        } catch (DataAccessException e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public boolean refillAccount(long userId, double amount) {
         try {
             UserAccount account = jdbcTemplate.queryForObject("SELECT * FROM accounts WHERE userId = ?", mapper, userId);
             account.setBalance(account.getBalance() + amount);
             SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(account);
-            namedParamJdbcTemplate.update("UPDATE users SET id=:id, userId=:userId, balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
+            namedParamJdbcTemplate.update("UPDATE accounts SET balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
             return true;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
@@ -67,7 +80,7 @@ public class UserAccountDaoImpl implements UserAccountDao {
             account.setBalance(account.getBalance() - amount);
             if(account.getBalance()>=0) {
                 SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(account);
-                namedParamJdbcTemplate.update("UPDATE users SET id=:id, userId=:userId, balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
+                namedParamJdbcTemplate.update("UPDATE accounts SET id=:id, userId=:userId, balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
                 return true;
             }
         } catch (DataAccessException e) {

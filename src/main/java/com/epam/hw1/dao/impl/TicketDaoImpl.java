@@ -2,12 +2,11 @@ package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.dao.TicketDao;
-import com.epam.hw1.dao.UserDao;
+import com.epam.hw1.dao.UserAccountDao;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.TicketBean;
-import com.epam.hw1.storage.Storage;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Types;
 import java.util.*;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * <code>TicketDao</code> implementation.
@@ -45,6 +42,8 @@ public class TicketDaoImpl implements TicketDao {
 
     private NamedParameterJdbcTemplate namedParamJdbcTemplate;
     private JdbcTemplate jdbcTemplate;
+    private UserAccountDao userAccountDao;
+    private EventDao eventDao;
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -56,11 +55,45 @@ public class TicketDaoImpl implements TicketDao {
         this.namedParamJdbcTemplate = namedParamJdbcTemplate;
     }
 
+    @Autowired
+    public void setUserAccountDao(UserAccountDao userAccountDao) {
+        this.userAccountDao = userAccountDao;
+    }
+
+    @Autowired
+    public void setEventDao(com.epam.hw1.dao.EventDao eventDao) {
+        this.eventDao = eventDao;
+    }
+
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         if (isTicketExists(eventId, place)) {
             throw new IllegalStateException("This place is already booked. EventId: " + eventId + ", place: " + place);
         }
+        double price = eventDao.getEventById(eventId).getPrice();
+        if(userAccountDao.withdraw(userId, price)){
+            return insertTicket(userId, eventId, place, category);
+        }
+        return null;
+    }
+
+    private boolean isTicketExists(long eventId, int place) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("eventId", eventId)
+                .addValue("place", place);
+        return !namedParamJdbcTemplate.query("SELECT * FROM tickets WHERE eventId = :eventId AND place = :place", params, mapper).isEmpty();
+    }
+
+    private Ticket getTicket(long userId, long eventId, int place, Ticket.Category category) {
+        Ticket ticket = new TicketBean();
+        ticket.setUserId(userId);
+        ticket.setEventId(eventId);
+        ticket.setPlace(place);
+        ticket.setCategory(category);
+        return ticket;
+    }
+
+    private Ticket insertTicket(long userId, long eventId, int place, Ticket.Category category) {
         Ticket ticket = getTicket(userId, eventId, place, category);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         BeanPropertySqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(ticket);
@@ -75,23 +108,6 @@ public class TicketDaoImpl implements TicketDao {
             }
         }
         return null;
-    }
-
-    private boolean isTicketExists(long eventId, int place) {
-        MapSqlParameterSource params = new MapSqlParameterSource()
-                .addValue("eventId", eventId)
-                .addValue("place", place);
-        return !namedParamJdbcTemplate.query("SELECT * FROM tickets WHERE eventId = ?", params, mapper).isEmpty();
-
-    }
-
-    private Ticket getTicket(long userId, long eventId, int place, Ticket.Category category) {
-        Ticket ticket = new TicketBean();
-        ticket.setUserId(userId);
-        ticket.setEventId(eventId);
-        ticket.setPlace(place);
-        ticket.setCategory(category);
-        return ticket;
     }
 
     @Override

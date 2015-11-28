@@ -30,15 +30,15 @@ INSERT INTO users (id, name, email) VALUES
 (12, 'Ivan12', 'ivan12@email.com');
 
 INSERT INTO accounts (id, userId, balance) VALUES
-(1, 1, 100),
-(2, 2, 100),
-(3, 3, 100),
-(4, 4, 100),
-(5, 5, 100),
-(6, 6, 100),
-(7, 7, 100),
-(8, 8, 100),
-(9, 9, 100),
+(1, 1, 10),
+(2, 2, 10),
+(3, 3, 10),
+(4, 4, 10),
+(5, 5, 10),
+(6, 6, 10),
+(7, 7, 10),
+(8, 8, 10),
+(9, 9, 10),
 (10, 10, 100);
 
 INSERT INTO tickets (id, eventId, userId, category, place) VALUES
@@ -47,8 +47,8 @@ INSERT INTO tickets (id, eventId, userId, category, place) VALUES
 	(3, 3, 3, 'STANDARD', 10),
 	(4, 4, 4, 'PREMIUM', 10),
 	(5, 5, 5, 'STANDARD', 10),
-	(6, 6, 6, 'PREMIUM', 10),
-	(7, 7, 7, 'STANDARD', 10),
+	(6, 1, 6, 'PREMIUM', 10),
+	(7, 7, 1, 'STANDARD', 10),
 	(8, 8, 8, 'PREMIUM', 10),
 	(9, 9, 9, 'STANDARD', 10),
 	(10, 10, 10, 'PREMIUM', 10);

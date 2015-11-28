@@ -1,6 +1,7 @@
 package com.epam.hw1.model.impl;
 
 import com.epam.hw1.model.Ticket;
+import com.google.common.base.Objects;
 
 /**
  * <code>Ticket</code> implementation.
@@ -62,5 +63,33 @@ public class TicketBean implements Ticket{
     @Override
     public void setPlace(int place) {
         this.place = place;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TicketBean that = (TicketBean) o;
+        return id == that.id &&
+                eventId == that.eventId &&
+                userId == that.userId &&
+                place == that.place &&
+                category == that.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, eventId, userId, category, place);
+    }
+
+    @Override
+    public String toString() {
+        return "TicketBean{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", eventId=" + eventId +
+                ", category=" + category +
+                ", place=" + place +
+                '}';
     }
 }
