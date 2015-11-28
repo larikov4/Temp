@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Yevhen_Larikov
@@ -30,6 +32,7 @@ public class TicketDaoImplTest {
     private static final int EXISTING_USER_ID = 1;
     private static final int EXISTING_EVENT_ID = 1;
     public static final int EXISTING_TICKET_PLACE = 10;
+    public static final Ticket.Category EXISTING_TICKET_CATEGORY = Ticket.Category.STANDARD;
     private static final int PAGE_SIZE = 2;
     private static final int PAGE_NUM = 1;
 
@@ -49,17 +52,26 @@ public class TicketDaoImplTest {
         existingTicket.setId(EXISTING_TICKET_ID);
         existingTicket.setUserId(EXISTING_USER_ID);
         existingTicket.setEventId(EXISTING_EVENT_ID);
-        existingTicket.setCategory(Ticket.Category.STANDARD);
+        existingTicket.setCategory(EXISTING_TICKET_CATEGORY);
         existingTicket.setPlace(EXISTING_TICKET_PLACE);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void shouldThrowExceptionWhenBookTicketWithExistingPlaceAndEventId(){
-        ticketDao.bookTicket(EXISTING_USER_ID,EXISTING_EVENT_ID,EXISTING_TICKET_PLACE, Ticket.Category.BAR);
+    @Test
+    public void shouldBookTicket() {
+        existingTicket.setPlace(existingTicket.getPlace() + 1);
+        assertTrue(ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE + 1, EXISTING_TICKET_CATEGORY).getId() > EXISTING_TICKET_ID);
     }
 
-    public void shouldThrowExceptionWhenBookTicketWithExistingPlaceAndEventId1(){
-        ticketDao.bookTicket(EXISTING_USER_ID,EXISTING_EVENT_ID,EXISTING_TICKET_PLACE+1, Ticket.Category.BAR);
+    @Test
+    public void shouldNotBookTicketWhenNotEnoughBalance() {
+        existingTicket.setPlace(existingTicket.getPlace() + 1);
+        assertTrue(ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE + 1, EXISTING_TICKET_CATEGORY).getId() > EXISTING_TICKET_ID);
+        assertNull(ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE + 2, EXISTING_TICKET_CATEGORY));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowExceptionWhenBookTicketWithExistingPlaceAndEventId() {
+        ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE, Ticket.Category.BAR);
     }
 
     @Test
@@ -68,7 +80,7 @@ public class TicketDaoImplTest {
         existingUser.setId(EXISTING_USER_ID);
         List<Ticket> tickets = ticketDao.getBookedTickets(existingUser, PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, tickets.size());
-        assertEquals(existingTicket, tickets.get(PAGE_SIZE-1));
+        assertEquals(existingTicket, tickets.get(PAGE_SIZE - 1));
     }
 
     @Test

@@ -26,7 +26,6 @@ import static org.junit.Assert.*;
 @ContextConfiguration("classpath:test-spring-config.xml")
 @Transactional
 public class EventDaoImplTest {
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
     private static final int EXISTING_EVENT_ID = 1;
     private static final int NEW_EVENT_ID = 20;
     private static final String EXISTING_EVENT_TITLE = "title1";

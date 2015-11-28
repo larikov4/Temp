@@ -99,7 +99,7 @@ public class TicketDaoImpl implements TicketDao {
         BeanPropertySqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(ticket);
         beanPropertySqlParameterSource.registerSqlType("category", Types.VARCHAR);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO tickets VALUES (:id, :userId, :eventId, :place, :category)", beanPropertySqlParameterSource, keyHolder);
+            namedParamJdbcTemplate.update("INSERT INTO tickets (userId, eventId, category, place) VALUES (:userId, :eventId, :category, :place)", beanPropertySqlParameterSource, keyHolder);
             ticket.setId(keyHolder.getKey().longValue());
             return ticket;
         } catch (DataAccessException e) {
@@ -122,7 +122,7 @@ public class TicketDaoImpl implements TicketDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM tickets NATURAL JOIN events WHERE userId=:userId ORDER BY date DESC LIMIT :offset, :size;", params, mapper);
+            return namedParamJdbcTemplate.query("SELECT * FROM tickets INNER JOIN events ON tickets.eventId=events.id AND userId=:userId ORDER BY date DESC LIMIT :offset, :size;", params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(e);
@@ -143,7 +143,7 @@ public class TicketDaoImpl implements TicketDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM tickets NATURAL JOIN users WHERE eventId=:eventId ORDER BY email LIMIT :offset, :size;", params, mapper);
+            return namedParamJdbcTemplate.query("SELECT * FROM tickets INNER JOIN users ON tickets.userId=users.id AND eventId=:eventId ORDER BY email LIMIT :offset, :size;", params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(e);
