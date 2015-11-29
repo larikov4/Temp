@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         if (email == null) {
-            LOG.warn("Passed parameter were null.");
+            LOG.warn("Passed parameter was null.");
             return null;
         }
         try {
@@ -105,7 +105,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User createUser(User user) {
         if (user == null) {
-            LOG.warn("Passed parameter were null.");
+            LOG.warn("Passed parameter was null.");
             return null;
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();

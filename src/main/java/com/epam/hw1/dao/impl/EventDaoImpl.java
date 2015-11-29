@@ -107,7 +107,7 @@ public class EventDaoImpl implements EventDao {
     @Override
     public Event createEvent(Event event) {
         if (event == null) {
-            LOG.warn("Passed parameter were null.");
+            LOG.warn("Passed parameter was null.");
             return null;
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -127,7 +127,7 @@ public class EventDaoImpl implements EventDao {
     @Override
     public Event updateEvent(Event event) {
         if (event == null) {
-            LOG.warn("Passed parameter were null.");
+            LOG.warn("Passed parameter was null.");
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);

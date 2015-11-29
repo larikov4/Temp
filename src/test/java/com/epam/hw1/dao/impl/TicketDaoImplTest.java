@@ -1,6 +1,7 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.TicketDao;
+import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
@@ -40,11 +41,6 @@ public class TicketDaoImplTest {
     private TicketDao ticketDao;
 
     private Ticket existingTicket;
-
-    @Autowired
-    public void setTicketDao(TicketDao ticketDao) {
-        this.ticketDao = ticketDao;
-    }
 
     @Before
     public void setUp() {

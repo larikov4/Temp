@@ -3,6 +3,7 @@ package com.epam.hw1.dao.impl;
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.dao.TicketDao;
 import com.epam.hw1.dao.UserAccountDao;
+import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
@@ -46,6 +47,7 @@ public class TicketDaoImpl implements TicketDao {
     private JdbcTemplate jdbcTemplate;
     private UserAccountDao userAccountDao;
     private EventDao eventDao;
+    private DefaultBeanHolder defaultBeanHolder;
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -65,6 +67,11 @@ public class TicketDaoImpl implements TicketDao {
     @Autowired
     public void setEventDao(com.epam.hw1.dao.EventDao eventDao) {
         this.eventDao = eventDao;
+    }
+
+    @Autowired
+    public void setDefaultBeanHolder(DefaultBeanHolder defaultBeanHolder) {
+        this.defaultBeanHolder = defaultBeanHolder;
     }
 
     @Override
@@ -119,7 +126,7 @@ public class TicketDaoImpl implements TicketDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        MapSqlParameterSource params = new MapSqlParameterSource()
+        SqlParameterSourceImpl params = new SqlParameterSourceImpl(defaultBeanHolder)
                 .addValue("userId", user.getId())
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
@@ -140,7 +147,7 @@ public class TicketDaoImpl implements TicketDao {
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
         }
-        MapSqlParameterSource params = new MapSqlParameterSource()
+        SqlParameterSourceImpl params = new SqlParameterSourceImpl(defaultBeanHolder)
                 .addValue("eventId", event.getId())
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);

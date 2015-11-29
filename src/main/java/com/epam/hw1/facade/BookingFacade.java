@@ -143,4 +143,8 @@ public interface BookingFacade {
     boolean cancelTicket(long ticketId);
 
     boolean refillAccount(long userId, double amount);
+
+    void setDefaultUser(User user);
+
+    void setDefaultEvent(Event event);
 }

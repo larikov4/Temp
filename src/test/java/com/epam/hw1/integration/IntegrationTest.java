@@ -10,16 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -28,6 +25,7 @@ import static org.junit.Assert.*;
 @Transactional
 public class IntegrationTest {
     private static final int USER_ID = 10;
+    private static final int DEFAULT_ENTITY_ID = 5;
     private static final int EVENT_ID = 2;
     private static final int TICKET_PLACE = 4;
     private static final String USER_EMAIL = "user@user.com";
@@ -46,10 +44,12 @@ public class IntegrationTest {
     @Before
     public void setUp() throws ParseException {
         user = new UserBean();
+        user.setId(USER_ID);
         user.setName("");
         user.setEmail(USER_EMAIL);
 
         event = new EventBean();
+        event.setId(EVENT_ID);
         event.setTitle("");
         event.setPrice(10);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -85,5 +85,23 @@ public class IntegrationTest {
 
         facade.deleteEvent(event.getId());
         assertNull(facade.getEventById(event.getId()));
+    }
+
+    @Test
+    public void shouldReturnDefaultUser(){
+        User defaultUser = new UserBean();
+        defaultUser.setId(DEFAULT_ENTITY_ID);
+        facade.setDefaultUser(defaultUser);
+        List<Ticket> tickets = facade.getBookedTickets(user, 10, 1);
+        assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getUserId());
+    }
+
+    @Test
+    public void shouldReturnDefaultEvent(){
+        Event defaultEvent = new EventBean();
+        defaultEvent.setId(DEFAULT_ENTITY_ID);
+        facade.setDefaultEvent(defaultEvent);
+        List<Ticket> tickets = facade.getBookedTickets(event, 10, 1);
+        assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getEventId());
     }
 }

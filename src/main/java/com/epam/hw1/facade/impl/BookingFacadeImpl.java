@@ -1,6 +1,7 @@
 package com.epam.hw1.facade.impl;
 
 import com.epam.hw1.facade.BookingFacade;
+import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
@@ -27,6 +28,7 @@ public class BookingFacadeImpl implements BookingFacade {
     private TicketService ticketService;
     private UserService userService;
     private UserAccountService userAccountService;
+    private DefaultBeanHolder defaultBeanHolder;
 
     @Autowired
     public void setEventService(EventService eventService) {
@@ -46,6 +48,11 @@ public class BookingFacadeImpl implements BookingFacade {
     @Autowired
     public void setUserAccountService(UserAccountService userAccountService) {
         this.userAccountService = userAccountService;
+    }
+
+    @Autowired
+    public void setDefaultBeanHolder(DefaultBeanHolder defaultBeanHolder) {
+        this.defaultBeanHolder = defaultBeanHolder;
     }
 
     @Override
@@ -130,4 +137,14 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public boolean refillAccount(long userId, double amount){return userAccountService.refillAccount(userId, amount);}
+
+    @Override
+    public void setDefaultUser(User user){
+        defaultBeanHolder.setDefaultUser(user);
+    }
+
+    @Override
+    public void setDefaultEvent(Event event){
+        defaultBeanHolder.setDefaultEvent(event);
+    }
 }
