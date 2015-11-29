@@ -2,26 +2,23 @@ package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.model.Event;
-import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.EventBean;
-import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.storage.Storage;
-import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.util.*;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <code>EventDao</code> implementation.
@@ -31,7 +28,6 @@ import static java.util.stream.Collectors.toList;
 @Repository
 public class EventDaoImpl implements EventDao {
     private static final Logger LOG = Logger.getLogger(EventDaoImpl.class);
-    public static final String EVENT_PREFIX = "event";
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParamJdbcTemplate;
 
@@ -52,18 +48,6 @@ public class EventDaoImpl implements EventDao {
     @Autowired
     public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
         this.namedParamJdbcTemplate = namedParamJdbcTemplate;
-    }
-
-    private Storage storage;
-
-    /**
-     * Injects storage into Dao.
-     *
-     * @param storage Storage
-     */
-    @Autowired
-    public void setStorage(Storage storage) {
-        this.storage = storage;
     }
 
     @Override

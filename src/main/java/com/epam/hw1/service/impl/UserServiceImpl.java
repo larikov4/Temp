@@ -5,6 +5,7 @@ import com.epam.hw1.model.User;
 import com.epam.hw1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Yevhen_Larikov
  */
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
     private UserDao userDao;
 
@@ -43,16 +45,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User createUser(User user) {
         return userDao.createUser(user);
     }
 
     @Override
+    @Transactional
     public User updateUser(User user) {
         return userDao.updateUser(user);
     }
 
     @Override
+    @Transactional
     public boolean deleteUser(long userId) {
         return userDao.deleteUser(userId);
     }

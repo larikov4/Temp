@@ -3,7 +3,6 @@ package com.epam.hw1.dao.impl;
 import com.epam.hw1.dao.UserDao;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.storage.Storage;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ import static java.util.stream.Collectors.toList;
 public class UserDaoImpl implements UserDao {
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
     public static final String USER_PREFIX = "user";
-    private Storage storage;
 
     private RowMapper<User> mapper = (rs, rowNum) -> {
         User user = new UserBean();
@@ -53,16 +51,6 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     public void setNamedParamJdbcTemplate(NamedParameterJdbcTemplate namedParamJdbcTemplate) {
         this.namedParamJdbcTemplate = namedParamJdbcTemplate;
-    }
-
-    /**
-     * Injects storage into Dao.
-     *
-     * @param storage Storage
-     */
-    @Autowired
-    public void setStorage(Storage storage) {
-        this.storage = storage;
     }
 
     @Override
@@ -121,9 +109,14 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("name", user.getName())
+                .addValue("email", user.getEmail())
+                .addValue("balance", 0);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES ( :name, :email)", beanPropertySqlParameterSource, keyHolder);
+            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES ( :name, :email)", params, keyHolder);
+            params.addValue("userId", keyHolder.getKey().longValue());
+            namedParamJdbcTemplate.update("INSERT INTO accounts (userId, balance) VALUES ( :userId, :balance)", params);
             user.setId(keyHolder.getKey().longValue());
             return user;
         } catch (DataAccessException e) {

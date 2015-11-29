@@ -1,11 +1,8 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.UserAccountDao;
-import com.epam.hw1.model.User;
 import com.epam.hw1.model.UserAccount;
 import com.epam.hw1.model.impl.UserAccountBean;
-import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.service.UserAccountService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -15,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Yevhen_Larikov

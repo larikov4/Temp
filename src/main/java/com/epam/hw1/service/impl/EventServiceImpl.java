@@ -8,6 +8,7 @@ import com.epam.hw1.model.User;
 import com.epam.hw1.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author Yevhen_Larikov
  */
 @Service
+@Transactional(readOnly = true)
 public class EventServiceImpl implements EventService {
     private EventDao eventDao;
 
@@ -47,16 +49,19 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public Event createEvent(Event event) {
         return eventDao.createEvent(event);
     }
 
     @Override
+    @Transactional
     public Event updateEvent(Event event) {
         return eventDao.updateEvent(event);
     }
 
     @Override
+    @Transactional
     public boolean deleteEvent(long eventId) {
         return eventDao.deleteEvent(eventId);
     }

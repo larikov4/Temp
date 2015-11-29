@@ -7,6 +7,7 @@ import com.epam.hw1.model.User;
 import com.epam.hw1.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @author Yevhen_Larikov
  */
 @Service
+@Transactional(readOnly = true)
 public class TicketServiceImpl implements TicketService {
     private TicketDao ticketDao;
 
@@ -30,6 +32,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         return ticketDao.bookTicket(userId, eventId, place, category);
     }
@@ -45,6 +48,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public boolean cancelTicket(long ticketId) {
         return ticketDao.cancelTicket(ticketId);
     }

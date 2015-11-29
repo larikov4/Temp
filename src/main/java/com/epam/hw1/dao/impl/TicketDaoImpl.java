@@ -12,13 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Types;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <code>TicketDao</code> implementation.
@@ -28,7 +31,6 @@ import java.util.*;
 @Repository
 public class TicketDaoImpl implements TicketDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
-    public static final String TICKET_PREFIX = "ticket";
 
     private RowMapper<Ticket> mapper = (rs, rowNum) -> {
         Ticket ticket = new TicketBean();
