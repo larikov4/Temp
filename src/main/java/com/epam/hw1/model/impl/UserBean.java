@@ -2,6 +2,7 @@ package com.epam.hw1.model.impl;
 
 import com.epam.hw1.model.User;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,7 +11,12 @@ import java.util.Date;
  *
  * @author Yevhen_Larikov
  */
+@Entity
 public class UserBean implements User, Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     private String name;
     private String email;

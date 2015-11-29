@@ -1,11 +1,13 @@
 package com.epam.hw1.integration;
 
+import com.epam.hw1.dao.jpa.UserDaoJpa;
 import com.epam.hw1.facade.BookingFacade;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.EventBean;
 import com.epam.hw1.model.impl.UserBean;
+import com.epam.hw1.oxm.OxmDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +37,19 @@ public class IntegrationTest {
     private User user;
     private Event event;
     private BookingFacade facade;
+    private OxmDao oxmDao;//TODO delete
+    @Autowired
+    private UserDaoJpa userDaoJpa;
+
+    @Autowired
+    public void setOxmDao(OxmDao oxmDao) {
+        this.oxmDao = oxmDao;
+    }
+
+    @Autowired
+    public OxmDao getOxmDao() { //TODO delete
+        return oxmDao;
+    }
 
     @Autowired
     public void setFacade(BookingFacade facade) {
@@ -103,5 +118,15 @@ public class IntegrationTest {
         facade.setDefaultEvent(defaultEvent);
         List<Ticket> tickets = facade.getBookedTickets(event, 10, 1);
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getEventId());
+    }
+
+//    @Test
+//    public void shouldUnmarshalTicketsFromFile(){
+//        oxmDao.unmarshalTickets();
+//    }
+
+    @Test
+    public void should(){
+        userDaoJpa.findAll();
     }
 }

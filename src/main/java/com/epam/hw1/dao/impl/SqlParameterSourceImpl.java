@@ -2,10 +2,7 @@ package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.model.DefaultBeanHolder;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.SqlParameterValue;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.util.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
