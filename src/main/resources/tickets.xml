@@ -1,4 +1,4 @@
-<!--<tickets>-->
-    <ticket userId="1" eventId="1" category="BAR" place="1"/>
-    <!--<ticket userId="1" eventId="1" category="BAR" place="2"/>-->
-<!--</tickets>-->
+<tickets>
+    <ticket user="1" event="2" category="BAR" place="3"/>
+    <ticket user="4" event="5" category="STANDARD" place="6"/>
+</tickets>

@@ -38,17 +38,16 @@ public class IntegrationTest {
     private Event event;
     private BookingFacade facade;
     private OxmDao oxmDao;//TODO delete
+
+
     @Autowired
     private UserDaoJpa userDaoJpa;
+
+
 
     @Autowired
     public void setOxmDao(OxmDao oxmDao) {
         this.oxmDao = oxmDao;
-    }
-
-    @Autowired
-    public OxmDao getOxmDao() { //TODO delete
-        return oxmDao;
     }
 
     @Autowired
@@ -120,10 +119,10 @@ public class IntegrationTest {
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getEventId());
     }
 
-//    @Test
-//    public void shouldUnmarshalTicketsFromFile(){
-//        oxmDao.unmarshalTickets();
-//    }
+    @Test
+    public void shouldUnmarshalTicketsFromFile(){
+        oxmDao.unmarshalTickets();
+    }
 
     @Test
     public void should(){

@@ -12,13 +12,18 @@ import java.util.Date;
  * @author Yevhen_Larikov
  */
 @Entity
+@Table(name = "usr",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"ID", "EMAIL"})})
 public class UserBean implements User, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+//    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true, length = 20)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "email")
     private String email;
 
     @Override
