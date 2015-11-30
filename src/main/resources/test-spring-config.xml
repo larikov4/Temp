@@ -58,17 +58,6 @@
 
     <jpa:repositories base-package="com.epam.hw1.dao.jpa"/>
 
-    <!--<bean id="sessionFactory"-->
-          <!--class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-        <!--<property name="hibernateProperties">-->
-            <!--<props>-->
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
-
     <!-- Hibernate session factory -->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -92,33 +81,5 @@
         <property name="dataSource" ref="dataSource" />
         <property name="jpaDialect" ref="jpaDialect" />
     </bean>
-
-    <!--<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
-        <!--<property name="showSql" value="true"/>-->
-        <!--<property name="generateDdl" value="true"/>-->
-        <!--<property name="database" value="MYSQL"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>-->
-        <!--&lt;!&ndash; spring based scanning for entity classes>&ndash;&gt;-->
-        <!--<property name="packagesToScan" value="com.epam.hw1.model"/>-->
-    <!--</bean>-->
-
-
-    <!--<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
-        <!--<property name="showSql" value="true"/>-->
-        <!--<property name="generateDdl" value="true"/>-->
-        <!--<property name="database" value="MYSQL"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>-->
-        <!--&lt;!&ndash; spring based scanning for entity classes>&ndash;&gt;-->
-        <!--<property name="packagesToScan" value="com.epam.hw1"/>-->
-    <!--</bean>-->
-
 
 </beans>

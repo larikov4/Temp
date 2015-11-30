@@ -5,7 +5,6 @@ import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.model.impl.TicketsBean;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +37,8 @@ public class OxmDao {
             return Collections.emptyList();
         }
         try (FileInputStream fis = new FileInputStream(resource.getFile())) {
-//            Object tickets =  this.unmarshaller.unmarshal(new StreamSource(fis));
-            List<TicketBean> tickets1 = ((TicketsBean)this.unmarshaller.unmarshal(new StreamSource(fis))).getTickets();
-            System.out.println();
+            TicketsBean tickets = (TicketsBean) this.unmarshaller.unmarshal(new StreamSource(fis));
+            List<TicketBean> ticketsList = tickets.getTickets();
         } catch (IOException e) {
             LOG.error(e);
         }
