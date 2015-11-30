@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Yevhen_Larikov
  */
 @Entity
-@Table(name = "usr",
+@Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"ID", "EMAIL"})})
 public class UserBean implements User, Serializable {
 

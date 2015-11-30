@@ -126,6 +126,7 @@ public class IntegrationTest {
 
     @Test
     public void should(){
-        userDaoJpa.findAll();
+        Iterable<UserBean> all = userDaoJpa.findAll();
+        System.out.println();
     }
 }
