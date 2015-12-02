@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * <code>UserAccountService</code> implementation.
+ *
  * @author Yevhen_Larikov
  */
 @Service

@@ -1,6 +1,7 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.EventDao;
+import com.epam.hw1.dao.annotation.JdbcImpl;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.impl.EventBean;
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author Yevhen_Larikov
  */
 @Repository
+@JdbcImpl
 public class EventDaoImpl implements EventDao {
     private static final Logger LOG = Logger.getLogger(EventDaoImpl.class);
     private JdbcTemplate jdbcTemplate;

@@ -3,6 +3,8 @@ package com.epam.hw1.dao.impl;
 import com.epam.hw1.dao.EventDao;
 import com.epam.hw1.dao.TicketDao;
 import com.epam.hw1.dao.UserAccountDao;
+import com.epam.hw1.dao.annotation.JdbcImpl;
+import com.epam.hw1.dao.parameter.SqlParameterSourceImpl;
 import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
@@ -16,9 +18,14 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.Types;
 import java.util.Collections;
@@ -30,6 +37,7 @@ import java.util.List;
  * @author Yevhen_Larikov
  */
 @Repository
+@JdbcImpl
 public class TicketDaoImpl implements TicketDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
 
@@ -48,6 +56,7 @@ public class TicketDaoImpl implements TicketDao {
     private UserAccountDao userAccountDao;
     private EventDao eventDao;
     private DefaultBeanHolder defaultBeanHolder;
+    private PlatformTransactionManager transactionManager;
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -74,13 +83,18 @@ public class TicketDaoImpl implements TicketDao {
         this.defaultBeanHolder = defaultBeanHolder;
     }
 
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
+
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         if (isTicketExists(eventId, place)) {
             throw new IllegalStateException("This place is already booked. EventId: " + eventId + ", place: " + place);
         }
         double price = eventDao.getEventById(eventId).getPrice();
-        if(userAccountDao.withdraw(userId, price)){
+        if (userAccountDao.withdraw(userId, price)) {
             return insertTicket(userId, eventId, place, category);
         }
         return null;
@@ -117,6 +131,30 @@ public class TicketDaoImpl implements TicketDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean insertTickets(List<TicketBean> tickets) {
+        SqlParameterSource[] params = new SqlParameterSource[tickets.size()];
+        for (int i = 0; i < tickets.size(); i++) {
+            BeanPropertySqlParameterSource source = new BeanPropertySqlParameterSource(tickets.get(i));
+            source.registerSqlType("category", Types.VARCHAR);
+            params[i] = source;
+        }
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus status = transactionManager.getTransaction(definition);
+        try {
+            namedParamJdbcTemplate.batchUpdate("INSERT INTO tickets (userId, eventId, category, place) VALUES (:userId, :eventId, :category, :place)", params);
+            transactionManager.commit(status);
+            return true;
+        } catch (DataAccessException e) {
+            transactionManager.rollback(status);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(e);
+            }
+            return false;
+        }
     }
 
     @Override

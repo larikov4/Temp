@@ -5,6 +5,7 @@ import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
+import com.epam.hw1.oxm.OxmManager;
 import com.epam.hw1.service.EventService;
 import com.epam.hw1.service.TicketService;
 import com.epam.hw1.service.UserAccountService;
@@ -147,4 +148,7 @@ public class BookingFacadeImpl implements BookingFacade {
     public void setDefaultEvent(Event event){
         defaultBeanHolder.setDefaultEvent(event);
     }
+
+    @Override
+    public boolean insertTicketsFromXml(String filename) { return ticketService.insertTicketsFromXml(filename);}
 }

@@ -1,6 +1,7 @@
 package com.epam.hw1.service.impl;
 
 import com.epam.hw1.dao.UserDao;
+import com.epam.hw1.dao.annotation.JpaImpl;
 import com.epam.hw1.model.User;
 import com.epam.hw1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
+
     private UserDao userDao;
 
     /**
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService{
      * @param userDao UserDao
      */
     @Autowired
+    @JpaImpl
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

@@ -142,9 +142,31 @@ public interface BookingFacade {
      */
     boolean cancelTicket(long ticketId);
 
+    /**
+     * Puts passed amount of money to User's account.
+     * @param userId user id
+     * @param amount amount of money to refill
+     * @return boolean whether account was refilled
+     */
     boolean refillAccount(long userId, double amount);
 
+    /**
+     * Sets default user to use instead of passed parameter to getBookingTickets method.
+     * @param user default user
+     */
     void setDefaultUser(User user);
 
+    /**
+     * Sets default event to use instead of passed parameter to getBookingTickets method.
+     * @param event default event
+     */
     void setDefaultEvent(Event event);
+
+    /**
+     * Unmarhal tickets from xml file and insert them as a batch to repository.
+     * Money from user account won't be withdraw.
+     * @param filename xml file name
+     * @return boolean whether batch was inserted
+     */
+    boolean insertTicketsFromXml(String filename);
 }

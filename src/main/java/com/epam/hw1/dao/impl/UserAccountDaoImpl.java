@@ -1,6 +1,7 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.UserAccountDao;
+import com.epam.hw1.dao.annotation.JdbcImpl;
 import com.epam.hw1.model.UserAccount;
 import com.epam.hw1.model.impl.UserAccountBean;
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author Yevhen_Larikov
  */
 @Repository
+@JdbcImpl
 public class UserAccountDaoImpl implements UserAccountDao {
     private static final Logger LOG = Logger.getLogger(UserAccountDaoImpl.class);
 

@@ -1,6 +1,7 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.UserDao;
+import com.epam.hw1.dao.annotation.JdbcImpl;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.UserBean;
 import com.google.common.collect.Lists;
@@ -28,6 +29,7 @@ import static java.util.stream.Collectors.toList;
  * @author Yevhen_Larikov
  */
 @Repository
+@JdbcImpl
 public class UserDaoImpl implements UserDao {
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
     public static final String USER_PREFIX = "user";

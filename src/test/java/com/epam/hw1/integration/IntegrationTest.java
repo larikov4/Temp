@@ -1,13 +1,15 @@
 package com.epam.hw1.integration;
 
+import com.epam.hw1.dao.TicketDao;
 import com.epam.hw1.dao.jpa.UserDaoJpa;
 import com.epam.hw1.facade.BookingFacade;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.EventBean;
+import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.oxm.OxmDao;
+import com.epam.hw1.oxm.OxmManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,28 +29,22 @@ import static org.junit.Assert.*;
 @Transactional
 public class IntegrationTest {
     private static final int USER_ID = 10;
+    private static final int ANOTHER_USER_ID = 8;
     private static final int DEFAULT_ENTITY_ID = 5;
     private static final int EVENT_ID = 2;
     private static final int TICKET_PLACE = 4;
     private static final String USER_EMAIL = "user@user.com";
     private static final int PAGE_SIZE = 1;
-    private static final int PAGE_NUM = 2;
+    private static final int FIRST_PAGE_NUM = 1;
+    private static final int SECOND_PAGE_NUM = 2;
+    public static final int TICKETS_IN_BATCH = 3;
 
     private User user;
     private Event event;
     private BookingFacade facade;
-    private OxmDao oxmDao;//TODO delete
-
 
     @Autowired
     private UserDaoJpa userDaoJpa;
-
-
-
-    @Autowired
-    public void setOxmDao(OxmDao oxmDao) {
-        this.oxmDao = oxmDao;
-    }
 
     @Autowired
     public void setFacade(BookingFacade facade) {
@@ -72,13 +68,11 @@ public class IntegrationTest {
 
     @Test
     public void shouldBookAndCancelTicket() {
-        User userWithId = new UserBean();
-        userWithId.setId(USER_ID);
         Ticket ticket = facade.bookTicket(USER_ID, EVENT_ID, TICKET_PLACE, Ticket.Category.BAR);
 
-        assertEquals(ticket.getId(), facade.getBookedTickets(userWithId, PAGE_SIZE, PAGE_NUM).get(0).getId());
+        assertEquals(ticket.getId(), facade.getBookedTickets(user, PAGE_SIZE, SECOND_PAGE_NUM).get(0).getId());
         facade.cancelTicket(ticket.getId());
-        assertTrue(facade.getBookedTickets(userWithId, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(facade.getBookedTickets(user, PAGE_SIZE, SECOND_PAGE_NUM).isEmpty());
     }
 
     @Test
@@ -106,7 +100,7 @@ public class IntegrationTest {
         User defaultUser = new UserBean();
         defaultUser.setId(DEFAULT_ENTITY_ID);
         facade.setDefaultUser(defaultUser);
-        List<Ticket> tickets = facade.getBookedTickets(user, 10, 1);
+        List<Ticket> tickets = facade.getBookedTickets(user, PAGE_SIZE, FIRST_PAGE_NUM);
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getUserId());
     }
 
@@ -115,18 +109,23 @@ public class IntegrationTest {
         Event defaultEvent = new EventBean();
         defaultEvent.setId(DEFAULT_ENTITY_ID);
         facade.setDefaultEvent(defaultEvent);
-        List<Ticket> tickets = facade.getBookedTickets(event, 10, 1);
+        List<Ticket> tickets = facade.getBookedTickets(event, PAGE_SIZE, FIRST_PAGE_NUM);
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getEventId());
     }
 
     @Test
-    public void shouldUnmarshalTicketsFromFile(){
-        oxmDao.unmarshalTickets();
+    public void shouldCommitUnmarshaledTickets(){
+        user.setId(ANOTHER_USER_ID);
+        int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
+        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("./tickets.xml").getFile());
+        assertEquals(initialSize + TICKETS_IN_BATCH, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 
     @Test
-    public void should(){
-        Iterable<UserBean> all = userDaoJpa.findAll();
-        System.out.println();
+    public void shouldRollbackUnmarshaledInvalidTickets(){
+        user.setId(ANOTHER_USER_ID);
+        int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
+        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("./invalidTickets.xml").getFile());
+        assertEquals(initialSize, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 }

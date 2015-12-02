@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
+ * Class is used to unmarshal list of tickets.
  *
  * @author Yevhen_Larikov
  */

@@ -2,4 +2,5 @@
     <ticket user="8" event="2" category="BAR" place="3"/>
     <ticket user="8" event="5" category="STANDARD" place="6"/>
     <ticket user="8" event="5" category="STANDARD" place="7"/>
+    <ticket user="111" event="5" category="STANDARD" place="8"/>
 </tickets>

@@ -48,4 +48,6 @@ public interface TicketService {
      * @return Flag whether anything has been canceled.
      */
     boolean cancelTicket(long ticketId);
+
+    boolean insertTicketsFromXml(String filename);
 }

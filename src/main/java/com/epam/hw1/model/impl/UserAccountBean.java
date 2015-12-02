@@ -3,6 +3,8 @@ package com.epam.hw1.model.impl;
 import com.epam.hw1.model.UserAccount;
 
 /**
+ * <code>UserAccount</code> implementation.
+ *
  * @author Yevhen_Larikov
  */
 public class UserAccountBean implements UserAccount{

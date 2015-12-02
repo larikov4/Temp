@@ -4,6 +4,7 @@ import com.epam.hw1.dao.TicketDao;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
+import com.epam.hw1.oxm.OxmManager;
 import com.epam.hw1.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class TicketServiceImpl implements TicketService {
     private TicketDao ticketDao;
+    private OxmManager oxmManager;
 
     /**
      * Injects <code>TicketDao</code> into Service.
@@ -29,6 +31,11 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
+    }
+
+    @Autowired
+    public void setOxmManager(OxmManager oxmManager) {
+        this.oxmManager = oxmManager;
     }
 
     @Override
@@ -51,5 +58,10 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     public boolean cancelTicket(long ticketId) {
         return ticketDao.cancelTicket(ticketId);
+    }
+
+    @Override
+    public boolean insertTicketsFromXml(String filename) {
+        return ticketDao.insertTickets(oxmManager.unmarshalTickets(filename));
     }
 }

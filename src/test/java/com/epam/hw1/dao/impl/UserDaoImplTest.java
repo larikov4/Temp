@@ -1,6 +1,7 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.UserDao;
+import com.epam.hw1.dao.annotation.JdbcImpl;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.UserBean;
 import org.junit.Before;
@@ -32,7 +33,8 @@ public class UserDaoImplTest {
     private static final int PAGE_NUM = 1;
 
     @Autowired
-    private UserDao userDao;
+    @JdbcImpl
+    private UserDao jdbcUserDao;
 
     private User existingUser;
     private User newUser;
@@ -45,55 +47,55 @@ public class UserDaoImplTest {
         existingUser.setEmail(EXISTING_USER_EMAIL);
 
         newUser = new UserBean();
-        newUser.setId(NEW_USER_ID);
         newUser.setName(NEW_USER_NAME);
         newUser.setEmail(NEW_USER_EMAIL);
     }
 
     @Test
     public void shouldReturnUserById(){
-        assertEquals(existingUser, userDao.getUserById(EXISTING_USER_ID));
+        assertEquals(existingUser, jdbcUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
     public void shouldReturnUserByEmail(){
-        assertEquals(existingUser, userDao.getUserByEmail(EXISTING_USER_EMAIL));
+        assertEquals(existingUser, jdbcUserDao.getUserByEmail(EXISTING_USER_EMAIL));
     }
 
     @Test
     public void shouldReturnListWhenUsersIsEnough(){
-        List<User> usersByName = userDao.getUsersByName(EXISTING_USER_NAME, PAGE_SIZE, PAGE_NUM);
+        List<User> usersByName = jdbcUserDao.getUsersByName(EXISTING_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, usersByName.size());
         assertEquals(existingUser, usersByName.get(0));
     }
 
     @Test
     public void shouldReturnEmptyListWhenUsersIsEnough(){
-        List<User> usersByName = userDao.getUsersByName(NEW_USER_NAME, PAGE_SIZE, PAGE_NUM);
+        List<User> usersByName = jdbcUserDao.getUsersByName(NEW_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertTrue(usersByName.isEmpty());
     }
 
     @Test
     public void shouldCreateUser(){
-        assertEquals(newUser, userDao.createUser(newUser));
+        assertEquals(newUser, jdbcUserDao.createUser(newUser));
         assertNotNull(newUser.getId());
+        assertEquals(newUser, jdbcUserDao.getUserById(newUser.getId()));
     }
 
     @Test
     public void shouldUpdateUser(){
         newUser.setId(EXISTING_USER_ID);
-        assertEquals(newUser, userDao.updateUser(newUser));
-        assertEquals(newUser, userDao.getUserById(EXISTING_USER_ID));
+        assertEquals(newUser, jdbcUserDao.updateUser(newUser));
+        assertEquals(newUser, jdbcUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
     public void shouldRemoveUserById(){
-        assertTrue(userDao.deleteUser(EXISTING_USER_ID));
-        assertNull(userDao.getUserById(EXISTING_USER_ID));
+        assertTrue(jdbcUserDao.deleteUser(EXISTING_USER_ID));
+        assertNull(jdbcUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
     public void shouldReturnFalseWhenRemovingNotExistingUser(){
-        assertFalse(userDao.deleteUser(NEW_USER_ID));
+        assertFalse(jdbcUserDao.deleteUser(NEW_USER_ID));
     }
 }

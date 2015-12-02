@@ -6,7 +6,7 @@ import com.epam.hw1.model.User;
 import org.springframework.stereotype.Component;
 
 /**
- * <code>DefaultBeanHolder</code> implementation
+ * <code>DefaultBeanHolder</code> implementation.
  *
  * @author Yevhen_Larikov
  */

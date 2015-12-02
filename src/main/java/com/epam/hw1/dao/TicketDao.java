@@ -3,6 +3,7 @@ package com.epam.hw1.dao;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
+import com.epam.hw1.model.impl.TicketBean;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface TicketDao {
      * @throws IllegalStateException if this place has already been booked.
      */
     Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category);
+
+    boolean insertTickets(List<TicketBean> tickets);
 
     /**
      * Get all booked tickets for specified user. Tickets should be sorted by event date in descending order.
