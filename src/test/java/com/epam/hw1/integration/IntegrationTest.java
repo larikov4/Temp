@@ -1,6 +1,5 @@
 package com.epam.hw1.integration;
 
-import com.epam.hw1.dao.jpa.UserDaoJpa;
 import com.epam.hw1.facade.BookingFacade;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
@@ -39,9 +38,6 @@ public class IntegrationTest {
     private User user;
     private Event event;
     private BookingFacade facade;
-
-    @Autowired
-    private UserDaoJpa userDaoJpa;
 
     @Autowired
     public void setFacade(BookingFacade facade) {

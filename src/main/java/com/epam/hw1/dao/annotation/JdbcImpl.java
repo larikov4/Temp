@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  *
  * @author Yevhen_Larikov
  */
-@Target({ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Qualifier("Jdbc implementation")
 public @interface JdbcImpl {
