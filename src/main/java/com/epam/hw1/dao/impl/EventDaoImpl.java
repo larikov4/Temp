@@ -30,6 +30,14 @@ import java.util.List;
 @JdbcImpl
 public class EventDaoImpl implements EventDao {
     private static final Logger LOG = Logger.getLogger(EventDaoImpl.class);
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM events WHERE id=?";
+    private static final String SQL_SELECT_BY_TITLE_WITH_LIMIT = "SELECT * FROM events WHERE title=:title LIMIT :offset, :size";
+    private static final String SQL_UPDATE = "UPDATE events SET title=:title, date=:date, price=:price WHERE id=:id";
+    private static final String SQL_INSERT = "INSERT INTO events (title, date, price) VALUES (:title, :date, :price)";
+    private static final String SQL_SELECT_BY_DAY_WITH_LIMIT = "SELECT * FROM events WHERE date=:date LIMIT :offset, :size";
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM events WHERE id = ?";
+    private static final String PASSED_PARAMETER_WAS_NULL = "Passed parameter was null.";
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParamJdbcTemplate;
 
@@ -55,10 +63,10 @@ public class EventDaoImpl implements EventDao {
     @Override
     public Event getEventById(long eventId) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM events WHERE id = ?", mapper, eventId);
+            return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, mapper, eventId);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -76,10 +84,10 @@ public class EventDaoImpl implements EventDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM events WHERE title=:title LIMIT :offset, :size", params, mapper);
+            return namedParamJdbcTemplate.query(SQL_SELECT_BY_TITLE_WITH_LIMIT, params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return Collections.emptyList();
@@ -97,10 +105,10 @@ public class EventDaoImpl implements EventDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM events WHERE date=:date LIMIT :offset, :size", params, mapper);
+            return namedParamJdbcTemplate.query(SQL_SELECT_BY_DAY_WITH_LIMIT, params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return Collections.emptyList();
@@ -109,18 +117,18 @@ public class EventDaoImpl implements EventDao {
     @Override
     public Event createEvent(Event event) {
         if (event == null) {
-            LOG.warn("Passed parameter was null.");
+            LOG.warn(PASSED_PARAMETER_WAS_NULL);
             return null;
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO events (title, date, price) VALUES (:title, :date, :price)", beanPropertySqlParameterSource, keyHolder);
+            namedParamJdbcTemplate.update(SQL_INSERT, beanPropertySqlParameterSource, keyHolder);
             event.setId(keyHolder.getKey().longValue());
             return event;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -129,16 +137,16 @@ public class EventDaoImpl implements EventDao {
     @Override
     public Event updateEvent(Event event) {
         if (event == null) {
-            LOG.warn("Passed parameter was null.");
+            LOG.warn(PASSED_PARAMETER_WAS_NULL);
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(event);
         try {
-            namedParamJdbcTemplate.update("UPDATE events SET id=:id, title=:title, date=:date, price=:price WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+            namedParamJdbcTemplate.update(SQL_UPDATE, beanPropertySqlParameterSource);
             return event;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -147,10 +155,10 @@ public class EventDaoImpl implements EventDao {
     @Override
     public boolean deleteEvent(long eventId) {
         try {
-            return jdbcTemplate.update("DELETE FROM events WHERE id=?", eventId) != 0;
+            return jdbcTemplate.update(SQL_DELETE_BY_ID, eventId) != 0;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return false;

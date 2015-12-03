@@ -40,6 +40,15 @@ import java.util.List;
 @JdbcImpl
 public class TicketDaoImpl implements TicketDao {
     private static final Logger LOG = Logger.getLogger(TicketDaoImpl.class);
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM tickets WHERE id=?";
+    private static final String SQL_SELECT_TICKETS_BY_EVENT_ID_WITH_LIMIT = "SELECT * FROM tickets INNER JOIN users ON "
+            + "tickets.userId=users.id AND eventId=:eventId ORDER BY email LIMIT :offset, :size;";
+    private static final String SQL_SELECT_TICKETS_BY_USER_ID_WITH_LIMIT = "SELECT * FROM tickets INNER JOIN events ON "
+            + "tickets.eventId=events.id AND userId=:userId ORDER BY date DESC LIMIT :offset, :size;";
+    private static final String SQL_INSERT = "INSERT INTO tickets (userId, eventId, category, place) "
+            + "VALUES (:userId, :eventId, :category, :place)";
+    private static final String SQL_SELECT_BY_EVENT_ID_AND_PLACE = "SELECT * FROM tickets WHERE eventId = :eventId "
+            + "AND place = :place";
 
     private RowMapper<Ticket> mapper = (rs, rowNum) -> {
         Ticket ticket = new TicketBean();
@@ -104,7 +113,7 @@ public class TicketDaoImpl implements TicketDao {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("eventId", eventId)
                 .addValue("place", place);
-        return !namedParamJdbcTemplate.query("SELECT * FROM tickets WHERE eventId = :eventId AND place = :place", params, mapper).isEmpty();
+        return !namedParamJdbcTemplate.query(SQL_SELECT_BY_EVENT_ID_AND_PLACE, params, mapper).isEmpty();
     }
 
     private Ticket getTicket(long userId, long eventId, int place, Ticket.Category category) {
@@ -122,12 +131,12 @@ public class TicketDaoImpl implements TicketDao {
         BeanPropertySqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(ticket);
         beanPropertySqlParameterSource.registerSqlType("category", Types.VARCHAR);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO tickets (userId, eventId, category, place) VALUES (:userId, :eventId, :category, :place)", beanPropertySqlParameterSource, keyHolder);
+            namedParamJdbcTemplate.update(SQL_INSERT, beanPropertySqlParameterSource, keyHolder);
             ticket.setId(keyHolder.getKey().longValue());
             return ticket;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -145,13 +154,13 @@ public class TicketDaoImpl implements TicketDao {
         definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         TransactionStatus status = transactionManager.getTransaction(definition);
         try {
-            namedParamJdbcTemplate.batchUpdate("INSERT INTO tickets (userId, eventId, category, place) VALUES (:userId, :eventId, :category, :place)", params);
+            namedParamJdbcTemplate.batchUpdate(SQL_INSERT, params);
             transactionManager.commit(status);
             return true;
         } catch (DataAccessException e) {
             transactionManager.rollback(status);
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
             return false;
         }
@@ -169,10 +178,10 @@ public class TicketDaoImpl implements TicketDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM tickets INNER JOIN events ON tickets.eventId=events.id AND userId=:userId ORDER BY date DESC LIMIT :offset, :size;", params, mapper);
+            return namedParamJdbcTemplate.query(SQL_SELECT_TICKETS_BY_USER_ID_WITH_LIMIT, params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return Collections.emptyList();
@@ -190,10 +199,10 @@ public class TicketDaoImpl implements TicketDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM tickets INNER JOIN users ON tickets.userId=users.id AND eventId=:eventId ORDER BY email LIMIT :offset, :size;", params, mapper);
+            return namedParamJdbcTemplate.query(SQL_SELECT_TICKETS_BY_EVENT_ID_WITH_LIMIT, params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -202,10 +211,10 @@ public class TicketDaoImpl implements TicketDao {
     @Override
     public boolean cancelTicket(long ticketId) {
         try {
-            return jdbcTemplate.update("DELETE FROM tickets WHERE id=?", ticketId) != 0;
+            return jdbcTemplate.update(SQL_DELETE_BY_ID, ticketId) != 0;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return false;

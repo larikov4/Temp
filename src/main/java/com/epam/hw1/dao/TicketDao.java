@@ -25,6 +25,12 @@ public interface TicketDao {
      */
     Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category);
 
+    /**
+     * Insert list of tickets as a batch.
+     *
+     * @param tickets tickets to insert
+     * @return boolean weather tickets were inserted.
+     */
     boolean insertTickets(List<TicketBean> tickets);
 
     /**

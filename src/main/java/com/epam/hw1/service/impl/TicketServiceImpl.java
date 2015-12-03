@@ -61,6 +61,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public boolean insertTicketsFromXml(String filename) {
         return ticketDao.insertTickets(oxmManager.unmarshalTickets(filename));
     }

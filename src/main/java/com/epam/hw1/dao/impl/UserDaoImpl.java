@@ -32,7 +32,14 @@ import static java.util.stream.Collectors.toList;
 @JdbcImpl
 public class UserDaoImpl implements UserDao {
     private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
-    public static final String USER_PREFIX = "user";
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String SQL_SELECT_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
+    private static final String SQL_SELECT_BY_NAME_WITH_LIMIT = "SELECT * FROM users WHERE name=:name LIMIT :offset, :size";
+    private static final String SQL_INSERT_USER = "INSERT INTO users (name, email) VALUES ( :name, :email)";
+    private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts (userId, balance) VALUES ( :userId, :balance)";
+    private static final String SQL_UPDATE = "UPDATE users SET name=:name, email=:email WHERE id=:id";
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM users WHERE id=?";
+    private static final String PASSED_PARAMETER_WAS_NULL = "Passed parameter was null.";
 
     private RowMapper<User> mapper = (rs, rowNum) -> {
         User user = new UserBean();
@@ -58,10 +65,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(long userId) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?", mapper, userId);
+            return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, mapper, userId);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -70,14 +77,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         if (email == null) {
-            LOG.warn("Passed parameter was null.");
+            LOG.warn(PASSED_PARAMETER_WAS_NULL);
             return null;
         }
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email = ?", mapper, email);
+            return jdbcTemplate.queryForObject(SQL_SELECT_BY_EMAIL, mapper, email);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -95,10 +102,10 @@ public class UserDaoImpl implements UserDao {
                 .addValue("offset", (pageNum - 1) * pageSize)
                 .addValue("size", pageSize);
         try {
-            return namedParamJdbcTemplate.query("SELECT * FROM users WHERE name=:name LIMIT :offset, :size", params, mapper);
+            return namedParamJdbcTemplate.query(SQL_SELECT_BY_NAME_WITH_LIMIT, params, mapper);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return Collections.emptyList();
@@ -107,7 +114,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User createUser(User user) {
         if (user == null) {
-            LOG.warn("Passed parameter was null.");
+            LOG.warn(PASSED_PARAMETER_WAS_NULL);
             return null;
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -116,14 +123,14 @@ public class UserDaoImpl implements UserDao {
                 .addValue("email", user.getEmail())
                 .addValue("balance", 0);
         try {
-            namedParamJdbcTemplate.update("INSERT INTO users (name, email) VALUES ( :name, :email)", params, keyHolder);
+            namedParamJdbcTemplate.update(SQL_INSERT_USER, params, keyHolder);
             params.addValue("userId", keyHolder.getKey().longValue());
-            namedParamJdbcTemplate.update("INSERT INTO accounts (userId, balance) VALUES ( :userId, :balance)", params);
+            namedParamJdbcTemplate.update(SQL_INSERT_ACCOUNT, params);
             user.setId(keyHolder.getKey().longValue());
             return user;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -132,16 +139,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User updateUser(User user) {
         if (user == null) {
-            LOG.warn("Passed parameter were null.");
+            LOG.warn(PASSED_PARAMETER_WAS_NULL);
             return null;
         }
         SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(user);
         try {
-            namedParamJdbcTemplate.update("UPDATE users SET id=:id, name=:name, email=:email WHERE id=:id", beanPropertySqlParameterSource); //TODO cut string, fields, queries
+            namedParamJdbcTemplate.update(SQL_UPDATE, beanPropertySqlParameterSource);
             return user;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -150,10 +157,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean deleteUser(long userId) {
         try {
-            return jdbcTemplate.update("DELETE FROM users WHERE id=?", userId) != 0;
+            return jdbcTemplate.update(SQL_DELETE_BY_ID, userId) != 0;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return false;

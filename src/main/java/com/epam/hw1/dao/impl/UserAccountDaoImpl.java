@@ -21,6 +21,9 @@ import org.springframework.stereotype.Repository;
 @JdbcImpl
 public class UserAccountDaoImpl implements UserAccountDao {
     private static final Logger LOG = Logger.getLogger(UserAccountDaoImpl.class);
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM accounts WHERE userId = ?";
+    private static final String SQL_UPDATE_ACCOUNT = "UPDATE accounts SET userId=:userId, balance=:balance WHERE id=:id";
+    private static final String SQL_UPDATE_BALANCE = "UPDATE accounts SET balance=:balance WHERE id=:id";
 
     private RowMapper<UserAccount> mapper = (rs, rowNum) -> {
         UserAccount userAccount = new UserAccountBean();
@@ -46,10 +49,10 @@ public class UserAccountDaoImpl implements UserAccountDao {
     @Override
     public UserAccount getUserAccount(long userId) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM accounts WHERE userId = ?", mapper, userId);
+            return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, mapper, userId);
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return null;
@@ -58,14 +61,14 @@ public class UserAccountDaoImpl implements UserAccountDao {
     @Override
     public boolean refillAccount(long userId, double amount) {
         try {
-            UserAccount account = jdbcTemplate.queryForObject("SELECT * FROM accounts WHERE userId = ?", mapper, userId);
+            UserAccount account = getUserAccount(userId);
             account.setBalance(account.getBalance() + amount);
             SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(account);
-            namedParamJdbcTemplate.update("UPDATE accounts SET balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
+            namedParamJdbcTemplate.update(SQL_UPDATE_BALANCE, beanPropertySqlParameterSource);
             return true;
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return false;
@@ -74,16 +77,16 @@ public class UserAccountDaoImpl implements UserAccountDao {
     @Override
     public boolean withdraw(long userId, double amount) {
         try {
-            UserAccount account = jdbcTemplate.queryForObject("SELECT * FROM accounts WHERE userId = ?", mapper, userId);
+            UserAccount account = getUserAccount(userId);
             account.setBalance(account.getBalance() - amount);
             if(account.getBalance()>=0) {
                 SqlParameterSource beanPropertySqlParameterSource = new BeanPropertySqlParameterSource(account);
-                namedParamJdbcTemplate.update("UPDATE accounts SET id=:id, userId=:userId, balance=:balance WHERE id=:id", beanPropertySqlParameterSource);
+                namedParamJdbcTemplate.update(SQL_UPDATE_ACCOUNT, beanPropertySqlParameterSource);
                 return true;
             }
         } catch (DataAccessException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug(e);
+                LOG.debug("Exception while working with DB is occurred: ", e);
             }
         }
         return false;

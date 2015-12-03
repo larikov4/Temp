@@ -1,15 +1,12 @@
 package com.epam.hw1.integration;
 
-import com.epam.hw1.dao.TicketDao;
 import com.epam.hw1.dao.jpa.UserDaoJpa;
 import com.epam.hw1.facade.BookingFacade;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.EventBean;
-import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.oxm.OxmManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -117,7 +114,7 @@ public class IntegrationTest {
     public void shouldCommitUnmarshaledTickets(){
         user.setId(ANOTHER_USER_ID);
         int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
-        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("./tickets.xml").getFile());
+        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("oxm/tickets.xml").getFile());
         assertEquals(initialSize + TICKETS_IN_BATCH, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 
@@ -125,7 +122,7 @@ public class IntegrationTest {
     public void shouldRollbackUnmarshaledInvalidTickets(){
         user.setId(ANOTHER_USER_ID);
         int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
-        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("./invalidTickets.xml").getFile());
+        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("oxm/invalidTickets.xml").getFile());
         assertEquals(initialSize, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 }
