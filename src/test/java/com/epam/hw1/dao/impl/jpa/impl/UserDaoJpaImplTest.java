@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
-@Transactional
 public class UserDaoJpaImplTest {
     private static final int EXISTING_USER_ID = 1;
     private static final int NEW_USER_ID = 20;
@@ -75,6 +75,7 @@ public class UserDaoJpaImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldCreateUser(){
         assertEquals(newUser, jpaUserDao.createUser(newUser));
         assertNotNull(newUser.getId());
@@ -82,6 +83,7 @@ public class UserDaoJpaImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldUpdateUser(){
         newUser.setId(EXISTING_USER_ID);
         assertEquals(newUser, jpaUserDao.updateUser(newUser));
@@ -89,12 +91,14 @@ public class UserDaoJpaImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldRemoveUserById(){
         assertTrue(jpaUserDao.deleteUser(EXISTING_USER_ID));
         assertNull(jpaUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
+    @DirtiesContext
     public void shouldReturnFalseWhenRemovingNotExistingUser(){
         assertFalse(jpaUserDao.deleteUser(NEW_USER_ID));
     }

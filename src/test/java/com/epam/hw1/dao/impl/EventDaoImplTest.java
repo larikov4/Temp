@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
-@Transactional
 public class EventDaoImplTest {
     private static final int EXISTING_EVENT_ID = 1;
     private static final int NEW_EVENT_ID = 20;
@@ -98,12 +98,14 @@ public class EventDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldCreateEvent(){
         assertEquals(newEvent, eventDao.createEvent(newEvent));
         assertNotNull(newEvent.getId());
     }
 
     @Test
+    @DirtiesContext
     public void shouldUpdateEvent(){
         newEvent.setId(EXISTING_EVENT_ID);
         assertEquals(newEvent, eventDao.updateEvent(newEvent));
@@ -111,6 +113,7 @@ public class EventDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldRemoveEventById(){
         assertTrue(eventDao.deleteEvent(EXISTING_EVENT_ID));
         assertNull(eventDao.getEventById(EXISTING_EVENT_ID));

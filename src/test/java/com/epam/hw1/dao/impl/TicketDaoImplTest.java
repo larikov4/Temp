@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,6 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
-@Transactional
 public class TicketDaoImplTest {
     private static final int EXISTING_TICKET_ID = 1;
     private static final int EXISTING_USER_ID = 1;
@@ -53,12 +53,14 @@ public class TicketDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldBookTicket() {
         existingTicket.setPlace(existingTicket.getPlace() + 1);
         assertTrue(ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE + 1, EXISTING_TICKET_CATEGORY).getId() > EXISTING_TICKET_ID);
     }
 
     @Test
+    @DirtiesContext
     public void shouldNotBookTicketWhenNotEnoughBalance() {
         existingTicket.setPlace(existingTicket.getPlace() + 1);
         assertTrue(ticketDao.bookTicket(EXISTING_USER_ID, EXISTING_EVENT_ID, EXISTING_TICKET_PLACE + 1, EXISTING_TICKET_CATEGORY).getId() > EXISTING_TICKET_ID);
@@ -105,6 +107,7 @@ public class TicketDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldCancelTicket() {
         User existingUser = new UserBean();
         existingUser.setId(EXISTING_USER_ID);

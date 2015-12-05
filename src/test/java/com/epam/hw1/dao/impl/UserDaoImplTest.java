@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
-@Transactional
 public class UserDaoImplTest {
     private static final int EXISTING_USER_ID = 1;
     private static final int NEW_USER_ID = 20;
@@ -75,6 +75,7 @@ public class UserDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldCreateUser(){
         assertEquals(newUser, jdbcUserDao.createUser(newUser));
         assertNotNull(newUser.getId());
@@ -82,6 +83,7 @@ public class UserDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldUpdateUser(){
         newUser.setId(EXISTING_USER_ID);
         assertEquals(newUser, jdbcUserDao.updateUser(newUser));
@@ -89,6 +91,7 @@ public class UserDaoImplTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldRemoveUserById(){
         assertTrue(jdbcUserDao.deleteUser(EXISTING_USER_ID));
         assertNull(jdbcUserDao.getUserById(EXISTING_USER_ID));

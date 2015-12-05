@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,6 +108,7 @@ public class IntegrationTest {
     }
 
     @Test
+    @DirtiesContext
     public void shouldCommitUnmarshaledTickets(){
         user.setId(ANOTHER_USER_ID);
         int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();

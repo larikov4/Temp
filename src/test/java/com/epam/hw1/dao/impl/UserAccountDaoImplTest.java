@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
-@Transactional
 public class UserAccountDaoImplTest {
     private static final int EXISTING_USER_ID = 1;
     private static final int INITIAL_BALANCE = 10;
@@ -33,19 +33,21 @@ public class UserAccountDaoImplTest {
     private UserAccountDao userAccountDao;
 
     @Test
+    @DirtiesContext
     public void shouldRefillAccount() {
         assertTrue(userAccountDao.refillAccount(EXISTING_USER_ID, INITIAL_BALANCE));
         assertEquals(INITIAL_BALANCE * 2, userAccountDao.getUserAccount(EXISTING_USER_ID).getBalance(), PRECISION);
     }
 
     @Test
+    @DirtiesContext
     public void shouldWithdrawFromAccount() {
         assertTrue(userAccountDao.withdraw(EXISTING_USER_ID, INITIAL_BALANCE));
         assertEquals(0, userAccountDao.getUserAccount(EXISTING_USER_ID).getBalance(), PRECISION);
     }
 
     @Test
-    public void shouldWithdrawTooMuchFromAccount() {
+    public void shouldNotWithdrawWhenAmountIsBiggerThanInitialBalance() {
         assertFalse(userAccountDao.withdraw(EXISTING_USER_ID, INITIAL_BALANCE*2));
         assertEquals(INITIAL_BALANCE, userAccountDao.getUserAccount(EXISTING_USER_ID).getBalance(), PRECISION);
     }
