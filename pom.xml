@@ -5,6 +5,7 @@
     <artifactId>SpringJDBC</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>SpringJDBC</name>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>
@@ -27,45 +28,55 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.8</target> 
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
             </plugin>
+
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.1.0.RC0</version>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
-                    <httpConnector>
-                        <port>8080</port>
-                        <host>localhost</host>
-                    </httpConnector>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+
+                    <port>
+                        8084
+                    </port>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm</artifactId>
-                        <version>5.0.2</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm-commons</artifactId>
-                        <version>5.0.2</version>
-                    </dependency>
-                </dependencies>
             </plugin>
+
+
+            <!--<plugin>-->
+                <!--<groupId>org.eclipse.jetty</groupId>-->
+                <!--<artifactId>jetty-maven-plugin</artifactId>-->
+                <!--<version>9.1.0.RC0</version>-->
+                <!--<configuration>-->
+                    <!--<httpConnector>-->
+                        <!--<port>8080</port>-->
+                        <!--<host>localhost</host>-->
+                    <!--</httpConnector>-->
+                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
+                <!--</configuration>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.ow2.asm</groupId>-->
+                        <!--<artifactId>asm</artifactId>-->
+                        <!--<version>5.0.2</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.ow2.asm</groupId>-->
+                        <!--<artifactId>asm-commons</artifactId>-->
+                        <!--<version>5.0.2</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
     <dependencies>
-
 
 
         <dependency>
@@ -184,7 +195,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -203,6 +213,13 @@
             <version>4.2.0</version>
         </dependency>
 
+
+
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
 
     </dependencies>
 </project>

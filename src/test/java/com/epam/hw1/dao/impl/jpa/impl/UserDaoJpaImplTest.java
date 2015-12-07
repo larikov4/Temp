@@ -23,10 +23,7 @@ import static org.junit.Assert.*;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({@ContextConfiguration("classpath:spring-config.xml"),
-        @ContextConfiguration("classpath:test-spring-config.xml")
-        })
-
+@ContextConfiguration(locations = {"classpath:spring-config.xml","classpath:test-spring-config.xml"})
 @WebAppConfiguration
 public class UserDaoJpaImplTest {
     private static final int EXISTING_USER_ID = 1;
