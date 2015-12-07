@@ -24,6 +24,13 @@ public class UserBean implements User, Serializable {
     @Column(name = "email")
     private String email;
 
+    public UserBean() {
+    }
+
+    public UserBean(long id) {
+        this.id = id;
+    }
+
     @Override
     public long getId() {
         return id;

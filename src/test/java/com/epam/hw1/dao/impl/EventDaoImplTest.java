@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
+@WebAppConfiguration
 public class EventDaoImplTest {
     private static final int EXISTING_EVENT_ID = 1;
     private static final int NEW_EVENT_ID = 20;

@@ -24,7 +24,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.epam.hw1"/>
 
-    <context:property-placeholder location="db/jdbc.properties"/>
+    <context:property-placeholder location="classpath:db/jdbc.properties"/>
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -41,8 +41,8 @@
     </bean>
 
     <jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
-        <jdbc:script location="db/create-db.sql"/>
-        <jdbc:script location="db/insert-data.sql"/>
+        <jdbc:script location="classpath:db/create-db.sql"/>
+        <jdbc:script location="classpath:db/insert-data.sql"/>
     </jdbc:initialize-database>
 
     <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
@@ -65,7 +65,7 @@
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="oxm/persistence.xml" />
+        <property name="persistenceXmlLocation" value="classpath:oxm/persistence.xml" />
         <property name="persistenceUnitName" value="persistenceUnit" />
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
