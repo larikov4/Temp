@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,10 @@ import static org.junit.Assert.*;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
+@ContextHierarchy({@ContextConfiguration("classpath:spring-config.xml"),
+        @ContextConfiguration("classpath:test-spring-config.xml")
+        })
+
 @WebAppConfiguration
 @Transactional
 public class UserDaoJpaImplTest {
@@ -42,7 +46,7 @@ public class UserDaoJpaImplTest {
     private User newUser;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         existingUser = new UserBean();
         existingUser.setId(EXISTING_USER_ID);
         existingUser.setName(EXISTING_USER_NAME);
@@ -54,50 +58,50 @@ public class UserDaoJpaImplTest {
     }
 
     @Test
-    public void shouldReturnUserById(){
+    public void shouldReturnUserById() {
         assertEquals(existingUser, jpaUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
-    public void shouldReturnUserByEmail(){
+    public void shouldReturnUserByEmail() {
         assertEquals(existingUser, jpaUserDao.getUserByEmail(EXISTING_USER_EMAIL));
     }
 
     @Test
-    public void shouldReturnListWhenUsersIsEnough(){
+    public void shouldReturnListWhenUsersIsEnough() {
         List<User> usersByName = jpaUserDao.getUsersByName(EXISTING_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, usersByName.size());
         assertEquals(existingUser, usersByName.get(0));
     }
 
     @Test
-    public void shouldReturnEmptyListWhenUsersIsEnough(){
+    public void shouldReturnEmptyListWhenUsersIsEnough() {
         List<User> usersByName = jpaUserDao.getUsersByName(NEW_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertTrue(usersByName.isEmpty());
     }
 
     @Test
-    public void shouldCreateUser(){
+    public void shouldCreateUser() {
         assertEquals(newUser, jpaUserDao.createUser(newUser));
         assertNotNull(newUser.getId());
         assertEquals(newUser, jpaUserDao.getUserById(newUser.getId()));
     }
 
     @Test
-    public void shouldUpdateUser(){
+    public void shouldUpdateUser() {
         newUser.setId(EXISTING_USER_ID);
         assertEquals(newUser, jpaUserDao.updateUser(newUser));
         assertEquals(newUser, jpaUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
-    public void shouldRemoveUserById(){
+    public void shouldRemoveUserById() {
         assertTrue(jpaUserDao.deleteUser(EXISTING_USER_ID));
         assertNull(jpaUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
-    public void shouldReturnFalseWhenRemovingNotExistingUser(){
+    public void shouldReturnFalseWhenRemovingNotExistingUser() {
         assertFalse(jpaUserDao.deleteUser(NEW_USER_ID));
     }
 }
