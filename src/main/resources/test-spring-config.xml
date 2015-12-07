@@ -83,13 +83,49 @@
     </bean>
 
     <!-- MVC -->
-
     <mvc:annotation-driven />
+
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:message-converters>-->
+            <!--&lt;!&ndash;<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>&ndash;&gt;-->
+            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+                <!--<property name="objectMapper" ref="objectMapper" />-->
+            <!--</bean>-->
+        <!--</mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
+
+    <!--<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">-->
+
+    <!--</bean>-->
+
+    <!-- activates annotation driven binding -->
+    <!--<mvc:annotation-driven ignoreDefaultModelOnRedirect="true" validator="validator">-->
+        <!--<mvc:message-converters>-->
+            <!--<bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>-->
+            <!--<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>-->
+            <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
+        <!--</mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
 
     <bean id="contentNegotiationManager"
           class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="defaultContentType" value="application/json" />
     </bean>
+
+    <!--<mvc:view-resolvers>-->
+        <!--<mvc:content-negotiation>-->
+            <!--<mvc:default-views>-->
+                <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
+            <!--</mvc:default-views>-->
+        <!--</mvc:content-negotiation>-->
+        <!--&lt;!&ndash;<mvc:freemarker cache="false"/>&ndash;&gt;-->
+    <!--</mvc:view-resolvers>-->
+
+    <!--<mvc:freemarker-configurer>-->
+        <!--&lt;!&ndash;<mvc:template-loader-path location="/freemarker"/>&ndash;&gt;-->
+    <!--</mvc:freemarker-configurer>-->
+
 
     <!-- Make this available across all of Spring MVC -->
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />

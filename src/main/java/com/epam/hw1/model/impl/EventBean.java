@@ -16,6 +16,13 @@ public class EventBean implements Event {
     private Date date;
     private double price;
 
+    public EventBean() {
+    }
+
+    public EventBean(long id) {
+        this.id = id;
+    }
+
     @Override
     public long getId() {
         return id;

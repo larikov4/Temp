@@ -16,6 +16,7 @@
     <properties>
         <spring.version>4.1.5.RELEASE</spring.version>
         <hibernate.version>5.0.4.Final</hibernate.version>
+        <jackson.version>2.6.3</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -60,11 +61,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.eclipse.jetty</groupId>-->
-                <!--<artifactId>jetty-maven-plugin</artifactId>-->
-
-            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -186,6 +182,27 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
         </dependency>
+
+
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!--?-->
+        <dependency>
+            <groupId>org.codehaus.woodstox</groupId>
+            <artifactId>woodstox-core-asl</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
 
     </dependencies>
 </project>
