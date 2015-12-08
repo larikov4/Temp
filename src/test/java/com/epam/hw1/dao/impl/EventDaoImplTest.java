@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
+@ContextConfiguration(locations = {"classpath:spring-config.xml", "classpath:test-datasource-config.xml"})
 @WebAppConfiguration
 public class EventDaoImplTest {
     private static final int EXISTING_EVENT_ID = 1;

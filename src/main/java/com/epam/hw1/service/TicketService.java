@@ -3,6 +3,7 @@ package com.epam.hw1.service;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
+import com.epam.hw1.model.impl.TicketBean;
 
 import java.util.Date;
 import java.util.List;

@@ -10,10 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import static org.junit.Assert.*;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-config.xml","classpath:test-spring-config.xml"})
+@ContextConfiguration(locations = {"classpath:spring-config.xml", "classpath:test-datasource-config.xml"})
 @WebAppConfiguration
 public class UserDaoJpaImplTest {
     private static final int EXISTING_USER_ID = 1;

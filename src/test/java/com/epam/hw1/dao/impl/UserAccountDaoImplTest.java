@@ -1,12 +1,6 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.UserAccountDao;
-import com.epam.hw1.dao.UserDao;
-import com.epam.hw1.model.User;
-import com.epam.hw1.model.UserAccount;
-import com.epam.hw1.model.impl.UserAccountBean;
-import com.epam.hw1.model.impl.UserBean;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +8,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +15,7 @@ import static org.junit.Assert.*;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
+@ContextConfiguration(locations = {"classpath:spring-config.xml", "classpath:test-datasource-config.xml"})
 @WebAppConfiguration
 public class UserAccountDaoImplTest {
     private static final int EXISTING_USER_ID = 1;

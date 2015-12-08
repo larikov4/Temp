@@ -10,10 +10,15 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <import resource="classpath:test-spring-config.xml"></import>
+    <import resource="classpath:demo-config.xml"></import>
+
+    <bean class="com.epam.hw1.web.LoggingHandlerExceptionResolver"/>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="20000000" />
+    </bean>
 
 
-    <!--<bean class="epambook.exception.CustomHandlerExceptionResolver"/>-->
 
     <!--<bean id="contentNegotiationManager"-->
           <!--class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
@@ -33,10 +38,9 @@
         <!--<property name="order" value="2"/>-->
     <!--</bean>-->
 
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="prefix" value="/WEB-INF/pages/"/>-->
-        <!--<property name="suffix" value=".jsp"/>-->
-        <!--<property name="order" value="1"/>-->
-    <!--</bean>-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
 </beans>

@@ -1,7 +1,6 @@
 package com.epam.hw1.dao.impl;
 
 import com.epam.hw1.dao.TicketDao;
-import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
@@ -16,7 +15,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ import static org.junit.Assert.assertTrue;
  * @author Yevhen_Larikov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
+@ContextConfiguration(locations = {"classpath:spring-config.xml", "classpath:test-datasource-config.xml"})
 @WebAppConfiguration
 public class TicketDaoImplTest {
     private static final int EXISTING_TICKET_ID = 1;

@@ -113,18 +113,20 @@
         <property name="defaultContentType" value="application/json" />
     </bean>
 
-    <!--<mvc:view-resolvers>-->
-        <!--<mvc:content-negotiation>-->
-            <!--<mvc:default-views>-->
-                <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
-            <!--</mvc:default-views>-->
-        <!--</mvc:content-negotiation>-->
-        <!--&lt;!&ndash;<mvc:freemarker cache="false"/>&ndash;&gt;-->
-    <!--</mvc:view-resolvers>-->
 
-    <!--<mvc:freemarker-configurer>-->
-        <!--&lt;!&ndash;<mvc:template-loader-path location="/freemarker"/>&ndash;&gt;-->
-    <!--</mvc:freemarker-configurer>-->
+
+    <mvc:view-resolvers>
+        <mvc:content-negotiation>
+            <mvc:default-views>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </mvc:default-views>
+        </mvc:content-negotiation>
+        <mvc:freemarker cache="false"/>
+    </mvc:view-resolvers>
+
+    <mvc:freemarker-configurer>
+        <mvc:template-loader-path location="/freemarker"/>
+    </mvc:freemarker-configurer>
 
 
     <!-- Make this available across all of Spring MVC -->

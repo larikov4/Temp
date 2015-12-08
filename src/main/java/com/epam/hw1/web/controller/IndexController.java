@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.IllegalFormatException;
 import java.util.List;
 
 /**
@@ -20,11 +21,19 @@ import java.util.List;
 public class IndexController {
     private static Logger LOG = Logger.getLogger(IndexController.class);
 
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public String getEventById() {
-        LOG.error("TEST!");
-        return "test";
+    public String ping() {
+        LOG.error("ping...");
+        return "ping";
+    }
+
+    @RequestMapping(value = "/e", method = RequestMethod.GET)
+    @ResponseBody
+    public String trowException() {
+        LOG.error("test exception!");
+        throw new RuntimeException("Test exception message");
     }
 }
 

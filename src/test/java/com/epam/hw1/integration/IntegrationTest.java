@@ -23,7 +23,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
+@ContextConfiguration(locations = {"classpath:spring-config.xml", "classpath:test-datasource-config.xml"})
 @WebAppConfiguration
 @Transactional
 public class IntegrationTest {

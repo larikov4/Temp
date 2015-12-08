@@ -5,6 +5,7 @@ import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
+import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.oxm.OxmManager;
 import com.epam.hw1.service.EventService;
 import com.epam.hw1.service.TicketService;
