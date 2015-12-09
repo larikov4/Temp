@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Controller is responsible for delegating HTTP requests to facade for
+ * querying Event beans.
+ *
  * @author Yevhen_Larikov
  */
 @Controller

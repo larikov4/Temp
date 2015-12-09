@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * Controller is responsible for delegating HTTP requests to facade for
+ * querying Ticket beans.
+ *
  * @author Yevhen_Larikov
  */
 @Controller
@@ -30,7 +33,7 @@ public class TicketController {
     @RequestMapping(method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    public Ticket createUser(@RequestParam("userId") long userId,
+    public Ticket bookTicket(@RequestParam("userId") long userId,
                            @RequestParam("eventId") long eventId,
                            @RequestParam("place") int place,
                            @RequestParam("category") Ticket.Category category) {

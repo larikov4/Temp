@@ -8,15 +8,22 @@ import org.springframework.web.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Class is responsible for resolving via logging of throwed exceptions.
+ *
+ * @author Yevhen_Larikov
+ */
 public class LoggingHandlerExceptionResolver implements HandlerExceptionResolver, Ordered {
     private static Logger LOG = Logger.getLogger(LoggingHandlerExceptionResolver.class);
-    private static final String VIEW_NAME = "exceptionView";
+    public static final String VIEW_NAME = "exceptionView";
     public static final String ERROR_MESSAGE_ATTRIBUTE = "message";
 
+    @Override
     public int getOrder() {
         return Integer.MIN_VALUE;
     }
 
+    @Override
     public ModelAndView resolveException(HttpServletRequest request,
                                          HttpServletResponse response,
                                          Object handler,

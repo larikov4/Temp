@@ -5,15 +5,11 @@ import com.epam.hw1.model.DefaultBeanHolder;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
 import com.epam.hw1.model.User;
-import com.epam.hw1.model.impl.TicketBean;
-import com.epam.hw1.oxm.OxmManager;
 import com.epam.hw1.service.EventService;
 import com.epam.hw1.service.TicketService;
 import com.epam.hw1.service.UserAccountService;
 import com.epam.hw1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

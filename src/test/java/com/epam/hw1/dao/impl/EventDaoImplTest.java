@@ -54,14 +54,12 @@ public class EventDaoImplTest {
 
     @Before
     public void setUp() {
-        existingEvent = new EventBean();
-        existingEvent.setId(EXISTING_EVENT_ID);
+        existingEvent = new EventBean(EXISTING_EVENT_ID);
         existingEvent.setTitle(EXISTING_EVENT_TITLE);
         existingEvent.setDate(existingEventDate);
         existingEvent.setPrice(EXISTING_EVENT_PRICE);
 
-        newEvent = new EventBean();
-        newEvent.setId(NEW_EVENT_ID);
+        newEvent = new EventBean(NEW_EVENT_ID);
         newEvent.setTitle(NEW_EVENT_TITLE);
         newEvent.setDate(newEventDate);
         newEvent.setPrice(NEW_EVENT_PRICE);

@@ -27,6 +27,13 @@ public class TicketBean implements Ticket{
     @XmlAttribute(name = "place")
     private int place;
 
+    public TicketBean() {
+    }
+
+    public TicketBean(long id) {
+        this.id = id;
+    }
+
     @Override
     public long getId() {
         return id;

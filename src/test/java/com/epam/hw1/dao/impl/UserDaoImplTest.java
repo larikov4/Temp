@@ -42,8 +42,7 @@ public class UserDaoImplTest {
 
     @Before
     public void setUp(){
-        existingUser = new UserBean();
-        existingUser.setId(EXISTING_USER_ID);
+        existingUser = new UserBean(EXISTING_USER_ID);
         existingUser.setName(EXISTING_USER_NAME);
         existingUser.setEmail(EXISTING_USER_EMAIL);
 

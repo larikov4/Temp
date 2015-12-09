@@ -49,13 +49,11 @@ public class IntegrationTest {
 
     @Before
     public void setUp() throws ParseException {
-        user = new UserBean();
-        user.setId(USER_ID);
+        user = new UserBean(USER_ID);
         user.setName("");
         user.setEmail(USER_EMAIL);
 
-        event = new EventBean();
-        event.setId(EVENT_ID);
+        event = new EventBean(EVENT_ID);
         event.setTitle("");
         event.setPrice(10);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,18 +91,14 @@ public class IntegrationTest {
 
     @Test
     public void shouldReturnDefaultUser(){
-        User defaultUser = new UserBean();
-        defaultUser.setId(DEFAULT_ENTITY_ID);
-        facade.setDefaultUser(defaultUser);
+        facade.setDefaultUser(new UserBean(DEFAULT_ENTITY_ID));
         List<Ticket> tickets = facade.getBookedTickets(user, PAGE_SIZE, FIRST_PAGE_NUM);
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getUserId());
     }
 
     @Test
     public void shouldReturnDefaultEvent(){
-        Event defaultEvent = new EventBean();
-        defaultEvent.setId(DEFAULT_ENTITY_ID);
-        facade.setDefaultEvent(defaultEvent);
+        facade.setDefaultEvent(new EventBean(DEFAULT_ENTITY_ID));
         List<Ticket> tickets = facade.getBookedTickets(event, PAGE_SIZE, FIRST_PAGE_NUM);
         assertEquals(DEFAULT_ENTITY_ID, tickets.get(0).getEventId());
     }

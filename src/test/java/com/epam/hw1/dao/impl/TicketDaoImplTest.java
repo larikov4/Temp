@@ -44,8 +44,7 @@ public class TicketDaoImplTest {
 
     @Before
     public void setUp() {
-        existingTicket = new TicketBean();
-        existingTicket.setId(EXISTING_TICKET_ID);
+        existingTicket = new TicketBean(EXISTING_TICKET_ID);
         existingTicket.setUserId(EXISTING_USER_ID);
         existingTicket.setEventId(EXISTING_EVENT_ID);
         existingTicket.setCategory(EXISTING_TICKET_CATEGORY);
@@ -74,43 +73,34 @@ public class TicketDaoImplTest {
 
     @Test
     public void shouldReturnListWhenTicketsByUserIdIsEnough() {
-        User existingUser = new UserBean();
-        existingUser.setId(EXISTING_USER_ID);
-        List<Ticket> tickets = ticketDao.getBookedTickets(existingUser, PAGE_SIZE, PAGE_NUM);
+        List<Ticket> tickets = ticketDao.getBookedTickets(new UserBean(EXISTING_USER_ID), PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, tickets.size());
         assertEquals(existingTicket, tickets.get(PAGE_SIZE - 1));
     }
 
     @Test
     public void shouldReturnEmptyListWhenTicketsByUserIdIsEnough() {
-        User newUser = new UserBean();
-        newUser.setId(Integer.MAX_VALUE);
-        List<Ticket> tickets = ticketDao.getBookedTickets(newUser, PAGE_SIZE, PAGE_NUM);
+        List<Ticket> tickets = ticketDao.getBookedTickets(new UserBean(Integer.MAX_VALUE), PAGE_SIZE, PAGE_NUM);
         assertTrue(tickets.isEmpty());
     }
 
     @Test
     public void shouldReturnListWhenTicketsByEventIdIsEnough() {
-        Event existingEvent = new EventBean();
-        existingEvent.setId(EXISTING_EVENT_ID);
-        List<Ticket> tickets = ticketDao.getBookedTickets(existingEvent, PAGE_SIZE, PAGE_NUM);
+        List<Ticket> tickets = ticketDao.getBookedTickets(new EventBean(EXISTING_EVENT_ID), PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, tickets.size());
         assertEquals(existingTicket, tickets.get(0));
     }
 
     @Test
     public void shouldReturnEmptyListWhenTicketsByEventIdIsEnough() {
-        Event newEvent = new EventBean();
-        newEvent.setId(Integer.MAX_VALUE);
-        List<Ticket> tickets = ticketDao.getBookedTickets(newEvent, PAGE_SIZE, PAGE_NUM);
+        List<Ticket> tickets = ticketDao.getBookedTickets(new EventBean(Integer.MAX_VALUE), PAGE_SIZE, PAGE_NUM);
         assertTrue(tickets.isEmpty());
     }
 
     @Test
     @DirtiesContext
     public void shouldCancelTicket() {
-        User existingUser = new UserBean();
-        existingUser.setId(EXISTING_USER_ID);
+        User existingUser = new UserBean(EXISTING_USER_ID);
         int expectedSize = ticketDao.getBookedTickets(existingUser, PAGE_SIZE, PAGE_NUM).size();
         assertTrue(ticketDao.cancelTicket(EXISTING_TICKET_ID));
         assertEquals(expectedSize - 1, ticketDao.getBookedTickets(existingUser, PAGE_SIZE, PAGE_NUM).size());

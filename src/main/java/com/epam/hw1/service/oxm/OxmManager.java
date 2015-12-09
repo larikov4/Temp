@@ -1,4 +1,4 @@
-package com.epam.hw1.oxm;
+package com.epam.hw1.service.oxm;
 
 import com.epam.hw1.model.impl.TicketBean;
 import com.epam.hw1.model.impl.TicketsBean;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.xml.transform.stream.StreamSource;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 

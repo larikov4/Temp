@@ -42,8 +42,7 @@ public class UserDaoImpl implements UserDao {
     private static final String PASSED_PARAMETER_WAS_NULL = "Passed parameter was null.";
 
     private RowMapper<User> mapper = (rs, rowNum) -> {
-        User user = new UserBean();
-        user.setId(rs.getLong("id"));
+        User user = new UserBean(rs.getLong("id"));
         user.setName(rs.getString("name"));
         user.setEmail(rs.getString("email"));
         return user;

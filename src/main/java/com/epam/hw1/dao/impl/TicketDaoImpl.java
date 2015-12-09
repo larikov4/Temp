@@ -51,8 +51,7 @@ public class TicketDaoImpl implements TicketDao {
             + "AND place = :place";
 
     private RowMapper<Ticket> mapper = (rs, rowNum) -> {
-        Ticket ticket = new TicketBean();
-        ticket.setId(rs.getLong("id"));
+        Ticket ticket = new TicketBean(rs.getLong("id"));
         ticket.setEventId(rs.getLong("eventId"));
         ticket.setUserId(rs.getLong("userId"));
         ticket.setCategory(Ticket.Category.valueOf(rs.getString("category")));

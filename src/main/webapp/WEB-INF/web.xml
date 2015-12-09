@@ -5,16 +5,6 @@
 
     <display-name>Spring MVC Application</display-name>
 
-    <!--<context-param>-->
-        <!--<param-name>contextConfigLocation</param-name>-->
-        <!--<param-value>WEB-INF/spring/test-datasource-config.xml</param-value>-->
-    <!--</context-param>-->
-
-    <!--&lt;!&ndash; Creates the Spring Container shared by all Servlets and Filters &ndash;&gt;-->
-    <!--<listener>-->
-        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-    <!--</listener>-->
-
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -25,9 +15,4 @@
         <servlet-name>mvc-dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!--<error-page>-->
-        <!--<exception-type>java.lang.Exception</exception-type>-->
-        <!--<location>/WEB-INF/pages/generic_error.jsp</location>-->
-    <!--</error-page>-->
 </web-app>

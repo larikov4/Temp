@@ -42,8 +42,7 @@ public class EventDaoImpl implements EventDao {
     private NamedParameterJdbcTemplate namedParamJdbcTemplate;
 
     private RowMapper<Event> mapper = (rs, rowNum) -> {
-        Event event = new EventBean();
-        event.setId(rs.getLong("id"));
+        Event event = new EventBean(rs.getLong("id"));
         event.setTitle(rs.getString("title"));
         event.setDate(rs.getDate("date"));
         event.setPrice(rs.getInt("price"));
