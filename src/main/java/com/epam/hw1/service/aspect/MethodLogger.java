@@ -38,7 +38,7 @@ public class MethodLogger {
                 .append(".")
                 .append(point.getSignature().getName())
                 .append("(")
-                .append(Joiner.on(",").join(point.getArgs()))
+                .append(Joiner.on(",").useForNull("null").join(point.getArgs()))
                 .append(")");
     }
 }

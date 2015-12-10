@@ -36,31 +36,30 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, params = "id",
             produces = "application/json")
     @ResponseBody
-    public User getUserById(@RequestParam("id") long id) {
+    public User getUserById(@RequestParam long id) {
         return facade.getUserById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "email",
             produces = "application/json")
     @ResponseBody
-    public User getUserByEmail(@RequestParam("email") String email) {
+    public User getUserByEmail(@RequestParam String email) {
         return facade.getUserByEmail(email);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "name",
             produces = "application/json")
     @ResponseBody
-    public List<User> getUsersByName(@RequestParam("name") String name,
-                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    public List<User> getUsersByName(@RequestParam String name,
+                                     @RequestParam(defaultValue = "5") int pageSize,
+                                     @RequestParam(defaultValue = "1") int pageNum) {
         return facade.getUsersByName(name, pageSize, pageNum);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"visual=true", "name"})
-    public ModelAndView getUsersByNameVisual(@RequestParam("name") String name,
-                                             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
-        LOG.info("getUsersByNameVisual");
+    public ModelAndView getUsersByNameVisual(@RequestParam String name,
+                                             @RequestParam(defaultValue = "5") int pageSize,
+                                             @RequestParam(defaultValue = "1") int pageNum) {
         List<User> users = facade.getUsersByName(name, pageSize, pageNum);
         return new ModelAndView(ENTITIES_LIST_VIEW, new ModelMap(USERS_ATTRIBUTE_NAME, users));
     }
@@ -79,10 +78,10 @@ public class UserController {
         return facade.updateUser(user);
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE,
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE,
             produces = "application/json")
     @ResponseBody
-    public boolean deleteUser(@PathVariable long userId) {
-        return facade.deleteUser(userId);
+    public boolean deleteUser(@PathVariable long id) {
+        return facade.deleteUser(id);
     }
 }

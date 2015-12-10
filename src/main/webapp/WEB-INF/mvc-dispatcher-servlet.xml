@@ -5,16 +5,6 @@
 
     <import resource="classpath:demo-config.xml"></import>
 
-    <bean class="com.epam.hw1.web.LoggingHandlerExceptionResolver"/>
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="20000000" />
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="order" value="1"/>
-    </bean>
 
 </beans>
