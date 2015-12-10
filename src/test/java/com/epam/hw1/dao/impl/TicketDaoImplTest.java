@@ -105,4 +105,21 @@ public class TicketDaoImplTest {
         assertTrue(ticketDao.cancelTicket(EXISTING_TICKET_ID));
         assertEquals(expectedSize - 1, ticketDao.getBookedTickets(existingUser, PAGE_SIZE, PAGE_NUM).size());
     }
+
+
+    @Test
+    public void shouldReturnEmptyListWhenPassedParametersToBookedByUserAreInvalid() {
+        User user = null;
+        assertTrue(ticketDao.getBookedTickets(user, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(ticketDao.getBookedTickets(new UserBean(), -1, PAGE_NUM).isEmpty());
+        assertTrue(ticketDao.getBookedTickets(new UserBean(), PAGE_SIZE, -1).isEmpty());
+    }
+
+    @Test
+    public void shouldReturnEmptyListWhenPassedParametersToBookedByEventAreInvalid() {
+        Event event = null;
+        assertTrue(ticketDao.getBookedTickets(event, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(ticketDao.getBookedTickets(new EventBean(), -1, PAGE_NUM).isEmpty());
+        assertTrue(ticketDao.getBookedTickets(new EventBean(), PAGE_SIZE, -1).isEmpty());
+    }
 }

@@ -122,4 +122,33 @@ public class EventDaoImplTest {
     public void shouldReturnFalseWhenRemovingNotExistingEvent(){
         assertFalse(eventDao.deleteEvent(NEW_EVENT_ID));
     }
+
+    @Test
+    public void shouldReturnEmptyListWhenPassedParametersToEventsByTitleAreInvalid(){
+        assertTrue(eventDao.getEventsByTitle(null, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(eventDao.getEventsByTitle(EXISTING_EVENT_TITLE, -1, PAGE_NUM).isEmpty());
+        assertTrue(eventDao.getEventsByTitle(EXISTING_EVENT_TITLE, PAGE_SIZE, -1).isEmpty());
+    }
+
+    @Test
+    public void shouldReturnEmptyListWhenPassedParametersToDayByTitleAreInvalid(){
+        assertTrue(eventDao.getEventsForDay(null, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(eventDao.getEventsForDay(existingEventDate, -1, PAGE_NUM).isEmpty());
+        assertTrue(eventDao.getEventsForDay(existingEventDate, PAGE_SIZE, -1).isEmpty());
+    }
+
+    @Test
+    public void shouldReturnNullWhenPassedParameterToCreateIsInvalid(){
+        assertNull(eventDao.createEvent(null));
+    }
+
+    @Test
+    public void shouldReturnNullWhenPassedParameterToUpdateIsInvalid(){
+        assertNull(eventDao.updateEvent(null));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenEventToDeleteDoesNotExist(){
+        assertFalse(eventDao.deleteEvent(newEvent.getId()));
+    }
 }

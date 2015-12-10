@@ -167,7 +167,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        if (user == null && pageNum < 1 || pageSize < 1) {
+        if (user == null || pageNum < 1 || pageSize < 1) {
             LOG.warn("Some of parameters were invalid. user:" + user +
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
@@ -188,7 +188,7 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        if (event == null && pageNum < 1 || pageSize < 1) {
+        if (event == null || pageNum < 1 || pageSize < 1) {
             LOG.warn("Some of parameters were invalid. event:" + event +
                     ", pageNum:" + pageNum + ", pageSize:" + pageSize);
             return Collections.emptyList();
