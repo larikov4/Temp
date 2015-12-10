@@ -41,7 +41,7 @@ public class UserDaoImplTest {
     private User newUser;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         existingUser = new UserBean(EXISTING_USER_ID);
         existingUser.setName(EXISTING_USER_NAME);
         existingUser.setEmail(EXISTING_USER_EMAIL);
@@ -52,31 +52,31 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void shouldReturnUserById(){
+    public void shouldReturnUserById() {
         assertEquals(existingUser, jdbcUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
-    public void shouldReturnUserByEmail(){
+    public void shouldReturnUserByEmail() {
         assertEquals(existingUser, jdbcUserDao.getUserByEmail(EXISTING_USER_EMAIL));
     }
 
     @Test
-    public void shouldReturnListWhenUsersIsEnough(){
+    public void shouldReturnListWhenUsersIsEnough() {
         List<User> usersByName = jdbcUserDao.getUsersByName(EXISTING_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertEquals(PAGE_SIZE, usersByName.size());
         assertEquals(existingUser, usersByName.get(0));
     }
 
     @Test
-    public void shouldReturnEmptyListWhenUsersIsEnough(){
+    public void shouldReturnEmptyListWhenUsersIsEnough() {
         List<User> usersByName = jdbcUserDao.getUsersByName(NEW_USER_NAME, PAGE_SIZE, PAGE_NUM);
         assertTrue(usersByName.isEmpty());
     }
 
     @Test
     @DirtiesContext
-    public void shouldCreateUser(){
+    public void shouldCreateUser() {
         assertEquals(newUser, jdbcUserDao.createUser(newUser));
         assertNotNull(newUser.getId());
         assertEquals(newUser, jdbcUserDao.getUserById(newUser.getId()));
@@ -84,7 +84,7 @@ public class UserDaoImplTest {
 
     @Test
     @DirtiesContext
-    public void shouldUpdateUser(){
+    public void shouldUpdateUser() {
         newUser.setId(EXISTING_USER_ID);
         assertEquals(newUser, jdbcUserDao.updateUser(newUser));
         assertEquals(newUser, jdbcUserDao.getUserById(EXISTING_USER_ID));
@@ -92,13 +92,46 @@ public class UserDaoImplTest {
 
     @Test
     @DirtiesContext
-    public void shouldRemoveUserById(){
+    public void shouldRemoveUserById() {
         assertTrue(jdbcUserDao.deleteUser(EXISTING_USER_ID));
         assertNull(jdbcUserDao.getUserById(EXISTING_USER_ID));
     }
 
     @Test
-    public void shouldReturnFalseWhenRemovingNotExistingUser(){
+    public void shouldReturnFalseWhenRemovingNotExistingUser() {
         assertFalse(jdbcUserDao.deleteUser(NEW_USER_ID));
     }
+
+    @Test
+    public void shouldReturnEmptyListWhenPassedParametersToUsersByTitleAreInvalid() {
+        assertTrue(jdbcUserDao.getUsersByName(null, PAGE_SIZE, PAGE_NUM).isEmpty());
+        assertTrue(jdbcUserDao.getUsersByName(EXISTING_USER_NAME, -1, PAGE_NUM).isEmpty());
+        assertTrue(jdbcUserDao.getUsersByName(EXISTING_USER_NAME, PAGE_SIZE, -1).isEmpty());
+    }
+
+    @Test
+    public void shouldReturnNullWhenPassedParameterToCreateIsInvalid() {
+        assertNull(jdbcUserDao.createUser(null));
+    }
+
+    @Test
+    public void shouldReturnNullWhenPassedParameterToUpdateIsInvalid() {
+        assertNull(jdbcUserDao.updateUser(null));
+    }
+
+    @Test
+    public void shouldReturnNullWhenPassedParameterToGetUserByEmailIsInvalid() {
+        assertNull(jdbcUserDao.getUserByEmail(null));
+    }
+
+    @Test
+    public void shouldReturnNullWhenUserWithPassedEmailDoesNotExists() {
+        assertNull(jdbcUserDao.getUserByEmail(newUser.getEmail()));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenPassedParameterToDeleteDoesNotExists() {
+        assertFalse(jdbcUserDao.deleteUser(newUser.getId()));
+    }
+
 }
