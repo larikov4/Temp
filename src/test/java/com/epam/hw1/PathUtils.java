@@ -1,5 +1,8 @@
 package com.epam.hw1;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
  * Class is responsible for getting absolute path for files which is in classpath.
  *
@@ -11,7 +14,8 @@ public class PathUtils {
 
     }
 
-    public static String getFileAbsolutePathFromClassPath(String path){
-        return null;
+    public static String getFileAbsolutePathFromClassPath(String path) throws URISyntaxException {
+        String absolutePath = PathUtils.class.getClassLoader().getResource(path).getFile();
+        return new URI(absolutePath).getPath();
     }
 }

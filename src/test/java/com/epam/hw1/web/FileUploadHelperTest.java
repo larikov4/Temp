@@ -9,13 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -41,14 +40,17 @@ public class FileUploadHelperTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenPassedFileIsNotExists() throws FileNotFoundException {
-       assertFalse(helper.fillStorageFromJsonFile(new FileInputStream(new File(""))));
+    public void shouldReturnFalseWhenPassedFileIsClosed() throws IOException, URISyntaxException {
+        String absolutePath = PathUtils.getFileAbsolutePathFromClassPath("entities.json");
+        FileInputStream fileInputStream = new FileInputStream(new File(absolutePath));
+        fileInputStream.close();
+        assertFalse(helper.fillStorageFromJsonFile(fileInputStream));
     }
 
     @Test
-    public void shouldReturnTrueAndInvokeFacadeMethodsWhenPassedValidFile() throws FileNotFoundException {
+    public void shouldReturnTrueAndInvokeFacadeMethodsWhenPassedValidFile() throws FileNotFoundException, URISyntaxException {
         String absolutePath = PathUtils.getFileAbsolutePathFromClassPath("entities.json");
-        assertFalse(helper.fillStorageFromJsonFile(new FileInputStream(new File(absolutePath))));
+        assertTrue(helper.fillStorageFromJsonFile(new FileInputStream(new File(absolutePath))));
 
         verify(bookingFacade).createEvent(any());
         verify(bookingFacade).createUser(any());

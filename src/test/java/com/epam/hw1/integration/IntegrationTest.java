@@ -1,5 +1,6 @@
 package com.epam.hw1.integration;
 
+import com.epam.hw1.PathUtils;
 import com.epam.hw1.facade.BookingFacade;
 import com.epam.hw1.model.Event;
 import com.epam.hw1.model.Ticket;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -105,18 +107,18 @@ public class IntegrationTest {
 
     @Test
     @DirtiesContext
-    public void shouldCommitUnmarshaledTickets(){
+    public void shouldCommitUnmarshaledTickets() throws URISyntaxException {
         user.setId(ANOTHER_USER_ID);
         int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
-        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("oxm/tickets.xml").getFile());
+        facade.insertTicketsFromXml(PathUtils.getFileAbsolutePathFromClassPath("oxm/tickets.xml"));
         assertEquals(initialSize + TICKETS_IN_BATCH, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 
     @Test
-    public void shouldRollbackUnmarshaledInvalidTickets(){
+    public void shouldRollbackUnmarshaledInvalidTickets() throws URISyntaxException {
         user.setId(ANOTHER_USER_ID);
         int initialSize = facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size();
-        facade.insertTicketsFromXml(getClass().getClassLoader().getResource("oxm/invalidTickets.xml").getFile());
+        facade.insertTicketsFromXml(PathUtils.getFileAbsolutePathFromClassPath("oxm/invalidTickets.xml"));
         assertEquals(initialSize, facade.getBookedTickets(user, TICKETS_IN_BATCH + PAGE_SIZE, FIRST_PAGE_NUM).size());
     }
 }
