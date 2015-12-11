@@ -2,17 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.epam.hw1</groupId>
-    <artifactId>SpringJDBC</artifactId>
+    <artifactId>SpringMVC</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>SpringJDBC</name>
+    <name>SpringMVC</name>
     <packaging>war</packaging>
-
-    <repositories>
-        <repository>
-            <id>Java.Net</id>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-    </repositories>
 
     <properties>
         <spring.version>4.1.5.RELEASE</spring.version>
@@ -41,38 +34,9 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <port>
-                        8084
-                    </port>
+                    <port>8080</port>
                 </configuration>
             </plugin>
-
-
-
-            <!--<plugin>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-maven-plugin</artifactId>-->
-            <!--<version>9.1.0.RC0</version>-->
-            <!--<configuration>-->
-            <!--<httpConnector>-->
-            <!--<port>8080</port>-->
-            <!--<host>localhost</host>-->
-            <!--</httpConnector>-->
-            <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
-            <!--</configuration>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>org.ow2.asm</groupId>-->
-            <!--<artifactId>asm</artifactId>-->
-            <!--<version>5.0.2</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-            <!--<groupId>org.ow2.asm</groupId>-->
-            <!--<artifactId>asm-commons</artifactId>-->
-            <!--<version>5.0.2</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -83,12 +47,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -112,6 +70,7 @@
             <version>3.0</version>
         </dependency>
 
+        <!--Test-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -122,6 +81,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
 

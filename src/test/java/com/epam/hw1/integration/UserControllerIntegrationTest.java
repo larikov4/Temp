@@ -83,8 +83,8 @@ public class UserControllerIntegrationTest {
     @Test
     @Ignore
     public void shouldCreateUser() throws Exception {
-        assertNotNull(facade.getUserById(ANOTHER_USER_ID));
-        mockMvc.perform(post("/users/" + ANOTHER_USER_ID))
+
+        mockMvc.perform(post("/users/" + ANOTHER_USER_ID).content(""))
                 .andExpect(status().isOk()).andReturn();
 
         assertNull(facade.getUserById(ANOTHER_USER_ID));
