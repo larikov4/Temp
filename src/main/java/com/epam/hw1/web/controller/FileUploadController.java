@@ -24,7 +24,7 @@ import java.io.InputStream;
 public class FileUploadController {
     private static Logger LOG = Logger.getLogger(FileUploadController.class);
     protected static final String UPLOAD_FILE_VIEW = "uploadFileView";
-    protected static final String SUCCESS_VIEW = "successView";
+    protected static final String SUCCESS_VIEW = "successFileUploadView";
     protected static final String EXCEPTION_VIEW = "exceptionView";
     private static final String ERROR_MESSAGE_ATTRIBUTE = "message";
 
