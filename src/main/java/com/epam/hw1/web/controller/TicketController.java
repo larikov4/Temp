@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -30,38 +31,34 @@ public class TicketController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST,
-            produces = "application/json")
     @ResponseBody
-    public Ticket bookTicket(@RequestParam("userId") long userId,
-                           @RequestParam("eventId") long eventId,
-                           @RequestParam("place") int place,
-                           @RequestParam("category") Ticket.Category category) {
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
+    public Ticket bookTicket(@RequestParam long userId,
+                             @RequestParam long eventId,
+                             @RequestParam int place,
+                             @RequestParam Ticket.Category category) {
         return facade.bookTicket(userId, eventId, place, category);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "userId",
-            produces = "application/json")
     @ResponseBody
-    public List<Ticket> getBookedTicketsForUser(@RequestParam("userId") long userId,
-                                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                       @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    @RequestMapping(method = RequestMethod.GET, params = "userId", produces = MediaType.APPLICATION_JSON)
+    public List<Ticket> getBookedTicketsForUser(@RequestParam long userId,
+                                                @RequestParam(defaultValue = "5") int pageSize,
+                                                @RequestParam(defaultValue = "1") int pageNum) {
         return facade.getBookedTickets(new UserBean(userId), pageSize, pageNum);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "eventId",
-            produces = "application/json")
     @ResponseBody
-    public List<Ticket> getBookedTicketsForEvent(@RequestParam("eventId") long eventId,
-                                      @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                      @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    @RequestMapping(method = RequestMethod.GET, params = "eventId", produces = MediaType.APPLICATION_JSON)
+    public List<Ticket> getBookedTicketsForEvent(@RequestParam long eventId,
+                                                 @RequestParam(defaultValue = "5") int pageSize,
+                                                 @RequestParam(defaultValue = "1") int pageNum) {
         return facade.getBookedTickets(new EventBean(eventId), pageSize, pageNum);
     }
 
-    @RequestMapping(value = "/{ticketId}", method = RequestMethod.DELETE,
-            produces = "application/json")
     @ResponseBody
-    public boolean cancelTicket(@PathVariable long ticketId) {
-        return facade.cancelTicket(ticketId);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON)
+    public boolean cancelTicket(@PathVariable long id) {
+        return facade.cancelTicket(id);
     }
 }

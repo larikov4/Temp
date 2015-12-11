@@ -1,26 +1,24 @@
 package com.epam.hw1.integration;
 
 import com.epam.hw1.facade.BookingFacade;
+import com.epam.hw1.model.User;
 import com.epam.hw1.model.impl.UserBean;
-import com.epam.hw1.web.controller.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,6 +37,7 @@ public class UserControllerIntegrationTest {
     private static final String USER_NAME = "Ivan1";
     private static final int PAGE_NUM = 1;
     private static final int PAGE_SIZE = 5;
+    public static final String NEW_EMAIL = "notExistingEmail@email.com";
 
     private MockMvc mockMvc;
     private ObjectMapper mapper;
@@ -81,13 +80,19 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void shouldCreateUser() throws Exception {
+        User newUser = new UserBean();
+        newUser.setEmail(NEW_EMAIL);
+        newUser.setId(111);
+        newUser.setName(NEW_EMAIL);
+        MvcResult mvcResult = mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(newUser)))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        mockMvc.perform(post("/users/" + ANOTHER_USER_ID).content(""))
-                .andExpect(status().isOk()).andReturn();
-
-        assertNull(facade.getUserById(ANOTHER_USER_ID));
+        assertEquals(mapper.writeValueAsString(facade.getUserByEmail(NEW_EMAIL)),
+                mvcResult.getResponse().getContentAsString());
     }
 
     @Test

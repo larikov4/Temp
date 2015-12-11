@@ -3,8 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <import resource="classpath:demo-config.xml"></import>
+    <import resource="classpath:spring-config.xml"/>
 
-
-
+    <!--Import overrides MySQL datasource with in memory DB. Should be remove on production. -->
+    <import resource="classpath:test-datasource-config.xml"/>
 </beans>

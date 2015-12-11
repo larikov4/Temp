@@ -40,7 +40,7 @@ public class OxmManager {
             TicketsBean ticketsBean = (TicketsBean) this.unmarshaller.unmarshal(new StreamSource(fis));
             return ticketsBean.getTickets();
         } catch (IOException e) {
-            LOG.error(e);
+            LOG.error("IO Exception was occurred while was working with file", e);
             return Collections.emptyList();
         }
     }
