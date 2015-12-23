@@ -29,7 +29,7 @@ public class FriendRepositoryImpl implements FriendRepository {
 
     @Override
     public void checkIsFriend(String username, String friendUsername) throws UsersAreNotFriendsException {
-        if (isFriends(username, friendUsername)) {
+        if (!isFriends(username, friendUsername)) {
             throw new UsersAreNotFriendsException("Users are not friends. Usernames: "
                     + username + " and " + friendUsername);
         }

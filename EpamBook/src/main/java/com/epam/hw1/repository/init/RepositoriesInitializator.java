@@ -2,9 +2,9 @@ package com.epam.hw1.repository.init;
 
 import com.epam.hw1.model.NoteBean;
 import com.epam.hw1.model.UserBean;
-import com.epam.hw1.repository.impl.FriendRepositoryImpl;
-import com.epam.hw1.repository.impl.TimelineRepositoryImpl;
-import com.epam.hw1.repository.impl.UserRepositoryImpl;
+import com.epam.hw1.repository.FriendRepository;
+import com.epam.hw1.repository.TimelineRepository;
+import com.epam.hw1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +23,14 @@ public class RepositoriesInitializator {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT);
 
     @Autowired
-    private UserRepositoryImpl userRepository;
+    private UserRepository userRepository;
     @Autowired
-    private TimelineRepositoryImpl timelineRepository;
+    private TimelineRepository timelineRepository;
     @Autowired
-    private FriendRepositoryImpl friendRepository;
+    private FriendRepository friendRepository;
+
+    public RepositoriesInitializator() {
+    }
 
     @PostConstruct
     public void fillRepositories() throws ParseException {

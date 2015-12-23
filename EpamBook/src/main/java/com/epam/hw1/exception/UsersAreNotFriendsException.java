@@ -5,9 +5,6 @@ package com.epam.hw1.exception;
  */
 public class UsersAreNotFriendsException extends EpambookException {
 
-    public UsersAreNotFriendsException() {
-    }
-
     public UsersAreNotFriendsException(String message) {
         super(message);
     }

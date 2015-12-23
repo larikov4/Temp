@@ -5,9 +5,6 @@ package com.epam.hw1.exception;
  */
 public class UserNotFoundException extends EpambookException {
 
-    public UserNotFoundException() {
-    }
-
     public UserNotFoundException(String message) {
         super(message);
     }

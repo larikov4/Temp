@@ -1,7 +1,7 @@
 package com.epam.hw1.web.controller;
 
 import com.epam.hw1.model.NoteBean;
-import com.epam.hw1.service.impl.TimelineServiceImpl;
+import com.epam.hw1.service.TimelineService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,9 +18,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -33,6 +35,7 @@ public class TimelineControllerTest {
     public static final String NEW_NOTE = "new note";
     public static final String EXISTING_USERNAME = "ivan";
     public static final String FRIEND_USERNAME = "max";
+    public static final String NEW_FRIEND_USERNAME = "alex";
 
     private MockMvc mockMvc;
     private ObjectMapper mapper;
@@ -40,7 +43,7 @@ public class TimelineControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
-    private TimelineServiceImpl timelineService;
+    private TimelineService timelineService;
 
     @Before
     public void setUp() {
@@ -87,11 +90,24 @@ public class TimelineControllerTest {
 
     @Test
     public void shouldGetFriendTimeline() throws Exception {
-        MvcResult result = mockMvc.perform(get("/user/" + FRIEND_USERNAME + "/friend/"+ EXISTING_USERNAME +"/timeline/"))
+        MvcResult result = mockMvc
+                .perform(get("/user/" + FRIEND_USERNAME + "/friend/"+ EXISTING_USERNAME +"/timeline/"))
                 .andExpect(status().isOk()).andReturn();
 
-        String parsedTimeline = mapper.writeValueAsString(timelineService.getTimelineBean(EXISTING_USERNAME));
+        String parsedTimeline = mapper.
+                writeValueAsString(timelineService.getFriendTimelineBean(FRIEND_USERNAME, EXISTING_USERNAME));
         assertEquals(parsedTimeline, result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenGetNotFriendTimeline() throws Exception {
+        mockMvc.perform(get("/user/" + FRIEND_USERNAME + "/friend/"+ NEW_FRIEND_USERNAME +"/timeline/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().string(containsString(ExceptionHandlingController.ERROR_MESSAGE_ATTRIBUTE)))
+                .andExpect(content().string(containsString(FRIEND_USERNAME)))
+                .andExpect(content().string(containsString(NEW_FRIEND_USERNAME)))
+                .andExpect(content().string(containsString("not friend")));
     }
 
 }

@@ -38,11 +38,4 @@ public class FriendServiceImpl implements FriendService {
         userRepository.checkUserExistence(friendUsername);
         return friendRepository.isFriends(username, friendUsername);
     }
-
-    @Override
-    public void addFriend(String username, String friendUsername) throws UserNotFoundException {
-        userRepository.checkUserExistence(username);
-        userRepository.checkUserExistence(friendUsername);
-        friendRepository.addFriend(username, friendUsername);
-    }
 }

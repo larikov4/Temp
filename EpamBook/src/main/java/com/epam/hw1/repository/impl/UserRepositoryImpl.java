@@ -26,11 +26,6 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public boolean isUserExist(String username) throws UserNotFoundException {
-        return getUser(username)!=null;
-    }
-
-    @Override
     public void checkUserExistence(String username) throws UserNotFoundException {
         if(getUser(username)==null){
             throw new UserNotFoundException("Cannot find user. Username: " + username );

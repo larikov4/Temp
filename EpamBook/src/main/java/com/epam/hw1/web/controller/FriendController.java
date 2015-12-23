@@ -2,7 +2,7 @@ package com.epam.hw1.web.controller;
 
 import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.UserBean;
-import com.epam.hw1.service.impl.FriendServiceImpl;
+import com.epam.hw1.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class FriendController {
     @Autowired
-    private FriendServiceImpl friendService;
+    private FriendService friendService;
 
     @RequestMapping(method = RequestMethod.POST,
             value = "/user/{username}/friend/",

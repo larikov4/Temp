@@ -36,8 +36,9 @@ public class TimelineServiceImpl implements TimelineService {
     @Override
     public TimelineBean getFriendTimelineBean(String username, String friendUsername) throws EpambookException {
         userRepository.checkUserExistence(username);
+        userRepository.checkUserExistence(friendUsername);
         friendRepository.checkIsFriend(username, friendUsername);
-        return timelineRepository.getTimelineBean(username);
+        return timelineRepository.getTimelineBean(friendUsername);
     }
 
     @Override

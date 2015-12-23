@@ -4,7 +4,7 @@ import com.epam.hw1.exception.EpambookException;
 import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.NoteBean;
 import com.epam.hw1.model.TimelineBean;
-import com.epam.hw1.service.impl.TimelineServiceImpl;
+import com.epam.hw1.service.TimelineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class TimelineController {
     @Autowired
-    private TimelineServiceImpl timelineService;
+    private TimelineService timelineService;
 
     @RequestMapping(method = RequestMethod.POST,
             value = "/user/{username}/timeline/",

@@ -13,6 +13,4 @@ public interface FriendService {
     List<String> getFriends(String username) throws UserNotFoundException;
 
     boolean isFriends(String username, String friendUsername) throws UserNotFoundException;
-
-    void addFriend(String username, String friendUsername) throws UserNotFoundException;
 }

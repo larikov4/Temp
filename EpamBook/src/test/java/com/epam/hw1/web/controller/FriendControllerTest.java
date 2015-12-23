@@ -1,7 +1,7 @@
 package com.epam.hw1.web.controller;
 
 import com.epam.hw1.model.UserBean;
-import com.epam.hw1.service.impl.FriendServiceImpl;
+import com.epam.hw1.service.FriendService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +16,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -28,9 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath:spring-config.xml"})
 @WebAppConfiguration
 public class FriendControllerTest {
-    public static final String NEW_FRIEND_USERNAME = "Alex";
+    public static final String NEW_FRIEND_USERNAME = "alex";
     public static final String EXISTING_USERNAME = "ivan";
     public static final String FRIEND_USERNAME = "max";
+    public static final String NOT_EXISTING_USERNAME = "not existing ivan";
 
     private MockMvc mockMvc;
     private ObjectMapper mapper;
@@ -39,7 +42,7 @@ public class FriendControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @Autowired
-    private FriendServiceImpl friendService;
+    private FriendService friendService;
 
     @Before
     public void setUp() {
@@ -68,6 +71,16 @@ public class FriendControllerTest {
 
         String parsedFriends = mapper.writeValueAsString(friendService.getFriends(FRIEND_USERNAME));
         assertEquals(parsedFriends, result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenGetNotExistingUserFriends() throws Exception {
+        mockMvc.perform(get("/user/" + NOT_EXISTING_USERNAME + "/friend/"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().string(containsString(ExceptionHandlingController.ERROR_MESSAGE_ATTRIBUTE)))
+                .andExpect(content().string(containsString(NOT_EXISTING_USERNAME)))
+                .andExpect(content().string(containsString("not exist")));
     }
 
 }
