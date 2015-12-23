@@ -21,6 +21,4 @@
         <property name="defaultContentType" value="application/json" />
     </bean>
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
-
-    <!--<bean class="com.epam.hw1.web.LoggingHandlerExceptionResolver"/>-->
 </beans>

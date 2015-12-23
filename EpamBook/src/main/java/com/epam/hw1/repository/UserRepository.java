@@ -9,4 +9,6 @@ public interface UserRepository {
     void addUser(UserBean userBean);
 
     UserBean getUser(String username);
+
+    boolean exists(String username);
 }

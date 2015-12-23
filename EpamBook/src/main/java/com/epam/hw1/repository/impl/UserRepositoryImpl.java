@@ -24,4 +24,9 @@ public class UserRepositoryImpl implements UserRepository{
         return users.get(username);
     }
 
+    @Override
+    public boolean exists(String username){
+        return users.containsKey(username);
+    }
+
 }

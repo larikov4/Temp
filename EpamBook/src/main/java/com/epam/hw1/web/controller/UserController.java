@@ -1,4 +1,4 @@
-package com.epam.hw1.web;
+package com.epam.hw1.web.controller;
 
 
 import com.epam.hw1.model.NoteBean;
