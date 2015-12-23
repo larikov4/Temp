@@ -1,5 +1,6 @@
 package com.epam.hw1.repository.impl;
 
+import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.UserBean;
 import com.epam.hw1.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -25,8 +26,14 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public boolean exists(String username){
-        return users.containsKey(username);
+    public boolean isUserExist(String username) throws UserNotFoundException {
+        return getUser(username)!=null;
     }
 
+    @Override
+    public void checkUserExistence(String username) throws UserNotFoundException {
+        if(getUser(username)==null){
+            throw new UserNotFoundException("Cannot find user. Username: " + username );
+        }
+    }
 }

@@ -16,40 +16,33 @@ import java.util.List;
 public class FriendServiceImpl implements FriendService {
     @Autowired
     private FriendRepository friendRepository;
-
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public void makeFriends(String username, String friendUsername) throws UserNotFoundException {
-        checkUserExistence(username);
-        checkUserExistence(friendUsername);
+        userRepository.checkUserExistence(username);
+        userRepository.checkUserExistence(friendUsername);
         friendRepository.makeFriends(username, friendUsername);
     }
 
     @Override
     public List<String> getFriends(String username) throws UserNotFoundException {
-        checkUserExistence(username);
+        userRepository.checkUserExistence(username);
         return friendRepository.getFriends(username);
     }
 
     @Override
     public boolean isFriends(String username, String friendUsername) throws UserNotFoundException {
-        checkUserExistence(username);
-        checkUserExistence(friendUsername);
+        userRepository.checkUserExistence(username);
+        userRepository.checkUserExistence(friendUsername);
         return friendRepository.isFriends(username, friendUsername);
     }
 
     @Override
     public void addFriend(String username, String friendUsername) throws UserNotFoundException {
-        checkUserExistence(username);
-        checkUserExistence(friendUsername);
+        userRepository.checkUserExistence(username);
+        userRepository.checkUserExistence(friendUsername);
         friendRepository.addFriend(username, friendUsername);
-    }
-
-    private void checkUserExistence(String username) throws UserNotFoundException {
-        if(!userRepository.exists(username)){
-            throw new UserNotFoundException("Cannot find user. Username: " + username );
-        }
     }
 }

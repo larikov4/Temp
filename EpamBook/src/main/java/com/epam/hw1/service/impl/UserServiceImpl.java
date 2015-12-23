@@ -1,5 +1,6 @@
 package com.epam.hw1.service.impl;
 
+import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.UserBean;
 import com.epam.hw1.repository.UserRepository;
 import com.epam.hw1.service.UserService;
@@ -23,8 +24,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserBean getUser(String username){
+    public UserBean getUser(String username) throws UserNotFoundException {
+        userRepository.checkUserExistence(username);
         return userRepository.getUser(username);
     }
-
 }
