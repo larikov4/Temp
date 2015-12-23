@@ -1,5 +1,6 @@
 package com.epam.hw1.service;
 
+import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.UserBean;
 
 /**
@@ -8,5 +9,5 @@ import com.epam.hw1.model.UserBean;
 public interface UserService {
     void addUser(UserBean userBean);
 
-    UserBean getUser(String username);
+    UserBean getUser(String username) throws UserNotFoundException;
 }

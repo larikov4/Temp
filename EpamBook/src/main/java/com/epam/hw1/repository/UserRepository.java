@@ -1,5 +1,6 @@
 package com.epam.hw1.repository;
 
+import com.epam.hw1.exception.UserNotFoundException;
 import com.epam.hw1.model.UserBean;
 
 /**
@@ -10,5 +11,7 @@ public interface UserRepository {
 
     UserBean getUser(String username);
 
-    boolean exists(String username);
+    boolean isUserExist(String username) throws UserNotFoundException;
+
+    void checkUserExistence(String username) throws UserNotFoundException;
 }

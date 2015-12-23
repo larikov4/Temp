@@ -1,5 +1,7 @@
 package com.epam.hw1.repository;
 
+import com.epam.hw1.exception.UsersAreNotFriendsException;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,9 @@ public interface FriendRepository {
 
     List<String> getFriends(String username);
 
-    boolean isFriends(String username, String friendUsername);
+    void checkIsFriend(String username, String friendUsername) throws UsersAreNotFriendsException;
 
     void addFriend(String username, String friendUsername);
+
+    boolean isFriends(String username, String friendUsername);
 }
