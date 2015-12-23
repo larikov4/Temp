@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.core.MediaType;
 import java.util.Date;
 import java.util.List;
 
@@ -29,50 +30,44 @@ public class EventController {
         this.facade = facade;
     }
 
-    @RequestMapping(method = RequestMethod.GET,
-            produces = "application/json")
     @ResponseBody
-    public Event getEventById(@RequestParam("id") long id) {
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public Event getEventById(@RequestParam long id) {
         return facade.getEventById(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "title",
-            produces = "application/json")
     @ResponseBody
-    public List<Event> getEventsByTitle(@RequestParam("title") String title,
-                                        @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    @RequestMapping(method = RequestMethod.GET, params = "title", produces = MediaType.APPLICATION_JSON)
+    public List<Event> getEventsByTitle(@RequestParam String title,
+                                        @RequestParam(defaultValue = "5") int pageSize,
+                                        @RequestParam(defaultValue = "1") int pageNum) {
         return facade.getEventsByTitle(title, pageSize, pageNum);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "day",
-            produces = "application/json")
     @ResponseBody
-    public List<Event> getEventsForDay(@RequestParam("day") @DateTimeFormat(pattern="yyyy-MM-dd") Date day,
-                                        @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
-                                        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    @RequestMapping(method = RequestMethod.GET, params = "day", produces = MediaType.APPLICATION_JSON)
+    public List<Event> getEventsForDay(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date day,
+                                       @RequestParam(defaultValue = "5") int pageSize,
+                                       @RequestParam(defaultValue = "1") int pageNum) {
         return facade.getEventsForDay(day, pageSize, pageNum);
     }
 
-    @RequestMapping(method = RequestMethod.POST,
-            produces = "application/json")
     @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
     public Event createEvent(@RequestBody EventBean event) {
         return facade.createEvent(event);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
-            produces = "application/json")
     @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON)
     public Event updateEvent(@RequestBody EventBean event) {
         return facade.updateEvent(event);
     }
 
-    @RequestMapping(value = "/{eventId}", method = RequestMethod.DELETE,
-            produces = "application/json")
     @ResponseBody
-    public boolean deleteEvent(@PathVariable long eventId) {
-        return facade.deleteEvent(eventId);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON)
+    public boolean deleteEvent(@PathVariable long id) {
+        return facade.deleteEvent(id);
     }
 }
 
