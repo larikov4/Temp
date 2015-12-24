@@ -2,6 +2,7 @@ package com.epam.hw1.web.controller;
 
 import com.epam.hw1.model.UserBean;
 import com.epam.hw1.service.FriendService;
+import com.epam.hw1.web.controller.handler.ExceptionHandlingController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

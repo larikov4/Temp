@@ -2,6 +2,7 @@ package com.epam.hw1.web.controller;
 
 import com.epam.hw1.model.NoteBean;
 import com.epam.hw1.service.TimelineService;
+import com.epam.hw1.web.controller.handler.ExceptionHandlingController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

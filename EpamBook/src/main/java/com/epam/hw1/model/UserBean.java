@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Represents user entity.
+ *
  * Created by Yevhen_Larikov on 20.12.2015.
  */
 public class UserBean {

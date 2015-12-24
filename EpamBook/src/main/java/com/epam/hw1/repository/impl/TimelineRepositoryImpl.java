@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * {@link TimelineRepository} implementation.
+ *
  * Created by Yevhen_Larikov on 20.12.2015.
  */
 @Repository

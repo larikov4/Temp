@@ -6,7 +6,7 @@ import com.epam.hw1.repository.FriendRepository;
 import com.epam.hw1.repository.TimelineRepository;
 import com.epam.hw1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.text.ParseException;
@@ -14,11 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * Component is used for initial filling repositories.
+ * It should be used in demo purpose only.
+ *
  * Created by Yevhen_Larikov on 21.12.2015.
  */
-@Service
+@Component
 public class RepositoriesInitializator {
-
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT);
 
@@ -29,9 +31,9 @@ public class RepositoriesInitializator {
     @Autowired
     private FriendRepository friendRepository;
 
-    public RepositoriesInitializator() {
-    }
-
+    /**
+     * Fills each repository with beans to show main functionality of the application.
+     */
     @PostConstruct
     public void fillRepositories() throws ParseException {
         List<String> names = Arrays.asList("Ivan", "Max", "Alex", "Petr");

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * {@link FriendRepository} implementation.
+ *
  * Created by Yevhen_Larikov on 21.12.2015.
  */
 @Repository
@@ -40,8 +42,7 @@ public class FriendRepositoryImpl implements FriendRepository {
         return friends.get(username) != null && friends.get(username).contains(friendUsername);
     }
 
-    @Override
-    public void addFriend(String username, String friendUsername) {
+    private void addFriend(String username, String friendUsername) {
         if (friends.get(username) == null) {
             friends.put(username, new ArrayList<>());
         }

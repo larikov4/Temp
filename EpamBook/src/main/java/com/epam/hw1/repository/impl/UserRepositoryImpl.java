@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Yevhn on 20.12.2015.
+ * {@link UserRepository} implementation.
+ *
+ * Created by Yevhen_Larikov on 20.12.2015.
  */
 @Repository
 public class UserRepositoryImpl implements UserRepository{

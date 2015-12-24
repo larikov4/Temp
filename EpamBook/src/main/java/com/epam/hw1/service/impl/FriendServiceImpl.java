@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * {@link FriendService} implementation.
+ *
  * Created by Yevhen_Larikov on 21.12.2015.
  */
 @Service

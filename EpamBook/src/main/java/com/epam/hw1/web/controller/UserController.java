@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Gives REST API for manipulation user entities.
+ *
  * Created by Yevhen_Larikov on 20.12.2015.
  */
 @Controller
@@ -20,6 +22,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Adds passed user to inner repository.
+     * @param userBean the user
+     */
     @RequestMapping(method = RequestMethod.POST,
             value = "/createUser",
             consumes = MediaType.APPLICATION_JSON_VALUE)
