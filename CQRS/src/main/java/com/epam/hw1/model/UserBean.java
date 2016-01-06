@@ -19,6 +19,15 @@ public class UserBean {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "UTC")
     private Date dateOfBirth;
 
+    public UserBean() {
+    }
+
+    public UserBean(UserBean user) {
+        name = user.name;
+        username = user.username;
+        dateOfBirth = user.dateOfBirth;
+    }
+
     public String getName() {
         return name;
     }
