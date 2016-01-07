@@ -7,17 +7,9 @@ import java.util.List;
 /**
  * Repository for storing friends.
  *
- * Created by Yevhn on 22.12.2015.
+ * @author Yevhen_Larikov on 22.12.2015.
  */
 public interface FriendRepository {
-
-    /**
-     * Makes two users friends. Friend is symmetric relation.
-     * @param username the username
-     * @param friendUsername the friend username
-     */
-    void makeFriends(String username, String friendUsername);
-
     /**
      * Returns all friend of user by passed username.
      * @param username the username
@@ -40,4 +32,12 @@ public interface FriendRepository {
      * @return boolean whether users are friends.
      */
     boolean isFriends(String username, String friendUsername);
+
+    /**
+     * Add friend to passed username friends list.
+     * @param version the version
+     * @param username the username
+     * @param friendUsername the friend username
+     */
+    void addFriend(long version, String username, String friendUsername);
 }

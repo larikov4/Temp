@@ -4,7 +4,9 @@ import com.epam.hw1.model.NoteBean;
 import com.epam.hw1.model.TimelineBean;
 
 /**
- * Created by Yevhn on 06.01.2016.
+ * Event on note addition.
+ *
+ * @author Yevhen_Larikov on 06.01.2016.
  */
 public class AddNoteEvent implements Event{
     private long versionId;

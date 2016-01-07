@@ -1,6 +1,7 @@
 package com.epam.hw1.web.controller;
 
 
+import com.epam.hw1.model.TimelineBean;
 import com.epam.hw1.model.UserBean;
 import com.epam.hw1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.Map;
+
 /**
  * Gives REST API for manipulation user entities.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 @Controller
 public class UserController {

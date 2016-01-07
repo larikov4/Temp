@@ -3,7 +3,9 @@ package com.epam.hw1.repository.event;
 import com.epam.hw1.model.UserBean;
 
 /**
- * Created by Yevhn on 05.01.2016.
+ * Event on user creation.
+ *
+ * @author Yevhen_Larikov on 05.01.2016.
  */
 public class UserCreateEvent implements Event{
     private long versionId;

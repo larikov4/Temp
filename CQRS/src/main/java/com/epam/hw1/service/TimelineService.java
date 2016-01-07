@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * Service for manipulation timeline entities.
  *
- * Created by Yevhn on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 public interface TimelineService {
     /**
@@ -38,6 +38,17 @@ public interface TimelineService {
      * @throws UserNotFoundException is thrown when user wasn't found.
      */
     void addNote(String username, NoteBean noteBean) throws UserNotFoundException;
+
+    /**
+     * Adds note to passed user friend's timeline.
+     * @param username the username
+     * @param friendUsername the friendUsername
+     * @param noteBean the noteBean
+     * @throws UserNotFoundException is thrown when users were't found.
+     * @throws UsersAreNotFriendsException is thrown when users aren't friends.
+     */
+    void addNoteToFriendTimeline(String username, String friendUsername, NoteBean noteBean)
+            throws UserNotFoundException, UsersAreNotFriendsException;
 }
 
 

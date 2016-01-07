@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by Yevhen_Larikov on 21.12.2015.
+ * @author Yevhen_Larikov on 21.12.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-config.xml"})
@@ -53,8 +53,6 @@ public class UserControllerTest {
         newUser.setDateOfBirth(generateDate());
         newUser.setName("newUserName");
         newUser.setUsername(NEW_USERNAME);
-
-        System.out.println(mapper.writeValueAsString(newUser));
 
         mockMvc.perform(post("/createUser")
                 .content(mapper.writeValueAsString(newUser))

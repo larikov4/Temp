@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Handles exceptions occurred in controllers.
  *
- * Created by Yevhen_Larikov on 23.12.2015.
+ * @author Yevhen_Larikov on 23.12.2015.
  */
 @ControllerAdvice
 public class ExceptionHandlingController {

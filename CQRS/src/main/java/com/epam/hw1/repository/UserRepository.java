@@ -6,14 +6,15 @@ import com.epam.hw1.model.UserBean;
 /**
  * Repository for storing users.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 public interface UserRepository {
     /**
      * Adds user to repository.
+     * @param version the version
      * @param userBean the user
      */
-    void addUser(UserBean userBean);
+    void addUser(long version, UserBean userBean);
 
     /**
      * Returns user bean by its username.

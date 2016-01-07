@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Service for manipulation friend entities.
  *
- * Created by Yevhn on 22.12.2015.
+ * @author Yevhen_Larikov on 22.12.2015.
  */
 public interface FriendService {
     /**

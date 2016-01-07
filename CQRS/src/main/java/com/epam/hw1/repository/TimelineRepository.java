@@ -6,7 +6,7 @@ import com.epam.hw1.model.TimelineBean;
 /**
  * Repository for storing users' timeline.
  *
- * Created by Yevhn on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 public interface TimelineRepository {
     /**
@@ -18,8 +18,9 @@ public interface TimelineRepository {
 
     /**
      * Adds note to passed user's timeline.
+     * @param version the version
      * @param username the username
      * @param noteBean the note with author
      */
-    void addNote(String username, NoteBean noteBean);
+    void addNote(long version, String username, NoteBean noteBean);
 }

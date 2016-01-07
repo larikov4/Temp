@@ -9,28 +9,28 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * {@link UserRepository} implementation.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 @Repository
 public class UserRepositoryImpl implements UserRepository{
-    private Map<String, UserCreateEvent> creationEvents = new HashMap<>();
-    private AtomicLong lastVersionId = new AtomicLong(0);
+    private Map<String, UserCreateEvent> userCreationEvents = new HashMap<>();
 
     @Override
-    public void addUser(UserBean userBean){
-        //Atomic operation is down here. There is nothing compare and swap so that just use atomic.
-        creationEvents.put(userBean.getUsername(), new UserCreateEvent(lastVersionId.incrementAndGet(), userBean));
+    public void addUser(long version, UserBean userBean){
+        userCreationEvents.put(userBean.getUsername(), new UserCreateEvent(version, userBean));
     }
 
     @Override
     public UserBean getUser(String username){
+        if(userCreationEvents.get(username)==null){
+            return null;
+        }
         UserAggregate userAggregate = new UserAggregate();
-        userAggregate.onCreationEvent(creationEvents.get(username));
+        userAggregate.onCreationEvent(userCreationEvents.get(username));
         return userAggregate.getUser();
     }
 

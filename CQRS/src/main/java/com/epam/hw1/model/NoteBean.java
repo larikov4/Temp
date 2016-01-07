@@ -5,7 +5,7 @@ import com.google.common.base.Objects;
 /**
  * Represents note entity of timeline.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 public class NoteBean {
     private String note;

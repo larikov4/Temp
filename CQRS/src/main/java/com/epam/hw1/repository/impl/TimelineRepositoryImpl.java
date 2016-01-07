@@ -16,12 +16,11 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * {@link TimelineRepository} implementation.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 @Repository
 public class TimelineRepositoryImpl implements TimelineRepository{
     private Map<String, List<AddNoteEvent>> addNoteEvents = new HashMap<>();
-    private AtomicLong lastVersionId = new AtomicLong(0);
 
     @Override
     public TimelineBean getTimelineBean(String username) {
@@ -31,11 +30,10 @@ public class TimelineRepositoryImpl implements TimelineRepository{
     }
 
     @Override
-    public void addNote(String username, NoteBean noteBean) {
+    public void addNote(long version, String username, NoteBean noteBean) {
         if (addNoteEvents.get(username) == null) {
             addNoteEvents.put(username, new ArrayList<>());
         }
-        //Atomic operation is down here. There is nothing compare and swap so that just use atomic.
-        addNoteEvents.get(username).add(new AddNoteEvent(lastVersionId.incrementAndGet(), noteBean));
+        addNoteEvents.get(username).add(new AddNoteEvent(version, noteBean));
     }
 }

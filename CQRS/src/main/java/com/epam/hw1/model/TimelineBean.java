@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Represents timeline entity.
  *
- * Created by Yevhen_Larikov on 20.12.2015.
+ * @author Yevhen_Larikov on 20.12.2015.
  */
 public class TimelineBean {
     private List<NoteBean> timeline = new ArrayList<>();

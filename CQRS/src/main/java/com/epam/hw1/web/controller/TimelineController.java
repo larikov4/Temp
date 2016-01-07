@@ -30,7 +30,8 @@ public class TimelineController {
     @RequestMapping(method = RequestMethod.POST,
             value = "/user/{username}/timeline/",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addNote(@PathVariable String username, @RequestBody NoteBean noteBean) throws UserNotFoundException {
+    public void addNote(@PathVariable String username,
+                        @RequestBody NoteBean noteBean) throws UserNotFoundException {
         timelineService.addNote(username, noteBean);
     }
 
@@ -49,8 +50,8 @@ public class TimelineController {
                                         @PathVariable String friendUsername,
                                         @RequestBody NoteBean noteBean)
                                         throws UserNotFoundException, UsersAreNotFriendsException {
-        timelineService.getFriendTimelineBean(username, friendUsername)
-                .addNote(new NoteBean(noteBean.getNote(), username));
+        timelineService.addNoteToFriendTimeline(username, friendUsername,
+                new NoteBean(noteBean.getNote(), username));
     }
 
     /**
