@@ -25,7 +25,7 @@ public interface TimelineService {
      * @param username the username
      * @param friendUsername the friend username
      * @return the timeline bean
-     * @throws UserNotFoundException is thrown when user wasn't found.
+     * @throws UserNotFoundException is thrown when user were't found.
      * @throws UsersAreNotFriendsException is thrown when users aren't friends.
      */
     TimelineBean getFriendTimelineBean(String username, String friendUsername)
@@ -38,6 +38,17 @@ public interface TimelineService {
      * @throws UserNotFoundException is thrown when user wasn't found.
      */
     void addNote(String username, NoteBean noteBean) throws UserNotFoundException;
+
+    /**
+     * Adds note to passed user friend's timeline.
+     * @param username the username
+     * @param friendUsername the friendUsername
+     * @param noteBean the noteBean
+     * @throws UserNotFoundException is thrown when users were't found.
+     * @throws UsersAreNotFriendsException is thrown when users aren't friends.
+     */
+    void addNoteToFriendTimeline(String username, String friendUsername, NoteBean noteBean)
+            throws UserNotFoundException, UsersAreNotFriendsException;
 }
 
 

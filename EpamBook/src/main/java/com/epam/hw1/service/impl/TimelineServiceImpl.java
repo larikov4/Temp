@@ -45,4 +45,13 @@ public class TimelineServiceImpl implements TimelineService {
         userRepository.checkUserExistence(username);
         timelineRepository.addNote(username, noteBean);
     }
+
+    @Override
+    public void addNoteToFriendTimeline(String username, String friendUsername, NoteBean noteBean)
+            throws UserNotFoundException, UsersAreNotFriendsException {
+        userRepository.checkUserExistence(username);
+        userRepository.checkUserExistence(friendUsername);
+        friendRepository.checkIsFriend(username, friendUsername);
+        timelineRepository.addNote(friendUsername, noteBean);
+    }
 }

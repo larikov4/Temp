@@ -29,7 +29,8 @@ public class FriendController {
     @RequestMapping(method = RequestMethod.POST,
             value = "/user/{username}/friend/",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void makeFriends(@PathVariable String username, @RequestBody UserBean friend) throws UserNotFoundException {
+    public void makeFriends(@PathVariable String username,
+                            @RequestBody UserBean friend) throws UserNotFoundException {
         friendService.makeFriends(username, friend.getUsername());
     }
 
