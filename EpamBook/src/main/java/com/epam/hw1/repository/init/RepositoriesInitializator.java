@@ -60,11 +60,6 @@ public class RepositoriesInitializator {
         int day = random.nextInt(27) + 1;
         int month = random.nextInt(11) + 1;
         calendar.setTime(SIMPLE_DATE_FORMAT.parse(day + "-" + month + "-1988"));
-        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
 }
