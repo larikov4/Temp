@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
+	<bean id="myb" class="com.javacodegeeks.camel.MyBean"/>
+	<bean id="proc" class="com.javacodegeeks.camel.MyProcessor"/>
+	<bean id="addProc" class="com.javacodegeeks.camel.AddProcessor"/>
+
+
+
+
+
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+		<route>
+			<from uri="timer:timer//simpleTimer?period=11s" />
+			<process ref="proc"/>
+			<log message="The operation is :: ${headers.operation} and  ${body}" />
+			<choice>
+				<when>
+					<simple>${headers.operation} == 'add'</simple>
+					<to uri="direct:addOperationsQueue"/>
+				</when>
+				<when>
+					<simple>${headers.operation} == 'sub'</simple>
+					<to uri="direct:subOperationsQueue"/>
+				</when>
+				<when>
+					<simple>${headers.operation} == 'mul'</simple>
+					<to uri="direct:mulOperationsQueue"/>
+				</when>
+				<when>
+					<simple>${headers.operation} == 'div'</simple>
+					<to uri="direct:divOperationsQueue"/>
+				</when>
+				<otherwise>
+					<log message="The operation '${headers.operation}' is invalid"/>
+					<to uri="jms:queue:dead"/>
+				</otherwise>
+			</choice>
+		</route>
+
+		<route>
+			<from uri="direct:addOperationsQueue"/>
+			<log message="The operation is :: ${headers.operation} and  ${body}" />
+			<process ref="addProc"/>
+			<to uri="direct:resultQueue"/>
+		</route>
+
+		<route>
+			<from uri="direct:resultQueue"/>
+			<log message="The operation is :: ${headers.operation} and  ${body}" />
+			<multicast>
+				<to uri="stream:out"/>
+				<to uri="file://d:/OutputMQ/?fileExist=Append&amp;fileName=${date:now:yyyy-MM-dd}.txt"/>
+			</multicast>
+		</route>
+
+	</camelContext>
+
+</beans>
