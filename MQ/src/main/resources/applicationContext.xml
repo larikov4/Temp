@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+       ">
+
+    <context:component-scan base-package="com.epam.hw3" />
+
+    <bean id="activeMq"
+          class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="timer:timer//simpleTimer?period=11s" />
+            <process ref="expressionGenerator"/>
+            <log message="Generated expression: header[${headers.operation}], body[${body}]" />
+            <choice>
+                <when>
+                    <simple>${headers.operation} == 'ADD'</simple>
+                    <to uri="activeMq:addOperationsQueue"/>
+                </when>
+                <when>
+                    <simple>${headers.operation} == 'SUB'</simple>
+                    <to uri="activeMq:subOperationsQueue"/>
+                </when>
+                <when>
+                    <simple>${headers.operation} == 'MUL'</simple>
+                    <to uri="activeMq:mulOperationsQueue"/>
+                </when>
+                <when>
+                    <simple>${headers.operation} == 'DIV'</simple>
+                    <to uri="activeMq:divOperationsQueue"/>
+                </when>
+                <otherwise>
+                    <log message="The operation '${headers.operation}' is invalid"/>
+                    <to uri="activeMq:queue:dead"/>
+                </otherwise>
+            </choice>
+        </route>
+
+        <!--<route>-->
+            <!--<from uri="activeMq:addOperationsQueue"/>-->
+            <!--<process ref="addProc"/>-->
+            <!--<log message="Add processor write: ${body}" />-->
+            <!--<to uri="activeMq:resultQueue"/>-->
+        <!--</route>-->
+
+        <!--<route>-->
+            <!--<from uri="activeMq:resultQueue"/>-->
+            <!--<log message="The result is persisting  ${body}" />-->
+            <!--<multicast>-->
+                <!--<to uri="stream:out"/>-->
+                <!--<to uri="file://d:/OutputMQ/?fileExist=Append&amp;fileName=${date:now:yyyy-MM-dd}.txt"/>-->
+            <!--</multicast>-->
+        <!--</route>-->
+
+    </camelContext>
+
+</beans>
