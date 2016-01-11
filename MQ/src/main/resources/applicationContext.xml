@@ -17,27 +17,54 @@
         <property name="brokerURL" value="tcp://localhost:61616"/>
     </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <camelContext xmlns="http://camel.apache.org/schema/spring" typeConverterStatisticsEnabled="true">
+        <dataFormats>
+            <json id="expression" library="Jackson" unmarshalTypeName="com.epam.hw3.model.Expression"/>
+        </dataFormats>
+
+        <!--generates one random expression each minute-->
         <route>
-            <from uri="timer:timer//simpleTimer?period=11s" />
+            <from uri="timer:timer//simpleTimer?period=1m&amp;daemon=false"/>
             <process ref="expressionGenerator"/>
-            <log message="Generated expression: header[${headers.operation}], body[${body}]" />
+            <marshal ref="expression"/>
+            <log message="Generated expression: ${body}" />
+            <to uri="activeMq:queue:validation"/>
+        </route>
+
+        <!--validates generated exception-->
+        <route>
+            <from uri="activeMq:queue:validation"/>
+            <doTry>
+                <unmarshal ref="expression"/>
+                <marshal ref="expression"/>
+                <to uri="activeMq:queue:validExpressions"/>
+                <doCatch>
+                    <exception>com.fasterxml.jackson.databind.JsonMappingException</exception>
+                    <log message="Unmarshaling exception is occurred with value: ${body}"/>
+                    <to uri="activeMq:queue:dead"/>
+                </doCatch>
+            </doTry>
+        </route>
+
+        <!--redirects to specific queue based on operation-->
+        <route>
+            <from uri="activeMq:queue:validExpressions"/>
             <choice>
                 <when>
                     <simple>${headers.operation} == 'ADD'</simple>
-                    <to uri="activeMq:addOperationsQueue"/>
+                    <to uri="activeMq:queue:addOperations"/>
                 </when>
                 <when>
                     <simple>${headers.operation} == 'SUB'</simple>
-                    <to uri="activeMq:subOperationsQueue"/>
+                    <to uri="activeMq:queue:subOperations"/>
                 </when>
                 <when>
                     <simple>${headers.operation} == 'MUL'</simple>
-                    <to uri="activeMq:mulOperationsQueue"/>
+                    <to uri="activeMq:queue:mulOperations"/>
                 </when>
                 <when>
                     <simple>${headers.operation} == 'DIV'</simple>
-                    <to uri="activeMq:divOperationsQueue"/>
+                    <to uri="activeMq:queue:divOperations"/>
                 </when>
                 <otherwise>
                     <log message="The operation '${headers.operation}' is invalid"/>
@@ -46,22 +73,49 @@
             </choice>
         </route>
 
-        <!--<route>-->
-            <!--<from uri="activeMq:addOperationsQueue"/>-->
-            <!--<process ref="addProc"/>-->
-            <!--<log message="Add processor write: ${body}" />-->
-            <!--<to uri="activeMq:resultQueue"/>-->
-        <!--</route>-->
+        <!--processes expression with add operation-->
+        <route>
+            <from uri="activeMq:queue:addOperations"/>
+            <unmarshal ref="expression"/>
+            <process ref="addOperationProcessor"/>
+            <to uri="activeMq:queue:result"/>
+        </route>
 
-        <!--<route>-->
-            <!--<from uri="activeMq:resultQueue"/>-->
-            <!--<log message="The result is persisting  ${body}" />-->
-            <!--<multicast>-->
-                <!--<to uri="stream:out"/>-->
-                <!--<to uri="file://d:/OutputMQ/?fileExist=Append&amp;fileName=${date:now:yyyy-MM-dd}.txt"/>-->
-            <!--</multicast>-->
-        <!--</route>-->
+        <!--processes expression with sub operation-->
+        <route>
+            <from uri="activeMq:queue:subOperations"/>
+            <unmarshal ref="expression"/>
+            <process ref="subOperationProcessor"/>
+            <to uri="activeMq:queue:result"/>
+        </route>
 
+        <!--processes expression with mul operation-->
+        <route>
+            <from uri="activeMq:queue:mulOperations"/>
+            <unmarshal ref="expression"/>
+            <process ref="mulOperationProcessor"/>
+            <to uri="activeMq:queue:result"/>
+        </route>
+
+        <!--processes expression with div operation-->
+        <route>
+            <from uri="activeMq:queue:divOperations"/>
+            <unmarshal ref="expression"/>
+            <process ref="divOperationProcessor"/>
+            <to uri="activeMq:queue:result"/>
+        </route>
+
+        <!--saves result to file and print it to out stream-->
+        <route>
+            <from uri="activeMq:queue:result"/>
+            <setBody>
+                <simple>${body}\n</simple>
+            </setBody>
+            <multicast>
+                <to uri="stream:out"/>
+                <to uri="file:./OutputMQ/?fileExist=Append&amp;fileName=${date:now:yyyy-MM-dd}.txt"/>
+            </multicast>
+        </route>
     </camelContext>
 
 </beans>

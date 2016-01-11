@@ -5,6 +5,11 @@ import org.apache.camel.spring.SpringCamelContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * Demo class.
+ *
+ * @author Yevhen_Larikov
+ */
 public class Demo {
 	public static void main(String[] args) throws Exception {
 		ApplicationContext appContext = new ClassPathXmlApplicationContext(
@@ -12,6 +17,5 @@ public class Demo {
 		CamelContext camelContext = SpringCamelContext.springCamelContext(
 				appContext, false);
 		camelContext.start();
-		Thread.sleep(3000);
 	}
 }
