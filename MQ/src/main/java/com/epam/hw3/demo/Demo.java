@@ -11,11 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Yevhen_Larikov
  */
 public class Demo {
-	public static void main(String[] args) throws Exception {
-		ApplicationContext appContext = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		CamelContext camelContext = SpringCamelContext.springCamelContext(
-				appContext, false);
-		camelContext.start();
-	}
+    public static void main(String[] args) {
+        new ClassPathXmlApplicationContext("applicationContext.xml");
+    }
 }
