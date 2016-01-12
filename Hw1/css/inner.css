@@ -1,0 +1,311 @@
+body{
+    word-wrap: break-word;
+    -webkit-nbsp-mode: space;
+    -webkit-line-break: after-white-space;
+    font: 14px/1.3em 'open_sansregular', 'Arial', 'Tahoma', sans-serif;
+    color:#000;
+    margin: 0;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+   list-style-type: none;    
+}
+
+nav li a{
+    display: block;
+    padding: 20px;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+}
+
+figure.avatar{
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+aside{
+    position: fixed;
+    width: 250px;
+    padding-top: 10px;
+    height: 100%;
+    background-color:floralwhite;
+}
+
+.go_back{
+    position: fixed;
+    bottom: 25px;
+    display: block;
+    width: 250px;
+    text-align: center;
+}
+
+main{
+    margin-left: 250px;
+    padding: 40px;
+    max-width: 900px;
+}
+
+h2.title{
+    margin-bottom: 50px;
+}
+
+#about_me p{
+    margin-bottom: 40px;
+}
+
+#education li {
+    margin-bottom: 10px;
+}
+
+#education li h4 {
+    margin: 0 0 5px 0;
+}
+
+#education li p {
+    margin: 0 0 0 0;
+}
+
+#education .content-wrapper{
+    height: 400px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+#education .year{
+    position: absolute;
+    margin: 12px;
+    width: 10%;
+}
+
+#education .description{
+    position: relative;
+    box-sizing: border-box;
+    padding: 15px;
+    left: 10%;
+    width: 90%;
+}
+
+#education{
+    margin-bottom: 40px;
+}
+
+
+#experience li{
+    margin-bottom: 30px;
+}
+
+#experience li .company_wrapper{
+    position: absolute;
+    width: 10%;
+}
+
+
+#experience li article{
+    position: relative;
+    box-sizing: border-box;
+    left: 15%;
+    width: 85%;
+}
+
+#experience li h4 {
+    margin: 0;
+}
+
+#experience li p {
+    margin: 0;
+}
+
+#experience{
+    margin-bottom: 40px;
+}
+
+#skills li{
+    background-color: antiquewhite;
+    height: 30px;
+    margin: 5px 0;
+    display: block;    
+}
+
+#skills li:nth-child(2){
+    width: 75%
+}
+
+#skills li:last-child{
+    width: 25%
+}
+
+#skills li span {
+    display: table-cell;
+    vertical-align: middle;
+    height: 30px;
+    padding-left: 10px;
+}
+
+#skills{
+    margin-bottom: 40px;
+}
+
+.scale {
+    position: relative;
+    margin-bottom: 95px;
+}
+
+.scale-item{
+    height: 5px;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    position: absolute;
+    top: 5px;
+    margin: 5px 0;
+}
+
+.scale-item span{
+    position: absolute;
+    top:15px;
+}
+
+.scale-item.beginner{
+    width: 0%;
+}
+
+.scale-item.proficient{
+    width: 25%;
+}
+
+.scale-item.proficient span{
+    right: -30px;
+}
+
+.scale-item.expert{
+    width: 75%;
+}
+
+.scale-item.expert span{
+    right: -22px;
+}
+
+.scale-item.master{
+    width: 100%;
+}
+
+.scale-item.master span{
+    right: 0;
+}
+
+.categories {
+    margin-bottom: 15px;
+}
+
+.categories li{
+    display: inline;
+}
+
+.categories li:after{
+    content: " /";
+}
+
+.categories li:last-child:after{
+    content: "";
+}
+
+#portfolio {    
+    margin-bottom: 50px;
+}
+
+.thumbnails{
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.thumbnails img{
+    float:left;
+    width: 300px;
+    height: 160px;
+    margin: 0 10px 10px 0;
+}
+
+#contacts .icon {
+    float: left;
+    display: block;
+    clear: both;
+    overflow: hidden;
+    line-height: 5;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+}
+
+#contacts address {
+    height: 60px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#contacts address p {
+    margin: 0;
+    font-style: normal;
+}
+
+#contacts address h4 {
+    margin: 0;
+    font-style: normal;
+}
+
+#contacts{
+    margin-bottom: 40px;
+}
+
+#feedbacks{
+    position: relative;
+}
+
+#feedbacks article {
+    padding: 15px;  
+    background-color: antiquewhite;
+}
+
+#feedbacks article p {
+    margin: 0;
+}
+
+#feedbacks figure {
+    position: absolute;
+}
+
+#feedbacks img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+#feedbacks figcaption span:after{
+    content: ", ";
+}
+
+#feedbacks figcaption{
+    line-height: 50px;
+    margin: 0 0 0 55px ;
+}
+
+#feedbacks figure{
+    margin:-5px 0 0 4px;
+}
+
+#feedbacks li{
+    margin-bottom: 90px;
+}
+
+#feedbacks li:last-child{
+    margin-bottom: 10px;
+}
