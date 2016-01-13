@@ -1,0 +1,43 @@
+.index-holder{
+	margin: 200px auto;
+	width: 500px;
+}
+
+.index-photo{
+	text-align: center;
+}
+
+.index-photo-img {
+	margin: auto;
+	width: 300px;
+	height: 300px;
+}
+
+.index-info {
+	text-align: center;
+}
+
+.index-name {
+	font-weight: bold;
+	font-size: 36px;
+}
+
+.index-motto {
+	font-size: 24px;
+}
+
+.index-know-more {
+	text-decoration: none;
+	color: #0d0;
+}
+
+@media screen and (max-width: 600px) {
+	.index-holder {
+		width: 300px;
+	}
+	
+	.body {
+		font-size: 12px;
+		line-height: 15px;
+	}
+}
