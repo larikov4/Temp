@@ -1,7 +1,4 @@
 body{
-    word-wrap: break-word;
-    -webkit-nbsp-mode: space;
-    -webkit-line-break: after-white-space;
     font: 14px/1.3em 'open_sansregular', 'Arial', 'Tahoma', sans-serif;
     color:#000;
     margin: 0;
@@ -26,7 +23,7 @@ img{
     height: 100px;
 }
 
-figure.avatar{
+.avatar{
     width: 100px;
     margin: 0 auto;
     margin-bottom:10px;
@@ -41,7 +38,42 @@ aside{
     background-color:floralwhite;
 }
 
-.go_back{
+aside .sidebar-toggle-button {
+    position: absolute;
+    top: 40px;
+    left: 250px;
+    width: 40px;
+    height: 40px;
+    
+    border: 1px solid black;
+    
+    background-color: #000;
+    color: #fff;
+    
+    line-height: 1.7;
+    text-align: center;
+    font-size: 24px;
+}
+
+aside li{
+    cursor: default;
+}
+
+aside a {
+    color:#000;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+aside a:visited {
+    color:#000;
+}
+
+.nav-icon{
+    padding-right: 10px;
+}
+
+.go-back{
     position: fixed;
     bottom: 25px;
     display: block;
@@ -307,5 +339,64 @@ h2.title{
 }
 
 #feedbacks li:last-child{
-    margin-bottom: 10px;
+    margin-bottom: 40px;
 }
+
+@media screen and (max-width: 600px) {
+    
+    aside {
+        width: 75px;
+    }
+    
+    .aside-toggle-button {
+        left: 75px;
+    }
+
+    .avatar {
+        margin: 0 0 0 5px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .avatar figcaption {
+        display: none;
+    }
+    
+    .avatar img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    nav {
+        margin-top: 20px;
+    }
+    
+    .inner-nav-icon  {
+        left: 5px;
+    }
+    
+    .nav-text {
+        display: none;
+    }
+    
+    .inner-go-back {
+        left: 0;
+    }
+    
+    .inner-info {
+        margin-left: 75px;
+        width: 500px;
+    }
+    
+    .inner-skill-beginner {
+        display: none;
+    }
+    
+    .body {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
+
+
+
