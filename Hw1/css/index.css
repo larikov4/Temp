@@ -1,10 +1,12 @@
 body{
-    font: 14px/1.3em 'open_sansregular', 'Arial', 'Tahoma', sans-serif;
+    font: 1em 'Arial', 'Tahoma', sans-serif;
     color:#000;
     margin: 0;
+    overflow:hidden;
+
 }
 
-section {
+main {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -13,32 +15,26 @@ section {
     text-align: center;
 }
 
-figure{
-    width: 200px;
-    margin: 0 auto;
-    margin-bottom:10px;
+.avatar-wrapper{
+    margin: 0;
 }
 
-figure img {
+.avatar {
     width: 200px;
     height: 200px;    
     margin-bottom:10px;
 }
 
-figure figcaption {
-    font: 45px/48px 'open_sansbold', 'Arial', 'Tahoma', sans-serif;
-    font-weight: 700;
+h1, h3, p, article div {
+    margin: 0 0 10px 0;
 }
 
-article h3 {
-    font: 30px/33px 'open_sansregular', 'Arial', 'Tahoma', sans-serif;
-    margin-bottom: 10px;
-}
+@media screen and (max-width: 600px) {
+    body{
+        font-size: 0.8em;
+    }
 
-article div {
-    margin-bottom: 10px;
-}
-
-main:after{
-    position: relative;
+    main {
+        width: 250px;
+    }
 }

@@ -5,40 +5,39 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
     <body>
-
         <aside>
             <div class="sidebar-toggler fa fa-bars"></div>
             <figure class="avatar">
-                <img src="./images/han_solo.jpg" alt="Han Solo avatar"/>
+                <img src="images/han-solo-avatar.jpg" alt="avatar"/>
                 <figcaption><h2>Han Solo</h2></figcaption>
             </figure>                    
             <nav>
                 <ul>
-                    <li><a href="#about_me">
+                    <li><a class="nav-item" href="#about_me">
                         <span class="fa fa-user nav-icon"></span>
                         <span class="nav-text">About me</span>
                     </a></li>
-                    <li><a href="#education">
+                    <li><a class="nav-item" href="#education">
                         <span class="fa fa-graduation-cap nav-icon"></span>
                         <span class="nav-text">Education</span>
                     </a></li>
-                    <li><a href="#experience">
+                    <li><a class="nav-item" href="#experience">
                         <span class="fa fa-pencil nav-icon"></span>
                         <span class="nav-text">Experience</span>
                     </a></li>
-                    <li><a href="#skills">
+                    <li><a class="nav-item" href="#skills">
                         <span class="fa fa-diamond nav-icon"></span>
                         <span class="nav-text">Skills</span>
                     </a></li>
-                    <li><a href="#portfolio">
+                    <li><a class="nav-item" href="#portfolio">
                         <span class="fa fa-suitcase nav-icon"></span>
                         <span class="nav-text">Portfolio</span>
                     </a></li>
-                    <li><a href="#contacts">
+                    <li><a class="nav-item" href="#contacts">
                         <span class="fa fa-envelope nav-icon"></span>
                         <span class="nav-text">Contacts</span>
                     </a></li>
-                    <li><a href="#feedbacks">
+                    <li><a class="nav-item" href="#feedbacks">
                         <span class="fa fa-comment nav-icon"></span>
                         <span class="nav-text">Feedbacks</span>
                     </a></li>
@@ -55,48 +54,45 @@
                 <h2 class="title">About Me</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
             </article>
-            <section id="education">
+            <div id="education">
                 <h2 class="title">Education</h2>
-                <div class="content-wrapper">
-                    <ul>
-                        <li>
-                            <div class="year">1000</div>
-                            <div class="description">
-                                <h4>I was born in the galaxy far, far away...</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="year">1005</div>
-                            <div class="description">
-                                <h4>Lorem ipsum dolor sit amet</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="year">1012</div>
-                            <div class="description">
-                                <h4>consectetur adipiscing elit</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
-                            </div>
+                <ul class="education-list">
+                    <li class="education-item">
+                        <div class="year">1000</div>
+                        <article class="description">
+                            <h4>I was born in the galaxy far, far away...</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
+                        </article>
+                    </li>
+                    <li class="education-item">
+                        <div class="year">1005</div>
+                        <article class="description">
+                            <h4>Lorem ipsum dolor sit amet</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
+                        </article>
+                    </li>
+                    <li class="education-item">
+                        <div class="year">1012</div>
+                        <article class="description">
+                            <h4>consectetur adipiscing elit</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
+                        </article>
 
-                        </li>
-                        <li>
-                            <div class="year">1012</div>
-                            <div class="description">
-                                <h4>Ut enim ad minim veniam</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
-                            </div>
-
-                        </li>
-                    </ul>
-                </div>
-            </section>
+                    </li>
+                    <li class="education-item">
+                        <div class="year">1012</div>
+                        <article class="description">
+                            <h4>Ut enim ad minim veniam</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lorem nisl, ullamcorper a odio sed, mattis auctor velit. Fusce pellentesque dictum facilisis. Quisque at lacinia odio. Proin turpis nibh, facilisis non purus non, efficitur vestibulum ligula. Donec faucibus elit turpis, ut interdum lectus porta ac. Etiam posuere aliquet neque.</p>
+                        </article>
+                    </li>
+                </ul>
+            </div>
             
-            <section id="experience">
+            <div id="experience">
                 <h2 class="title">Experience</h2>
                 <ul>
-                    <li>
+                    <li class="experience-item">
                         <div class="company_wrapper">
                             <h4>Google</h4>
                             <div class="employed_years">2013-2014</div>
@@ -106,7 +102,7 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
                         </article>
                     </li>
-                    <li>
+                    <li class="experience-item">
                         <div class="company_wrapper">
                             <h4>Twitter</h4>
                             <div class="employed_years">2014-2015</div>
@@ -117,69 +113,69 @@
                         </article>
                     </li>
                 </ul>
-            </section>
+            </div>
             
-            <section id="skills">
+            <div id="skills">
                 <h2 class="title">Skills</h2>
                 <ul>
-                    <li><span>100% example</span></li>
-                    <li><span>75% example</span></li>
-                    <li><span>25% example</span></li>
+                    <li class="skill-item"><span>100% example</span></li>
+                    <li class="skill-item"><span>75% example</span></li>
+                    <li class="skill-item"><span>50% example</span></li>
                 </ul>
-                <div class="scale">
+                <div class="skills-scale">
                     <div class="scale-item beginner"><span>Beginner</span></div>
                     <div class="scale-item proficient"><span>Proficient</span></div>
                     <div class="scale-item expert"><span>Expert</span></div>
                     <div class="scale-item master"><span>Master</span></div>
                 </div>
-            </section>
+            </div>
             
-            <section id="portfolio">
+            <div id="portfolio">
                 <h2 class="title">Portfolio</h2>
-                    <ul class="categories">
-                        <li><a href="#">All</a></li>
-                        <li><a href="#">Code</a></li>
-                        <li><a href="#">UI</a></li>
+                    <ul class="portfolio-categories">
+                        <li class="category-item"><a href="#">All</a></li>
+                        <li class="category-item"><a href="#">Code</a></li>
+                        <li class="category-item"><a href="#">UI</a></li>
                     </ul>
-                <ul class="thumbnails">
-                    <li><img src="./images/Hansoloprofile.jpg" alt="Han Solo avatar"/></li>
-                    <li><img src="./images/Hansoloprofile.jpg" alt="Han Solo avatar"/></li>
-                    <li><img src="./images/Hansoloprofile.jpg" alt="Han Solo avatar"/></li>
-                    <li><img src="./images/Hansoloprofile.jpg" alt="Han Solo avatar"/></li>
-                    <li><img src="./images/Hansoloprofile.jpg" alt="Han Solo avatar"/></li>
+                <ul class="portfolio-thumbnails">
+                    <li><img src="./images/han-solo-happy.jpg" alt="portfolio thumbnail"/></li>
+                    <li><img src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/></li>
+                    <li><img src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/></li>
+                    <li><img src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/></li>
+                    <li><img src="./images/han-solo-happy.jpg" alt="portfolio thumbnail"/></li>
                 </ul>  
-            </section>
+            </div>
             
-            <section id="contacts">
+            <div id="contacts">
                 <h2 class="title">Contacts</h2>
                 <ul>  
-                    <li>
+                    <li class="contact-item">
                         <div class="icon"><i class="fa fa-phone fa-2x"></i></div>
                         <address>
                             <h4>500 345 242</h4>
                         </address>
                     </li>                
-                    <li>
+                    <li class="contact-item">
                         <div class="icon"><i class="fa fa-envelope fa-2x"></i></div>
                         <address>
                             <h4>sdfsdf@sdfsdf.sdf</h4>
                         </address>
                     </li>
-                    <li>
+                    <li class="contact-item">
                         <div class="icon"><i class="fa fa-twitter fa-2x"></i></div>
                         <address>
                             <h4>Twitter</h4>
                             <p>Lorem ipsum dolor sit amet</p>
                         </address>                        
                     </li>   
-                    <li>
+                    <li class="contact-item">
                         <div class="icon"><i class="fa fa-facebook fa-2x"></i></div>
                         <address>
                             <h4>Facebook</h4>
                             <p>Lorem ipsum dolor sit amet</p>
                         </address>                        
                     </li>  
-                    <li>
+                    <li class="contact-item">
                         <div class="icon"><i class="fa fa-skype fa-2x"></i></div>
                         <address>
                             <h4>Skype</h4>
@@ -187,77 +183,68 @@
                         </address>                        
                     </li>   
                 </ul>
-            </section>
+            </div>
             
-            <section id="feedbacks">
+            <div id="feedbacks">
                 <h2 class="title">Feedbacks</h2>
                 <ul>
-                    <li>
-                        <article>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </article>
-                        <figure class="author">
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
                             <img src="./images/luke.jpg" alt="Han Solo avatar"/>
-                            <figcaption>
-                                <span>Luke</span>
-                                <a href="#">somesite</a>
-                            </figcaption>                              
-                        </figure>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
                     </li>
-                    
-                    <li>
-                        <article>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </article>
-                        <figure class="author">
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
                             <img src="./images/luke.jpg" alt="Han Solo avatar"/>
-                            <figcaption>
-                                <span>Luke</span>
-                                <a href="#">somesite</a>
-                            </figcaption>                              
-                        </figure>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
                     </li>
-                    
-                    <li>
-                        <article>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </article>
-                        <figure class="author">
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
                             <img src="./images/luke.jpg" alt="Han Solo avatar"/>
-                            <figcaption>
-                                <span>Luke</span>
-                                <a href="#">somesite</a>
-                            </figcaption>                              
-                        </figure>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
                     </li>
-                    
-                    <li>
-                        <article>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </article>
-                        <figure class="author">
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
                             <img src="./images/luke.jpg" alt="Han Solo avatar"/>
-                            <figcaption>
-                                <span>Luke</span>
-                                <a href="#">somesite</a>
-                            </figcaption>                              
-                        </figure>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
+                    </li>                                                                            
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
+                            <img src="./images/luke.jpg" alt="Han Solo avatar"/>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
                     </li>
 
-                    <li>
-                        <article>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        </article>
-                        <figure class="author">
+                    <li class="feedback-item">
+                        <blockquote class="feedback">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit,Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                            </div>
                             <img src="./images/luke.jpg" alt="Han Solo avatar"/>
-                            <figcaption>
-                                <span>Luke</span>
-                                <a href="#">somesite</a>
-                            </figcaption>                              
-                        </figure>
+                            <cite>Luke, <a href="#">somesite</a></cite>
+                        </blockquote>
                     </li>
                 </ul>
-            </section>
+            </div>
             <a class="go-top" href="#">
                 <span class="fa fa-chevron-up go-top-icon"></span>
             </a>
