@@ -67,9 +67,9 @@ aside a:visited {
 }
 
 nav {
-    height: calc(100% - 102px);
-    height: -webkit-calc(100% - 150px);
-    height: -moz-calc(100% - 150px);
+    height: calc(100% - 250px);
+    height: -webkit-calc(100% - 250px);
+    height: -moz-calc(100% - 250px);
     overflow-y: auto;
 }
 
@@ -102,9 +102,10 @@ main{
     margin-left: 250px;
     padding: 40px;
     max-width: 900px;
+    box-sizing: border-box;
 }
 
-main > article, main > div {
+main > article {
     margin-bottom: 40px;
 }
 
@@ -284,15 +285,17 @@ main > article, main > div {
 
 /*contacts*/
 
-.contact-item .icon {
+.contact-icon-wrapper {
     float: left;
-    display: block;
-    clear: both;
-    overflow: hidden;
-    line-height: 5;
+    display: table;
     text-align: center;
     width: 60px;
     height: 60px;
+}
+
+.contact-icon-wrapper span {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .contact-item address {
@@ -394,6 +397,10 @@ main > article, main > div {
     
     nav {
         margin-top: 20px;
+        height: calc(100% - 150px);
+        height: -webkit-calc(100% - 150px);
+        height: -moz-calc(100% - 150px);
+        overflow-y: auto;
     }
     
     .nav-text {
