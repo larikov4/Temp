@@ -1,4 +1,8 @@
 @import "base.less";
+//fa fa-refresh fa-spin fa-3x fa-fw
+
+@thumbnail-width:290px;
+@thumbnail-height:150px;
 
 body{
     font:14px/1.3em @font;
@@ -14,6 +18,10 @@ ul{
 
 li{
    list-style-type: none;    
+}
+
+h1,h2,h3,p{
+    margin: 0;
 }
 
 /*sidebar*/
@@ -35,7 +43,6 @@ aside .sidebar-toggler {
     background-color: @midnight;
     border-radius: 0 5px 5px 0;
     color: @white;
-    font-size: 18px;
     line-height: 30px;
     text-align: center;
 }
@@ -73,7 +80,7 @@ aside a:visited {
     font: 16px/19px @font;
     color: @white;
     font-weight: @font-weight-bold;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 nav {
@@ -86,6 +93,7 @@ nav {
 .nav-item{
     display: block;
     padding: 20px;
+    border: 1px dashed @oxford-blue;
 }
 
 .nav-item.active{
@@ -151,10 +159,12 @@ main > article {
 
 .education-item h4 {
     margin: 0 0 5px 0;
+    font: 16px/19px @font;
+    font-weight: @font-weight-bold;
 }
 
 .education-item p {
-    margin: 0 0 0 0;
+    margin: 0;
 }
 
 .education-list:before{
@@ -168,7 +178,7 @@ main > article {
     background-color: @shamrock;    
 }
 
-.education-item .year{
+.education-year{
     float: left;
     padding: 10px 0;
     background-color: @white;
@@ -177,12 +187,26 @@ main > article {
     height: 100%;
 }
 
-.education-item .description{
+.education-description{
     float: left;   
-    float: left;   
+    position: relative;
     box-sizing: border-box;
     padding: 15px;
     width: 90%;
+    background-color: @gallery;
+    margin-bottom: 10px;
+}
+
+.education-description:before{
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 13px 10px 0;
+    border-color: transparent @gallery transparent transparent; 
 }
 
 /*experience*/
@@ -208,6 +232,8 @@ main > article {
 
 .experience-item h4 {
     margin: 0;
+    font: 16px/19px @font;
+    font-weight: @font-weight-bold;
 }
 
 .experience-item p {
@@ -220,7 +246,9 @@ main > article {
     background-color: @shamrock;
     height: 30px;
     margin: 5px 0;
-    display: block;    
+    display: block;
+    -webkit-transition: width 1s;
+    transition: width 1s;
 }
 
 .skill-item:nth-child(2){
@@ -236,6 +264,7 @@ main > article {
     vertical-align: middle;
     height: 30px;
     padding-left: 10px;
+    color: @white;
 }
 
 /*skill scale*/
@@ -247,18 +276,18 @@ main > article {
 
 .scale-item{
     height: 5px;
-    border-right: 1px solid #aaa;
-    border-bottom: 1px solid #aaa;
+    border-right: 1px solid @alto;
+    border-bottom: 1px solid @alto;
     position: absolute;
     top: 5px;
     margin: 5px 0;
-        font-size: 10px;
-    color: #aaa;
+    font-size: 10px;
 }
 
 .scale-item span{
     position: absolute;
     top:15px;
+    color: @alto;
 }
 
 .scale-item.beginner{
@@ -292,7 +321,7 @@ main > article {
 /*portfolio*/
 
 .portfolio-categories {
-    margin-bottom: 15px;
+//    margin-bottom: 15px;
 }
 
 .category-item{
@@ -313,12 +342,64 @@ main > article {
     overflow: hidden;
 }
 
-.portfolio-thumbnails img{
+.portfolio-thumbnails li {
     float:left;
-    width: 290px;
-    height: 150px;
-    margin: 0 15px 15px 0;
+    width: @thumbnail-width;
+    height: @thumbnail-height;
+    margin: 15px 15px 0 0;
 }
+
+.thumbnail-wrapper {
+    overflow: hidden;
+    width: @thumbnail-width;
+    height: @thumbnail-height;
+}
+
+.thumbnail{
+    width: @thumbnail-width;
+    height: @thumbnail-height;
+}
+
+.thumbnail-curtain{
+    position: relative;    
+    background-color: rgba(0,0,0,0.7);
+    border: 1px solid @shamrock;
+    width: @thumbnail-width;
+    height: @thumbnail-height;
+    padding: 10px;
+    box-sizing: border-box;
+    
+    margin-top:0;
+    -webkit-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    
+    h2{
+        color: @shamrock;        
+        font-size: 15px;
+        font-weight: @font-weight-bold;
+        margin-bottom: 10px;
+    }
+    
+    p{
+        color: @white;
+        margin-bottom: 10px;
+    }
+    
+    span{
+        color: @shamrock;
+    }
+}
+
+
+
+.thumbnail:hover + .thumbnail-curtain{
+    margin-top:-154px;
+}
+
+.thumbnail-curtain:hover{
+    margin-top:-154px;
+}
+
 
 /*contacts*/
 
@@ -404,11 +485,11 @@ main > article {
     height: 30px;
     
     background-color: @black;
+    border-radius: 5px 5px 0 0;
     color:@white;
     
-    line-height: 2;
+    line-height: 30px;
     text-align: center;
-    font-size: 15px;
 }
 
 @media screen and (max-width: 600px) {
