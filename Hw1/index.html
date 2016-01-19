@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/index.css" rel="stylesheet" type="text/css">
+        <link href="css/index.less" rel="stylesheet/less" type="text/css">
+        <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'>
     </head>
     <body>
         <main>
-            <figure class="avatar-wrapper">
-                <img class="avatar" src="images/han-solo-avatar.jpg" alt="avatar">
-            </figure>
-            <article>
-                <h1>Han Solo</h1>
-                <h3>Captain of the Millennium Falcon.</h3>   
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget erat nisl.</p>
-                <a href="inner.html">Know more</a>
-            </article>
-        </main>        
+            <div class="content-wrapper">            
+                <figure class="avatar-wrapper">
+                    <img class="avatar" src="images/han-solo-avatar.jpg" alt="avatar">
+                </figure>
+                <article>
+                    <h1>Han Solo</h1>
+                    <h3>Captain of the Millennium Falcon.</h3>   
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget erat nisl.</p>
+                    <a href="inner.html">
+                        <span>Know more</span>
+                    </a>
+                </article>
+            </div>
+        </main>   
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>     
     </body>
 </html>

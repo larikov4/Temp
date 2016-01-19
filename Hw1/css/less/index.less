@@ -1,0 +1,43 @@
+body{
+    font: 1em 'Arial', 'Tahoma', sans-serif;
+    color:#000;
+    margin: 0;
+    overflow:hidden;
+}
+
+main{
+    background-image: url(../)
+}
+
+.content-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:470px;
+    text-align: center;
+}
+
+.avatar-wrapper{
+    margin: 0;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;    
+    margin-bottom:10px;
+}
+
+h1, h3, p, article div {
+    margin: 0 0 10px 0;
+}
+
+@media screen and (max-width: 600px) {
+    body{
+        font-size: 0.8em;
+    }
+
+    main {
+        width: 250px;
+    }
+}

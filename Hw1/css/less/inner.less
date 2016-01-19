@@ -1,0 +1,439 @@
+body{
+    font: 1em 'Arial', 'Tahoma', sans-serif;
+    color:#000;
+    margin: 0;
+    height: 100%;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+   list-style-type: none;    
+}
+
+/*sidebar*/
+
+aside{
+    position: fixed;
+    width: 250px;
+    padding-top: 10px;
+    height: 100%;
+    background-color:floralwhite;
+}
+
+aside .sidebar-toggler {
+    position: fixed;
+    top: 37px;
+    left: 250px;
+    width: 30px;
+    height: 30px;
+    
+    border: 1px solid black;
+    
+    background-color: #000;
+    color: #fff;
+    
+    line-height: 1.5;
+    text-align: center;
+    font-size: 20px;
+}
+
+aside li{
+    cursor: default;
+}
+
+aside a {
+    color:#000;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+aside a:visited {
+    color:#000;
+}
+
+.avatar{
+    margin: 0 auto;
+    margin-bottom:10px;
+    text-align: center;
+}
+
+.avatar img{
+    width: 100px;
+    height: 100px;
+}
+
+nav {
+    height: calc(100% - 250px);
+    height: -webkit-calc(100% - 250px);
+    height: -moz-calc(100% - 250px);
+    overflow-y: auto;
+}
+
+.nav-item{
+    display: block;
+    padding: 20px;
+}
+
+.nav-icon{
+    width: 25px;
+    text-align: center;
+}
+
+.go-back-icon{
+    width: 20px;
+    text-align: center;
+}
+
+.go-back{
+    position: fixed;
+    bottom: 25px;
+    display: block;
+    width: 250px;
+    text-align: center;
+}
+
+/*main*/
+
+main{
+    margin-left: 250px;
+    padding: 40px;
+    max-width: 900px;
+    box-sizing: border-box;
+}
+
+main > article {
+    margin-bottom: 40px;
+}
+
+.title{
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+
+/*education*/
+
+.education-list{
+    height: 400px;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.education-item {
+    margin-bottom: 10px;
+}
+
+.education-item h4 {
+    margin: 0 0 5px 0;
+}
+
+.education-item p {
+    margin: 0 0 0 0;
+}
+
+.education-item .year{
+    float: left;
+    padding-top: 12px;
+    box-sizing: border-box;
+    width: 10%;
+}
+
+.education-item .description{
+    float: left;
+    box-sizing: border-box;
+    padding: 15px;
+    width: 90%;
+}
+
+/*experience*/
+
+.experience-item{
+    display: block;
+    clear: both;
+    overflow: hidden;   
+    margin-bottom: 30px;
+}
+
+.experience-item .company_wrapper{
+    float:left;
+    width: 15%;
+}
+
+.experience-item article{
+    float: left;
+    box-sizing: border-box;    
+    width: 85%;
+    padding-left: 20px;
+}
+
+.experience-item h4 {
+    margin: 0;
+}
+
+.experience-item p {
+    margin: 0;
+}
+
+/*skills*/
+
+.skill-item{
+    background-color: antiquewhite;
+    height: 30px;
+    margin: 5px 0;
+    display: block;    
+}
+
+.skill-item:nth-child(2){
+    width: 75%
+}
+
+.skill-item:last-child{
+    width: 50%
+}
+
+.skill-item span {
+    display: table-cell;
+    vertical-align: middle;
+    height: 30px;
+    padding-left: 10px;
+}
+
+/*skill scale*/
+
+.skills-scale {
+    position: relative;
+    margin-bottom: 95px;
+}
+
+.scale-item{
+    height: 5px;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    position: absolute;
+    top: 5px;
+    margin: 5px 0;
+        font-size: 10px;
+    color: #aaa;
+}
+
+.scale-item span{
+    position: absolute;
+    top:15px;
+}
+
+.scale-item.beginner{
+    width: 0%;
+}
+
+.scale-item.proficient{
+    width: 25%;
+}
+
+.scale-item.proficient span{
+    right: -30px;
+}
+
+.scale-item.expert{
+    width: 75%;
+}
+
+.scale-item.expert span{
+    right: -22px;
+}
+
+.scale-item.master{
+    width: 100%;
+}
+
+.scale-item.master span{
+    right: 0;
+}
+
+/*portfolio*/
+
+.portfolio-categories {
+    margin-bottom: 15px;
+}
+
+.category-item{
+    display: inline;
+}
+
+.category-item:after{
+    content: " /";
+}
+
+.category-item:last-child:after{
+    content: "";
+}
+
+.portfolio-thumbnails{
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.portfolio-thumbnails img{
+    float:left;
+    width: 290px;
+    height: 150px;
+    margin: 0 15px 15px 0;
+}
+
+/*contacts*/
+
+.contact-icon-wrapper {
+    float: left;
+    display: table;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+}
+
+.contact-icon-wrapper span {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.contact-item address {
+    height: 60px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.contact-item address p {
+    margin: 0;
+    font-style: normal;
+}
+
+.contact-item address h4 {
+    margin: 0;
+    font-style: normal;
+}
+
+/*feedback*/
+
+.feedback {
+    margin:0;
+}
+
+.feedback div {
+    padding: 15px;  
+    background-color: antiquewhite;
+}
+
+.feedback div p {
+    margin: 0;
+}
+
+.feedback figure {
+    position: absolute;
+}
+
+.feedback img {
+    position: absolute;
+    margin:-5px 0 0 4px;
+    width: 50px;
+    height: 50px;
+}
+
+.feedback cite{
+    line-height: 50px;
+    margin: 0 0 0 60px ;
+}
+
+.feedback-item{
+    margin-bottom: 40px;
+}
+
+.feedback-item:last-of-type{
+    margin-bottom: 0;
+}
+
+#feedbacks{
+    margin-bottom: 0;
+}
+
+/*go top */
+
+.go-top {
+    position: fixed;
+    bottom: 0px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    
+    border: 1px solid black;
+    
+    background-color: #000;
+    color: #fff;
+    
+    line-height: 2;
+    text-align: center;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    aside {
+        width: 65px;
+    }
+
+    .avatar img {
+        width: 90%;
+        height: 90%;
+    }
+
+    .avatar figcaption {
+        display: none;
+    }    
+    
+    nav {
+        margin-top: 20px;
+        height: calc(100% - 150px);
+        height: -webkit-calc(100% - 150px);
+        height: -moz-calc(100% - 150px);
+        overflow-y: auto;
+    }
+    
+    .nav-text {
+        display: none;
+    }
+    
+    .go-back{
+        width: 60px;   
+    }
+    
+    .go-back-text{
+        display: none;
+    }
+    
+    main {
+        margin-left: 65px;
+        max-width: 500px;
+    }
+
+    .portfolio-thumbnails img{
+        width:290px;
+    }    
+    
+    aside .sidebar-toggler {
+        position: fixed;
+        left: 65px;
+    }
+}
+
+/*in order to not overflow portfolio thumbnail between 600-650 px*/
+@media screen and (max-width: 650px) {
+    .portfolio-thumbnails img{
+        width:250px;
+    }
+}
+
