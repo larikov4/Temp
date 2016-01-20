@@ -1,4 +1,4 @@
-//collors 
+//collors from mockup 
 @midnight: #000614;
 @oxford-blue: #222935;
 @shamrock: #26c17e;
@@ -8,7 +8,42 @@
 @white: #fff;
 @black: #000;
 
-@font: 'Open Sans', 'Arial', 'Tahoma', sans-serif;
-@font-weight-bold: 700;
+//include fonts
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../font/open-sans/OpenSans-Regular.ttf');
+}
 
-@border:1px solid @white;
+@font-face {
+    font-family: 'Open Sans Bold';
+    src: url('../font/open-sans/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans Light';
+    src: url('../font/open-sans/OpenSans-Light.ttf');
+}
+
+@open-sans: 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+@open-sans-bold: 'Open Sans Bold', 'Arial', 'Tahoma', sans-serif;
+@open-sans-light: 'Open Sans Light', 'Arial', 'Tahoma', sans-serif;
+
+//reset defaults
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+li{
+   list-style-type: none;    
+}
+
+h1, h2, h3, h4, p, blockquote, body{
+    margin: 0;
+}
+
+//set common properties
+body{
+    font:14px/1.3em @open-sans;
+    color: @black;
+}

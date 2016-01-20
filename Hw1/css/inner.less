@@ -4,26 +4,6 @@
 @thumbnail-width:290px;
 @thumbnail-height:150px;
 
-body{
-    font:14px/1.3em @font;
-    color: @black;
-    margin: 0;
-    height: 100%;
-}
-
-ul{
-    margin: 0;
-    padding: 0;
-}
-
-li{
-   list-style-type: none;    
-}
-
-h1,h2,h3,p{
-    margin: 0;
-}
-
 /*sidebar*/
 
 aside{
@@ -54,7 +34,7 @@ aside li{
 aside a {
     color:@raven;
     text-decoration: none;
-    font: 16px/19px @font;
+    font: 16px/19px @open-sans;
 }
 
 aside a:visited {
@@ -77,31 +57,29 @@ aside a:visited {
 }
 
 .avatar figcaption {
-    font: 16px/19px @font;
+    font: 16px/19px @open-sans-bold;
     color: @white;
-    font-weight: @font-weight-bold;
     margin-bottom: 40px;
 }
 
 nav {
     height: calc(100% - 250px);
     height: -webkit-calc(100% - 250px);
-    height: -moz-calc(100% - 250px);
     overflow-y: auto;
 }
 
 .nav-item{
     display: block;
     padding: 20px;
-    border: 1px dashed @oxford-blue;
+    border-top: 1px dashed @oxford-blue;
 }
 
-.nav-item.active{
+.nav-item:last-child{
+    border-bottom: 1px dashed @oxford-blue;
+}
+
+.nav-link.active{
     color:@shamrock;
-}
-
-.nav-item:hover{
-    color:@white;
 }
 
 .nav-icon{
@@ -123,6 +101,10 @@ nav {
     text-align: center;
 }
 
+.nav-link:hover, .go-back:hover, {
+    color:@white;
+}
+
 /*main*/
 
 main{
@@ -137,9 +119,8 @@ main > article {
 }
 
 .title{
-    font: 25px/28px @font;
+    font: 25px/28px @open-sans-bold;
     color: @shamrock;
-    font-weight: @font-weight-bold;
     margin-top: 0;
     margin-bottom: 50px;
 }
@@ -155,27 +136,45 @@ main > article {
 
 .education-item {
     margin-bottom: 10px;
+    display: block;
+    clear: both;
+    overflow: hidden;
+    position: relative;
+}
+
+.education-item:first-of-type{
+    padding-top:20px; 
+}
+
+.education-item:first-of-type:before{
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    width: 5px;
+    height: 50px;
+    background-color: @shamrock;    
+    
+    -webkit-box-shadow: inset 0 20px 30px -2px @white;
+    box-shadow: inset 0 20px 30px -2px @white;
+}
+
+.education-item:after{
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    width: 5px;
+    height: calc(90%-7px);
+    height: -webkit-calc(90%-7px);
+    background-color: @shamrock;    
 }
 
 .education-item h4 {
     margin: 0 0 5px 0;
-    font: 16px/19px @font;
-    font-weight: @font-weight-bold;
-}
-
-.education-item p {
-    margin: 0;
-}
-
-.education-list:before{
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: -55px;
-    left: 15px;
-    width: 5px;
-    height: 100%;
-    background-color: @shamrock;    
+    font: 16px/19px @open-sans-bold;
 }
 
 .education-year{
@@ -204,6 +203,7 @@ main > article {
     left: -12px;
     width: 0;
     height: 0;
+    
     border-style: solid;
     border-width: 10px 13px 10px 0;
     border-color: transparent @gallery transparent transparent; 
@@ -231,13 +231,7 @@ main > article {
 }
 
 .experience-item h4 {
-    margin: 0;
-    font: 16px/19px @font;
-    font-weight: @font-weight-bold;
-}
-
-.experience-item p {
-    margin: 0;
+    font: 16px/19px @open-sans-bold;
 }
 
 /*skills*/
@@ -320,10 +314,6 @@ main > article {
 
 /*portfolio*/
 
-.portfolio-categories {
-//    margin-bottom: 15px;
-}
-
 .category-item{
     display: inline;
 }
@@ -376,7 +366,7 @@ main > article {
     h2{
         color: @shamrock;        
         font-size: 15px;
-        font-weight: @font-weight-bold;
+        font-family: @open-sans-bold;
         margin-bottom: 10px;
     }
     
@@ -389,8 +379,6 @@ main > article {
         color: @shamrock;
     }
 }
-
-
 
 .thumbnail:hover + .thumbnail-curtain{
     margin-top:-154px;
@@ -414,37 +402,24 @@ main > article {
 .contact-icon-wrapper span {
     display: table-cell;
     vertical-align: middle;
+    color: @shamrock;
 }
 
 .contact-item address {
     height: 60px;
     display: table-cell;
     vertical-align: middle;
-}
-
-.contact-item address p {
-    margin: 0;
-    font-style: normal;
+    font: 14px/1.3em @open-sans;
 }
 
 .contact-item address h4 {
-    margin: 0;
-    font-style: normal;
+    font-familly: @open-sans-bold;
 }
 
 /*feedback*/
-
-.feedback {
-    margin:0;
-}
-
 .feedback div {
     padding: 15px;  
-    background-color: antiquewhite;
-}
-
-.feedback div p {
-    margin: 0;
+    background-color: @gallery;
 }
 
 .feedback figure {
@@ -456,11 +431,14 @@ main > article {
     margin:-5px 0 0 4px;
     width: 50px;
     height: 50px;
+    border-radius: 50%;
 }
 
 .feedback cite{
+    margin: -5px 0 0 60px ;
+    display: block;
+    font: 12px @open-sans-light;
     line-height: 50px;
-    margin: 0 0 0 60px ;
 }
 
 .feedback-item{
@@ -515,7 +493,6 @@ main > article {
         margin-top: 20px;
         height: calc(100% - 150px);
         height: -webkit-calc(100% - 150px);
-        height: -moz-calc(100% - 150px);
         overflow-y: auto;
     }
     
