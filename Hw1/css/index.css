@@ -1,40 +1,114 @@
-body{
-    font: 1em 'Arial', 'Tahoma', sans-serif;
-    color:#000;
-    margin: 0;
-    overflow:hidden;
-
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../font/open-sans/OpenSans-Regular.ttf');
 }
-
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('../font/open-sans/OpenSans-Bold.ttf');
+}
+@font-face {
+  font-family: 'Open Sans Light';
+  src: url('../font/open-sans/OpenSans-Light.ttf');
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
+  cursor: default;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote,
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+body {
+  font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+  color: #000;
+}
+body {
+  font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+  color: #000;
+  margin: 0;
+  overflow: hidden;
+}
+h1,
+h3,
+p,
+article div {
+  margin: 0 0 10px 0;
+}
+h1,
+h3,
+p {
+  color: #fff;
+}
+h1 {
+  font: 45px/48px 'Open Sans Bold', 'Arial', 'Tahoma', sans-serif;
+}
+h3 {
+  font: 30px/33px 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+}
 main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width:470px;
-    text-align: center;
+  background-image: url(../images/background.jpg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
-
-.avatar-wrapper{
-    margin: 0;
+main:before {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
-
+.content-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 470px;
+  text-align: center;
+}
+.avatar-wrapper {
+  margin: 0;
+}
 .avatar {
-    width: 200px;
-    height: 200px;    
-    margin-bottom:10px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
-
-h1, h3, p, article div {
-    margin: 0 0 10px 0;
+a[href='inner.html'] {
+  background-color: #000;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
 }
-
+a[href='inner.html']:hover {
+  background-color: #26c17e;
+}
 @media screen and (max-width: 600px) {
-    body{
-        font-size: 0.8em;
-    }
-
-    main {
-        width: 250px;
-    }
+  body {
+    font-size: 0.8em;
+  }
+  .content-wrapper {
+    width: 250px;
+  }
 }

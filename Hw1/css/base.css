@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../font/open-sans/OpenSans-Regular.ttf');
+}
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('../font/open-sans/OpenSans-Bold.ttf');
+}
+@font-face {
+  font-family: 'Open Sans Light';
+  src: url('../font/open-sans/OpenSans-Light.ttf');
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
+  cursor: default;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote,
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+body {
+  font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+  color: #000;
+}

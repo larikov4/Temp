@@ -1,12 +1,46 @@
+@import "base.less";
+
 body{
-    font: 1em 'Arial', 'Tahoma', sans-serif;
-    color:#000;
+    font:14px/1.3em @open-sans;
+    color: @black;
     margin: 0;
     overflow:hidden;
 }
 
+h1, h3, p, article div {
+    margin: 0 0 10px 0;
+    
+}
+
+h1, h3, p{
+   color: @white; 
+}
+
+h1{
+    font:45px/48px @open-sans-bold;
+}
+
+h3{
+    font: 30px/33px @open-sans;
+}
+
 main{
-    background-image: url(../)
+    background-image: url(../images/background.jpg);
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    min-width: 100%;
+    min-height: 100%;
+}
+
+main:before{
+    content: '';   
+    background-color: rgba(0,0,0,0.7);
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0;
+    bottom: 0;
 }
 
 .content-wrapper {
@@ -15,7 +49,7 @@ main{
     left: 50%;
     transform: translate(-50%, -50%);
     width:470px;
-    text-align: center;
+    text-align: center;   
 }
 
 .avatar-wrapper{
@@ -26,10 +60,22 @@ main{
     width: 200px;
     height: 200px;    
     margin-bottom:10px;
+    border: 1px solid @white;
+    border-radius: 50%;
+    box-sizing: border-box;
 }
 
-h1, h3, p, article div {
-    margin: 0 0 10px 0;
+a[href='inner.html']{
+    background-color: @black;
+    padding: 10px 20px;  
+    color:@white;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a[href='inner.html']:hover{
+    background-color: @shamrock;
 }
 
 @media screen and (max-width: 600px) {
@@ -37,7 +83,7 @@ h1, h3, p, article div {
         font-size: 0.8em;
     }
 
-    main {
+    .content-wrapper {
         width: 250px;
     }
 }
