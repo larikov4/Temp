@@ -1,5 +1,4 @@
 @import "base.less";
-//fa fa-refresh fa-spin fa-3x fa-fw
 
 @thumbnail-width:290px;
 @thumbnail-height:150px;
@@ -33,7 +32,7 @@ aside li{
 
 aside a {
     color:@raven;
-    text-decoration: none;
+    
     font: 16px/19px @open-sans;
 }
 
@@ -125,13 +124,55 @@ main > article {
     margin-bottom: 50px;
 }
 
+/*education-animation*/
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+
+/* spinner */
+
+.spinner-wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;   
+    pointer-events: none;
+    color:@shamrock;    
+    
+    animation: fadein 0.3s 1.7s linear reverse forwards;
+    -webkit-animation: fadein 0.3s 1.7s linear reverse forwards;
+}
+
 /*education*/
+
+.education-list-wrapper{
+    position: relative;
+}
 
 .education-list{
     height: 400px;
     overflow-y: scroll;
-    position: relative;
     padding-top: 10px;
+    
+    opacity: 0;    
+    animation: fadein 0.5s 2s linear forwards;
+    -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 
 .education-item {
@@ -186,14 +227,18 @@ main > article {
     height: 100%;
 }
 
-.education-description{
-    float: left;   
-    position: relative;
-    box-sizing: border-box;
-    padding: 15px;
+.education-description-wrapper{
+    float: left;
     width: 90%;
-    background-color: @gallery;
+    padding-left: 10px;
+    box-sizing: border-box;
     margin-bottom: 10px;
+}
+
+.education-description{       
+    position: relative;
+    padding: 15px;
+    background-color: @gallery;
 }
 
 .education-description:before{
@@ -210,6 +255,16 @@ main > article {
 }
 
 /*experience*/
+
+.experience-list-wrapper{
+    position: relative;
+}
+
+.experience-list{
+    opacity: 0;    
+    animation: fadein 0.5s 2s linear forwards;
+    -webkit-animation: fadein 0.5s 2s linear forwards;
+}
 
 .experience-item{
     display: block;
