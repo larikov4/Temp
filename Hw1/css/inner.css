@@ -53,6 +53,7 @@ aside .sidebar-toggler {
   color: #fff;
   line-height: 40px;
   text-align: center;
+  cursor: pointer;
 }
 aside a {
   color: #667081;
