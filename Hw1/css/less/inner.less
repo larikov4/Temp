@@ -2,12 +2,12 @@
 
 /*sidebar*/
 
-aside{
+aside {
     position: fixed;
     width: 250px;
     padding-top: 10px;
     height: 100%;
-    background-color:@midnight;
+    background-color: @midnight;
 }
 
 aside .sidebar-toggler {
@@ -24,21 +24,21 @@ aside .sidebar-toggler {
 }
 
 aside a {
-    color:@raven;    
+    color: @raven;
     font: 16px/19px @open-sans;
 }
 
 aside a:visited {
-    color:@raven;
+    color: @raven;
 }
 
-.avatar{
+.avatar {
     margin-top: 0;
-    margin-bottom:10px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
-.avatar img{
+.avatar img {
     width: 100px;
     height: 100px;
     border: 2px solid @white;
@@ -59,32 +59,32 @@ nav {
     overflow-y: auto;
 }
 
-.nav-item{
+.nav-item {
     display: block;
     padding: 20px;
     border-top: 1px dashed @oxford-blue;
 }
 
-.nav-item:last-child{
+.nav-item:last-child {
     border-bottom: 1px dashed @oxford-blue;
 }
 
-.nav-link.active{
-    color:@shamrock;
+.nav-link.active {
+    color: @shamrock;
 }
 
-.nav-icon{
+.nav-icon {
     width: 25px;
     text-align: center;
     padding-right: 10px;
 }
 
-.go-back-icon{
+.go-back-icon {
     width: 20px;
     text-align: center;
 }
 
-.go-back{
+.go-back {
     position: fixed;
     bottom: 25px;
     display: block;
@@ -92,13 +92,16 @@ nav {
     text-align: center;
 }
 
-.nav-link:hover, .go-back:hover, {
-    color:@white;
+.nav-link:hover,
+.go-back:hover,
+{
+    color: @white;
 }
+
 
 /*main*/
 
-main{
+main {
     margin-left: 250px;
     padding: 40px;
     max-width: 900px;
@@ -109,77 +112,78 @@ main{
     margin-bottom: 40px;
 }
 
-.title{
+.title {
     font: 25px/28px @open-sans-bold;
     color: @shamrock;
     margin-top: 0;
     margin-bottom: 50px;
 }
 
+
 /*education-animation*/
 
 @keyframes fadein {
     from {
-        opacity:0;
+        opacity: 0;
     }
     to {
-        opacity:1;
+        opacity: 1;
     }
 }
 
 @-webkit-keyframes fadein {
     from {
-        opacity:0;
+        opacity: 0;
     }
     to {
-        opacity:1;
+        opacity: 1;
     }
 }
 
+
 /* spinner */
 
-.spinner-wrapper{
+.spinner-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;   
+    text-align: center;
     pointer-events: none;
-    color:@shamrock;    
-    
+    color: @shamrock;
     animation: fadein 0.3s 1.7s linear reverse forwards;
     -webkit-animation: fadein 0.3s 1.7s linear reverse forwards;
 }
 
+
 /*education*/
 
-.education-list-wrapper{
+.education-list-wrapper {
     position: relative;
 }
 
-.education-list{
+.education-list {
     height: 400px;
     overflow-y: scroll;
     padding-top: 10px;
-    
-    opacity: 0;    
+    opacity: 0;
     animation: fadein 0.5s 2s linear forwards;
     -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 
 .education-item {
-    margin-bottom: 10px;
+    padding-bottom: 10px;
     display: block;
     clear: both;
     overflow: hidden;
     position: relative;
 }
 
-.education-item:first-of-type{
-    padding-top:20px; 
+.education-item:first-of-type {
+    padding-top: 20px;
 }
 
-.education-item:first-of-type:before{
+.education-item:first-of-type:before {
     content: '';
     z-index: -1;
     position: absolute;
@@ -187,13 +191,12 @@ main{
     left: 15px;
     width: 5px;
     height: 50px;
-    background-color: @shamrock;    
-    
+    background-color: @shamrock;
     -webkit-box-shadow: inset 0 20px 30px -2px @white;
     box-shadow: inset 0 20px 30px -2px @white;
 }
 
-.education-item:after{
+.education-item:after {
     content: '';
     z-index: -1;
     position: absolute;
@@ -201,10 +204,10 @@ main{
     left: 15px;
     width: 5px;
     height: 100%;
-    background-color: @shamrock;    
+    background-color: @shamrock;
 }
 
-.education-item:last-of-type:after{
+.education-item:last-of-type:after {
     height: 90%;
 }
 
@@ -213,16 +216,17 @@ main{
     font: 16px/19px @open-sans-bold;
 }
 
-.education-year{
+.education-year {
     float: left;
     padding: 10px 0;
     background-color: @white;
     box-sizing: border-box;
     width: 10%;
     height: 100%;
+    font: 16px/19px @open-sans-bold;
 }
 
-.education-description-wrapper{
+.education-description-wrapper {
     float: left;
     width: 90%;
     padding-left: 10px;
@@ -230,59 +234,59 @@ main{
     margin-bottom: 10px;
 }
 
-.education-description{       
+.education-description {
     position: relative;
     padding: 15px;
     background-color: @gallery;
 }
 
-.education-description:before{
+.education-description:before {
     content: '';
     position: absolute;
     top: 10px;
     left: -12px;
     width: 0;
     height: 0;
-    
     border-style: solid;
     border-width: 10px 13px 10px 0;
-    border-color: transparent @gallery transparent transparent; 
+    border-color: transparent @gallery transparent transparent;
 }
+
 
 /*experience*/
 
-.experience-list-wrapper{
+.experience-list-wrapper {
     position: relative;
 }
 
-.experience-list{
-    opacity: 0;    
+.experience-list {
+    opacity: 0;
     animation: fadein 0.5s 2s linear forwards;
     -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 
-.experience-item{
+.experience-item {
     display: block;
     clear: both;
-    overflow: hidden;   
+    overflow: hidden;
     padding-bottom: 15px;
     margin-bottom: 14px;
     border-bottom: 1px dashed @shamrock;
 }
 
-.experience-item:last-of-type{
+.experience-item:last-of-type {
     padding-bottom: 0;
-    border-bottom:0;
+    border-bottom: 0;
 }
 
-.experience-item .company_wrapper{
-    float:left;
+.experience-item .company_wrapper {
+    float: left;
     width: 15%;
 }
 
-.experience-item article{
+.experience-item article {
     float: left;
-    box-sizing: border-box;    
+    box-sizing: border-box;
     width: 85%;
     padding-left: 20px;
 }
@@ -291,9 +295,10 @@ main{
     font: 16px/19px @open-sans-bold;
 }
 
+
 /*skills*/
 
-.skill-item{
+.skill-item {
     background-color: @shamrock;
     height: 30px;
     margin: 5px 0;
@@ -302,11 +307,11 @@ main{
     transition: width 1s;
 }
 
-.skill-item:nth-child(2){
+.skill-item:nth-child(2) {
     width: 75%
 }
 
-.skill-item:last-child{
+.skill-item:last-child {
     width: 50%
 }
 
@@ -318,6 +323,7 @@ main{
     color: @white;
 }
 
+
 /*skill scale*/
 
 .skills-scale {
@@ -325,7 +331,7 @@ main{
     margin-bottom: 95px;
 }
 
-.scale-item{
+.scale-item {
     height: 5px;
     border-right: 1px solid @alto;
     border-bottom: 1px solid @alto;
@@ -335,78 +341,79 @@ main{
     font-size: 10px;
 }
 
-.scale-item span{
+.scale-item span {
     position: absolute;
-    top:15px;
+    top: 15px;
     color: @alto;
 }
 
-.scale-item.beginner{
+.scale-item.beginner {
     width: 0%;
 }
 
-.scale-item.proficient{
+.scale-item.proficient {
     width: 25%;
 }
 
-.scale-item.proficient span{
+.scale-item.proficient span {
     right: -30px;
 }
 
-.scale-item.expert{
+.scale-item.expert {
     width: 75%;
 }
 
-.scale-item.expert span{
+.scale-item.expert span {
     right: -22px;
 }
 
-.scale-item.master{
+.scale-item.master {
     width: 100%;
 }
 
-.scale-item.master span{
+.scale-item.master span {
     right: 0;
 }
 
+
 /*portfolio*/
 
-.category-item{
+.category-item {
     display: inline;
     font-size: 17px;
 }
 
-.category-item:after{
+.category-item:after {
     content: "/";
     padding-left: 3px;
     padding-right: 5px;
 }
 
-.category-item:last-child:after{
+.category-item:last-child:after {
     content: "";
 }
 
-.category-item a{
+.category-item a {
     color: @shamrock;
 }
 
-.category-item.active a{
+.category-item.active a {
     color: @black;
 }
 
+
 /*portfolio thumbnails*/
 
-@thumbnail-width:260px;
-@thumbnail-height:150px;
-
-.portfolio-thumbnails{
+@thumbnail-width: 260px;
+@thumbnail-height: 150px;
+.portfolio-thumbnails {
     display: block;
     clear: both;
     overflow: hidden;
 }
 
 .portfolio-thumbnails li {
-    float:left;
+    float: left;
     width: @thumbnail-width;
     height: @thumbnail-height;
     margin: 15px 15px 0 0;
@@ -418,49 +425,46 @@ main{
     height: @thumbnail-height;
 }
 
-.thumbnail{
+.thumbnail {
     width: @thumbnail-width;
     height: @thumbnail-height;
     vertical-align: bottom;
 }
 
-.thumbnail-curtain{
-    position: relative;    
-    background-color: rgba(0,0,0,0.7);
+.thumbnail-curtain {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
     border: 1px solid @shamrock;
     width: @thumbnail-width;
     height: @thumbnail-height;
     padding: 10px;
     box-sizing: border-box;
-    
-    margin-top:0;
+    margin-top: 0;
     -webkit-transition: 0.5s margin ease-in-out;
     transition: 0.5s margin ease-in-out;
-    
-    h2{
-        color: @shamrock;        
+    h2 {
+        color: @shamrock;
         font-size: 15px;
         font-family: @open-sans-bold;
         margin-bottom: 10px;
     }
-    
-    p{
+    p {
         color: @white;
         margin-bottom: 10px;
     }
-    
-    span{
+    span {
         color: @shamrock;
     }
 }
 
-.thumbnail:hover + .thumbnail-curtain{
-    margin-top:-150px;
+.thumbnail:hover + .thumbnail-curtain {
+    margin-top: -150px;
 }
 
-.thumbnail-curtain:hover{
-    margin-top:-150px;
+.thumbnail-curtain:hover {
+    margin-top: -150px;
 }
+
 
 /*contacts*/
 
@@ -476,7 +480,7 @@ main{
     box-sizing: border-box;
 }
 
-li:last-child > .contact-icon-wrapper{
+li:last-child > .contact-icon-wrapper {
     border-bottom-style: none;
 }
 
@@ -498,9 +502,11 @@ li:last-child > .contact-icon-wrapper{
     font-family: @open-sans-bold;
 }
 
+
 /*feedback*/
+
 .feedback div {
-    padding: 15px;  
+    padding: 15px;
     background-color: @gallery;
 }
 
@@ -510,75 +516,76 @@ li:last-child > .contact-icon-wrapper{
 
 .feedback img {
     position: absolute;
-    margin:-5px 0 0 4px;
+    margin: -5px 0 0 4px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-.feedback cite{
-    margin: -5px 0 0 60px ;
+.feedback cite {
+    margin: -5px 0 0 60px;
     display: block;
     font: 12px @open-sans-light;
     line-height: 50px;
 }
 
-.feedback cite a{
-    color:@shamrock;
+.feedback cite a {
+    color: @shamrock;
 }
 
-.feedback-item{
+.feedback-item {
     margin-bottom: 40px;
 }
 
-.feedback-item:last-of-type{
+.feedback-item:last-of-type {
     margin-bottom: 0;
 }
 
-.main-article:last-of-type{
+.main-article:last-of-type {
     margin-bottom: 0;
 }
+
 
 /*go top */
+
 .go-top {
     position: fixed;
     bottom: 0px;
     right: 8px;
     width: 30px;
     height: 30px;
-    
     background-color: @black;
     border-radius: 5px 5px 0 0;
-    color:@white;
-    
+    color: @white;
     line-height: 30px;
     text-align: center;
     font-size: 15px;
     padding: 8px 12px 8px;
 }
 
+
 /*media query in order to not overflow education years between 600-730 px*/
-@media screen and (max-width: 730px) {
-    .education-description-wrapper{
-        width: 85%;
+
+@media screen and (max-width: 745px) {
+    .education-description-wrapper {
+        width: 83%;
     }
-    
-    .education-year{
-        width: 15%;
+    .education-year {
+        width: 17%;
     }
 }
 
+
 /*media query in order to adaptate to modile devices*/
+
 @media screen and (max-width: 600px) {
     body {
         font-size: 12px;
         line-height: 15px;
     }
-
     aside {
         width: 65px;
     }
-
     .avatar {
         width: 100%;
         height: 55px;
@@ -586,62 +593,54 @@ li:last-child > .contact-icon-wrapper{
         padding: 0 5px;
         box-sizing: border-box;
     }
-    
     .avatar img {
         width: 90%;
         height: 90%;
     }
-
     .avatar figcaption {
         display: none;
-    }    
-    
+    }
     nav {
         margin-top: 10px;
         height: calc(~"100% - 150px");
         height: -webkit-calc(~"100% - 150px");
         overflow-y: auto;
     }
-    
     .nav-text {
         display: none;
     }
-    
-    .go-back{
-        width: 60px;   
+    .go-back {
+        width: 60px;
     }
-    
-    .go-back-text{
+    .go-back-text {
         display: none;
     }
-    
     main {
         margin-left: 65px;
         max-width: 500px;
     }
-    
     aside .sidebar-toggler {
         left: 65px;
     }
-    
-    .education-description:before{
+    .education-description:before {
         top: 8px;
     }
-    
-    .education-description-wrapper{
-        width: 90%;
+    .education-description-wrapper {
+        width: 85%;
     }
-    
-    .education-year{
-        width: 10%;
+    .education-year {
+        width: 15%;
     }
 }
+
+
 /*media query in order to fix extreamly small resolutions*/
+
 @media screen and (max-width: 500px) {
     main {
         min-width: 360px;
     }
-    aside{
+    aside {
         z-index: 1;
     }
 }

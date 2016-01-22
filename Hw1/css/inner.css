@@ -173,7 +173,7 @@ main {
   -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 .education-item {
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   display: block;
   clear: both;
   overflow: hidden;
@@ -218,6 +218,7 @@ main {
   box-sizing: border-box;
   width: 10%;
   height: 100%;
+  font: 16px/19px 'Open Sans Bold', 'Arial', 'Tahoma', sans-serif;
 }
 .education-description-wrapper {
   float: left;
@@ -489,12 +490,12 @@ li:last-child > .contact-icon-wrapper {
   padding: 8px 12px 8px;
 }
 /*media query in order to not overflow education years between 600-730 px*/
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 745px) {
   .education-description-wrapper {
-    width: 85%;
+    width: 83%;
   }
   .education-year {
-    width: 15%;
+    width: 17%;
   }
 }
 /*media query in order to adaptate to modile devices*/
@@ -546,10 +547,10 @@ li:last-child > .contact-icon-wrapper {
     top: 8px;
   }
   .education-description-wrapper {
-    width: 90%;
+    width: 85%;
   }
   .education-year {
-    width: 10%;
+    width: 15%;
   }
 }
 /*media query in order to fix extreamly small resolutions*/

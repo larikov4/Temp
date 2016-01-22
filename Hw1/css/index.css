@@ -34,21 +34,10 @@ body {
   font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
   color: #000;
 }
-body {
-  font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
-  color: #000;
-  margin: 0;
-  overflow: hidden;
-}
-h1,
-h3,
-p,
-article div {
-  margin: 0 0 10px 0;
-}
 h1,
 h3,
 p {
+  margin-bottom: 10px;
   color: #fff;
 }
 h1 {
@@ -81,6 +70,9 @@ main:before {
   transform: translate(-50%, -50%);
   width: 470px;
   text-align: center;
+}
+article {
+  margin-bottom: 10px;
 }
 .avatar-wrapper {
   margin: 0;
