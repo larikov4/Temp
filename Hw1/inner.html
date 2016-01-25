@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-        <link href="css/inner.css" rel="stylesheet" type="text/css">
+        <link href="css/less/inner.less" rel="stylesheet/less" type="text/css">
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
     </head>
     <body>
@@ -134,7 +134,18 @@
             
             <article class="main-article" id="skills">
                 <h2 class="title">Skills</h2>
-                <ul>
+                <form class="skills-form" autocomplete="off">
+                    <div class="form-row">                    
+                        <label for="skill-name">Skill name:</label>
+                        <input id="skill-name" type="text" placeholder="Enter skill name" maxlength="100" required="required">
+                    </div>
+                    <div class="form-row">                    
+                        <label for="skill-range">Skill range:</label>
+                        <input id="skill-range" type="number" placeholder="Enter skill range" min="1" max="100" required="required">
+                    </div>
+                    <input type="submit" value="Add skill">
+                </form>
+                <ul class="skill-list">
                     <li class="skill-item"><span>Shooting</span></li>
                     <li class="skill-item"><span>Smiling</span></li>
                     <li class="skill-item"><span>Talking</span></li>
@@ -150,12 +161,12 @@
             <article class="main-article" id="portfolio">
                 <h2 class="title">Portfolio</h2>
                     <ul class="portfolio-categories">
-                        <li class="category-item active"><a href="#">All</a></li>
-                        <li class="category-item"><a href="#">Code</a></li>
-                        <li class="category-item"><a href="#">UI</a></li>
+                        <li class="category-item active" data-filter="*">All</li>
+                        <li class="category-item" data-filter=".happiness">Happiness</li>
+                        <li class="category-item" data-filter=".blasters">Blasters</li>
                     </ul>
                 <ul class="portfolio-thumbnails">
-                    <li>
+                    <li class="happiness">
                         <div class='thumbnail-wrapper'>
                             <img class='thumbnail' src="./images/han-solo-happy.jpg" alt="portfolio thumbnail"/>
                             <article class='thumbnail-curtain'>
@@ -168,7 +179,7 @@
                             </article>
                         </div>
                     </li>
-                    <li>
+                    <li class="blasters">
                         <div class='thumbnail-wrapper'>
                             <img class='thumbnail' src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/>
                             <article class='thumbnail-curtain'>
@@ -182,7 +193,7 @@
                         </div>
                     </li>
                     
-                    <li>
+                    <li class="happiness">
                         <div class='thumbnail-wrapper'>
                             <img class='thumbnail' src="./images/han-solo-happy.jpg" alt="portfolio thumbnail"/>
                             <article class='thumbnail-curtain'>
@@ -195,7 +206,7 @@
                             </article>
                         </div>
                     </li>
-                    <li>
+                    <li class="blasters">
                         <div class='thumbnail-wrapper'>
                             <img class='thumbnail' src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/>
                             <article class='thumbnail-curtain'>
@@ -209,7 +220,7 @@
                         </div>
                     </li>
                     
-                    <li>
+                    <li class="blasters">
                         <div class='thumbnail-wrapper'>
                             <img class='thumbnail' src="./images/han-solo-with-blaster.jpg" alt="portfolio thumbnail"/>
                             <article class='thumbnail-curtain'>
@@ -329,5 +340,9 @@
                 <span class="fa fa-chevron-up fa-lg go-top-icon"></span>
             </a>
         </main>  
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+        <script src="js/jquery-1.12.0.min.js"></script>
+        <script src="js/isotope.js"></script>
+        <script src="js/all.js"></script>
     </body>
 </html>

@@ -10,6 +10,10 @@ aside {
     background-color: @midnight;
 }
 
+aside.hidden {
+    left: -250px;
+}
+
 aside .sidebar-toggler {
     position: fixed;
     top: 17px;
@@ -22,6 +26,10 @@ aside .sidebar-toggler {
     line-height: 40px;
     text-align: center;
     cursor: pointer;
+}
+
+.sidebar-toggler.active {
+    left: 0;
 }
 
 aside a {
@@ -107,6 +115,10 @@ main {
     padding: 40px;
     max-width: 900px;
     box-sizing: border-box;
+}
+
+main.hidden-sidebar {
+    margin-left: 0;
 }
 
 .main-article {
@@ -312,7 +324,7 @@ main {
     width: 75%
 }
 
-.skill-item:last-child {
+.skill-item:nth-child(3) {
     width: 50%
 }
 
@@ -322,6 +334,52 @@ main {
     height: 30px;
     padding-left: 10px;
     color: @white;
+}
+
+
+/*skills-form*/
+
+.skills-form {
+    border: 1px solid @shamrock;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.form-row {
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.form-row input {
+    width: 70%;
+    height: 25px;
+    margin-bottom: 10px;
+    float: right;
+    border: 1px solid @alto;
+    padding-left: 5px;
+}
+
+.skills-form label {
+    width: 80px;
+    font-family: @open-sans-bold;
+    margin-right: 15px;
+    line-height: 30px;
+}
+
+input[type='submit'] {
+    background-color: @black;
+    padding: 10px 20px;
+    color: @white;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    border-style: none;
+    cursor: pointer;
+}
+
+input[type='submit']:hover {
+    background-color: @shamrock;
 }
 
 
@@ -382,24 +440,24 @@ main {
 .category-item {
     display: inline;
     font-size: 17px;
+    color: @black;
+    cursor: pointer;
 }
 
 .category-item:after {
     content: "/";
     padding-left: 3px;
     padding-right: 5px;
+    color: @black;
 }
 
 .category-item:last-child:after {
     content: "";
 }
 
-.category-item a {
+.category-item.active,
+.category-item:hover {
     color: @shamrock;
-}
-
-.category-item.active a {
-    color: @black;
 }
 
 
@@ -573,6 +631,15 @@ li:last-child > .contact-icon-wrapper {
     }
     .education-year {
         width: 17%;
+    }
+}
+
+
+/*media query in order to avoid input go out from form row*/
+
+@media screen and (max-width: 670px) {
+    .form-row input {
+        width: 60%;
     }
 }
 
