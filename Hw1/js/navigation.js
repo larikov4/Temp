@@ -1,6 +1,8 @@
 (function ($) {
     "use strict";
     var ARTICLE_MARGIN = 40,
+        ANIMATION_DURATION = 900,
+        ANIMATION_FUNCTION = 'swing',
         navLinks = (function () {
             var $links = $(".nav-link"),
                 result = [];
@@ -22,16 +24,18 @@
     $('.go-top').on('click', function (e) {
         e.preventDefault();
         $('html, body').stop()
-            .animate({'scrollTop': '0'}, 900, 'swing');
+            .animate({'scrollTop': '0'}, ANIMATION_DURATION, ANIMATION_FUNCTION);
     });
 
     $('nav a').on('click', function (e) {
         e.preventDefault();
         $('html, body').stop()
-            .animate({'scrollTop': $(this.hash).offset().top - ARTICLE_MARGIN }, 900, 'swing');
+            .animate({
+                'scrollTop': $(this.hash).offset().top - ARTICLE_MARGIN 
+            }, ANIMATION_DURATION, ANIMATION_FUNCTION);
     });
     
-    function highlightActiveNavLink(){
+    function highlightActiveNavLink() {
         var windowStart = $(window).scrollTop(),
             windowEnd = windowStart + $(window).height(),
             documentHeight = $(document).height(),
@@ -49,12 +53,12 @@
                 $link.removeClass("active");
             }
         }
-        if(windowEnd == documentHeight && !$lastLink.hasClass("active")) {
+        if (windowEnd === documentHeight && !$lastLink.hasClass("active")) {
             $(".active").removeClass("active");
             $lastLink.addClass("active");
         }
     }
     
     highlightActiveNavLink();
-    $(window).scroll(highlightActiveNavLink);    
+    $(window).scroll(highlightActiveNavLink);
 })(jQuery);
