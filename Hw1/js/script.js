@@ -25,12 +25,14 @@ $(function () {
 
     //portfolio module
     (function () {
-        //animate filtering through portfolio categories using isotope lib.
+        //init isotope greed for thumbnails
+        var greed = $('.portfolio-thumbnails').isotope();
+        //animate filtering through portfolio categories using isotope
         $('.portfolio-categories').on('click', '.category-item', function () {
             var $this = $(this);
             $this.siblings('.category-item.active').removeClass('active');
             $this.addClass('active');
-            $('.portfolio-thumbnails').isotope({
+            greed.isotope({
                 filter: $this.data('filter')
             });
         });
@@ -112,10 +114,10 @@ $(function () {
             navLinks = (function () {
                 var $links = $(".nav-link"),
                     result = [];
-                for (var i = 0; i < $links.length; i++) {
-                    var href = $links.eq(i).attr('href');
-                    result.push(href);
-                }
+//                for (var i = 0; i < $links.length; i++) {
+//                    var href = $links.eq(i).attr('href');
+//                    result.push(href);
+//                }
                 return result;
             })();
 
@@ -153,19 +155,19 @@ $(function () {
                 documentHeight = $(document).height(),
                 $lastLink = $(".nav-item:last-child .nav-link");
 
-            for (var i = 0; i < navLinks.length; i++) {
-                var id = navLinks[i],
-                    divStart = $(id).offset().top,
-                    divEnd = divStart + $(id).height(),
-                    $link = $("a[href='" + id + "']");
-
-                //check whether window is currently on passed div
-                if (windowStart >= divStart - ARTICLE_MARGIN && windowStart < divEnd) {
-                    $link.addClass("active");
-                } else {
-                    $link.removeClass("active");
-                }
-            }
+//            for (var i = 0; i < navLinks.length; i++) {
+//                var id = navLinks[i],
+//                    divStart = $(id).offset().top,
+//                    divEnd = divStart + $(id).height(),
+//                    $link = $("a[href='" + id + "']");
+//
+//                //check whether window is currently on passed div
+//                if (windowStart >= divStart - ARTICLE_MARGIN && windowStart < divEnd) {
+//                    $link.addClass("active");
+//                } else {
+//                    $link.removeClass("active");
+//                }
+//            }
             //check whether window bottom is reached
             if (windowEnd === documentHeight && !$lastLink.hasClass("active")) {
                 $(".active").removeClass("active");

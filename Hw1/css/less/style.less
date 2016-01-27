@@ -1,9 +1,9 @@
 @import "base.less";
-
-body{
-    font:14px/1.3em @open-sans;
+body {
+    font: 14px/1.3em @open-sans;
     color: @black;
 }
+
 
 /*index page */
 
@@ -79,6 +79,7 @@ a[href='inner.html'] {
 a[href='inner.html']:hover {
     background-color: @shamrock;
 }
+
 
 /*sidebar*/
 
@@ -211,6 +212,7 @@ nav {
     margin-bottom: 50px;
 }
 
+
 /*education*/
 
 .education-spinner-wrapper {
@@ -268,8 +270,8 @@ nav {
     background-color: @shamrock;
 }
 
-.education-item:last-of-type .education-description-wrapper{
-    margin-bottom: 0;   
+.education-item:last-of-type .education-description-wrapper {
+    margin-bottom: 0;
 }
 
 .education-item:last-of-type:after {
@@ -361,11 +363,16 @@ nav {
 
 .skill-item {
     background-color: @shamrock;
-    height: 30px;
     margin: 5px 0;
-    display: block;
     -webkit-transition: width 1s;
     transition: width 1s;
+    line-height: 30px;
+    height: 30px;
+    padding-left: 10px;
+    color: @white;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .skill-item:nth-child(2) {
@@ -374,14 +381,6 @@ nav {
 
 .skill-item:nth-child(3) {
     width: 50%
-}
-
-.skill-item span {
-    display: table-cell;
-    vertical-align: middle;
-    height: 30px;
-    padding-left: 10px;
-    color: @white;
 }
 
 

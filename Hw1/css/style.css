@@ -329,24 +329,22 @@ nav {
 /*skills*/
 .skill-item {
   background-color: #26c17e;
-  height: 30px;
   margin: 5px 0;
-  display: block;
   -webkit-transition: width 1s;
   transition: width 1s;
+  line-height: 30px;
+  height: 30px;
+  padding-left: 10px;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .skill-item:nth-child(2) {
   width: 75%;
 }
 .skill-item:nth-child(3) {
   width: 50%;
-}
-.skill-item span {
-  display: table-cell;
-  vertical-align: middle;
-  height: 30px;
-  padding-left: 10px;
-  color: #fff;
 }
 /*skills-form*/
 .skills-form {
