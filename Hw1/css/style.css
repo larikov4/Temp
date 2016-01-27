@@ -34,6 +34,69 @@ body {
   font: 14px/1.3em 'Open Sans', 'Arial', 'Tahoma', sans-serif;
   color: #000;
 }
+/*index page */
+.index-article h1,
+.index-article h3,
+.index-article p {
+  margin-bottom: 10px;
+  color: #fff;
+}
+.index-article h1 {
+  font: 45px/48px 'Open Sans Bold', 'Arial', 'Tahoma', sans-serif;
+}
+.index-article h3 {
+  font: 30px/33px 'Open Sans', 'Arial', 'Tahoma', sans-serif;
+}
+.index-main {
+  background-image: url(../images/background.jpg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+.index-main:before {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.index-content-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 470px;
+  text-align: center;
+}
+.index-article {
+  margin-bottom: 10px;
+}
+.index-avatar-wrapper {
+  margin: 0;
+}
+.index-avatar {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+a[href='inner.html'] {
+  background-color: #000;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+}
+a[href='inner.html']:hover {
+  background-color: #26c17e;
+}
 /*sidebar*/
 aside {
   position: fixed;
@@ -41,6 +104,9 @@ aside {
   padding-top: 10px;
   height: 100%;
   background-color: #000614;
+}
+aside.hidden {
+  left: -250px;
 }
 aside .sidebar-toggler {
   position: fixed;
@@ -55,6 +121,9 @@ aside .sidebar-toggler {
   text-align: center;
   cursor: pointer;
 }
+.sidebar-toggler.active {
+  left: 0;
+}
 aside a {
   color: #667081;
   font: 16px/19px 'Open Sans', 'Arial', 'Tahoma', sans-serif;
@@ -62,12 +131,12 @@ aside a {
 aside a:visited {
   color: #667081;
 }
-.avatar {
+.inner-avatar {
   margin-top: 0;
   margin-bottom: 10px;
   text-align: center;
 }
-.avatar img {
+.inner-avatar img {
   width: 100px;
   height: 100px;
   border: 2px solid #fff;
@@ -75,7 +144,7 @@ aside a:visited {
   margin-bottom: 10px;
   box-sizing: border-box;
 }
-.avatar figcaption {
+.inner-avatar figcaption {
   font: 16px/19px 'Open Sans Bold', 'Arial', 'Tahoma', sans-serif;
   color: #fff;
   margin-bottom: 40px;
@@ -117,11 +186,14 @@ nav {
   color: #fff;
 }
 /*main*/
-main {
+.inner-main {
   margin-left: 250px;
   padding: 40px;
   max-width: 900px;
   box-sizing: border-box;
+}
+.inner-main.hidden-sidebar {
+  margin-left: 0;
 }
 .main-article {
   margin-bottom: 40px;
@@ -132,25 +204,8 @@ main {
   margin-top: 0;
   margin-bottom: 50px;
 }
-/*education-animation*/
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@-webkit-keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-/* spinner */
-.spinner-wrapper {
+/*education*/
+.education-spinner-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -158,10 +213,7 @@ main {
   text-align: center;
   pointer-events: none;
   color: #26c17e;
-  animation: fadein 0.3s 1.7s linear reverse forwards;
-  -webkit-animation: fadein 0.3s 1.7s linear reverse forwards;
 }
-/*education*/
 .education-list-wrapper {
   position: relative;
 }
@@ -170,8 +222,6 @@ main {
   overflow-y: scroll;
   padding-top: 10px;
   opacity: 0;
-  animation: fadein 0.5s 2s linear forwards;
-  -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 .education-item {
   padding-bottom: 10px;
@@ -185,7 +235,6 @@ main {
 }
 .education-item:first-of-type:before {
   content: '';
-  z-index: -1;
   position: absolute;
   top: -10px;
   left: 15px;
@@ -197,7 +246,6 @@ main {
 }
 .education-item:after {
   content: '';
-  z-index: -1;
   position: absolute;
   top: 20px;
   left: 15px;
@@ -205,8 +253,11 @@ main {
   height: 100%;
   background-color: #26c17e;
 }
+.education-item:last-of-type .education-description-wrapper {
+  margin-bottom: 0;
+}
 .education-item:last-of-type:after {
-  height: 90%;
+  height: 85%;
 }
 .education-item h4 {
   margin-bottom: 5px;
@@ -214,6 +265,8 @@ main {
 }
 .education-year {
   float: left;
+  position: relative;
+  z-index: 2;
   padding: 10px 0;
   background-color: #fff;
   box-sizing: border-box;
@@ -247,11 +300,6 @@ main {
 /*experience*/
 .experience-list-wrapper {
   position: relative;
-}
-.experience-list {
-  opacity: 0;
-  animation: fadein 0.5s 2s linear forwards;
-  -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 .experience-item {
   display: block;
@@ -290,7 +338,7 @@ main {
 .skill-item:nth-child(2) {
   width: 75%;
 }
-.skill-item:last-child {
+.skill-item:nth-child(3) {
   width: 50%;
 }
 .skill-item span {
@@ -304,18 +352,20 @@ main {
 .skills-form {
   border: 1px solid #26c17e;
   padding: 10px;
+  margin-bottom: 15px;
 }
 .form-row {
   display: block;
   clear: both;
   overflow: hidden;
 }
-#skill-name,
-#skill-range {
+.form-row input {
   width: 70%;
   height: 25px;
   margin-bottom: 10px;
   float: right;
+  border: 1px solid #ddd;
+  padding-left: 5px;
 }
 .skills-form label {
   width: 80px;
@@ -323,21 +373,23 @@ main {
   margin-right: 15px;
   line-height: 30px;
 }
-input[type='submit'] {
+.skills-form input[type='submit'] {
   background-color: #000;
   padding: 10px 20px;
   color: #fff;
   border-radius: 5px;
   text-decoration: none;
   display: inline-block;
+  border-style: none;
+  cursor: pointer;
 }
-input[type='submit']:hover {
+.skills-form input[type='submit']:hover {
   background-color: #26c17e;
 }
 /*skill scale*/
 .skills-scale {
   position: relative;
-  margin-bottom: 95px;
+  height: 45px;
 }
 .scale-item {
   height: 5px;
@@ -354,7 +406,7 @@ input[type='submit']:hover {
   color: #ddd;
 }
 .scale-item.beginner {
-  width: 0%;
+  width: 0;
 }
 .scale-item.proficient {
   width: 25%;
@@ -534,27 +586,36 @@ li:last-child > .contact-icon-wrapper {
     width: 17%;
   }
 }
+/*media query in order to avoid input go out from form row*/
+@media screen and (max-width: 670px) {
+  .form-row input {
+    width: 60%;
+  }
+}
 /*media query in order to adaptate to modile devices*/
 @media screen and (max-width: 600px) {
   body {
     font-size: 12px;
     line-height: 15px;
   }
+  .index-content-wrapper {
+    width: 250px;
+  }
   aside {
     width: 65px;
   }
-  .avatar {
+  .inner-avatar {
     width: 100%;
     height: 55px;
     margin: 0;
     padding: 0 5px;
     box-sizing: border-box;
   }
-  .avatar img {
+  .inner-avatar img {
     width: 90%;
     height: 90%;
   }
-  .avatar figcaption {
+  .inner-avatar figcaption {
     display: none;
   }
   nav {
@@ -572,7 +633,7 @@ li:last-child > .contact-icon-wrapper {
   .go-back-text {
     display: none;
   }
-  main {
+  .inner-main {
     margin-left: 65px;
     max-width: 500px;
   }

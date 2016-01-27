@@ -1,5 +1,10 @@
 @import "base.less";
 
+body{
+    font:14px/1.3em @open-sans;
+    color: @black;
+}
+
 /*index page */
 
 .index-article h1,
@@ -206,31 +211,9 @@ nav {
     margin-bottom: 50px;
 }
 
+/*education*/
 
-/*education-animation*/
-
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-
-/* spinner */
-
-.spinner-wrapper {
+.education-spinner-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -240,9 +223,6 @@ nav {
     color: @shamrock;
 }
 
-
-/*education*/
-
 .education-list-wrapper {
     position: relative;
 }
@@ -251,7 +231,7 @@ nav {
     height: 400px;
     overflow-y: scroll;
     padding-top: 10px;
-    visibility: hidden;
+    opacity: 0;
 }
 
 .education-item {
@@ -268,7 +248,6 @@ nav {
 
 .education-item:first-of-type:before {
     content: '';
-    z-index: -1;
     position: absolute;
     top: -10px;
     left: 15px;
@@ -281,7 +260,6 @@ nav {
 
 .education-item:after {
     content: '';
-    z-index: -1;
     position: absolute;
     top: 20px;
     left: 15px;
@@ -290,8 +268,12 @@ nav {
     background-color: @shamrock;
 }
 
+.education-item:last-of-type .education-description-wrapper{
+    margin-bottom: 0;   
+}
+
 .education-item:last-of-type:after {
-    height: 90%;
+    height: 85%;
 }
 
 .education-item h4 {
@@ -301,6 +283,8 @@ nav {
 
 .education-year {
     float: left;
+    position: relative;
+    z-index: 2;
     padding: 10px 0;
     background-color: @white;
     box-sizing: border-box;
@@ -340,12 +324,6 @@ nav {
 
 .experience-list-wrapper {
     position: relative;
-}
-
-.experience-list {
-    opacity: 0;
-    animation: fadein 0.5s 2s linear forwards;
-    -webkit-animation: fadein 0.5s 2s linear forwards;
 }
 
 .experience-item {
@@ -727,18 +705,18 @@ li:last-child > .contact-icon-wrapper {
     aside {
         width: 65px;
     }
-    .avatar {
+    .inner-avatar {
         width: 100%;
         height: 55px;
         margin: 0;
         padding: 0 5px;
         box-sizing: border-box;
     }
-    .avatar img {
+    .inner-avatar img {
         width: 90%;
         height: 90%;
     }
-    .avatar figcaption {
+    .inner-avatar figcaption {
         display: none;
     }
     nav {
@@ -756,7 +734,7 @@ li:last-child > .contact-icon-wrapper {
     .go-back-text {
         display: none;
     }
-    main {
+    .inner-main {
         margin-left: 65px;
         max-width: 500px;
     }
